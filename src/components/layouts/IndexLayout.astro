@@ -1,0 +1,75 @@
+---
+import Header from "@components/ui/Header.astro";
+import { Loader } from "./Loader";
+---
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content={Astro.generator} />
+        <title>PetsAnd+</title>
+    </head>
+    <body>
+        <Header />
+
+        <slot />
+
+        <Loader client:load />
+    </body>
+</html>
+<style is:global>
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;700&family=Poppins:wght@200;300;400;500;600&display=swap");
+
+    :root {
+        --main-color: #46d1d3;
+        --main-color-hover: rgb(60, 181, 183);
+        --secondary-color: #e55;
+        --secondary-color-hover: rgb(227, 73, 73);
+        --header-height: 68px;
+        background-color: #fcfcfc;
+        font-size: 13px;
+        color: #343434;
+    }
+
+    body {
+        background-image: url("./bg.png");
+        /* background-size: 25%; */
+    }
+
+    .shadow-island {
+        box-shadow: 0 2px 10px -6px #8d8d8daa;
+        background-color: #fff;
+    }
+
+    input:focus {
+        outline: thin solid var(--secondary-color);
+    }
+
+    *,
+    *::after,
+    *::before {
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", "Montserrat", Arial, Helvetica, sans-serif;
+    }
+
+    @media screen and (min-width: 480px) {
+        :root {
+            font-size: 14px;
+        }
+    }
+
+    @media screen and (min-width: 776px) {
+        :root {
+            font-size: 16px;
+        }
+    }
+
+    @media screen and (min-width: 990px) {
+        :root {
+            font-size: 18px;
+        }
+    }
+</style>

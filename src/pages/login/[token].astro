@@ -1,0 +1,39 @@
+---
+import MainLayout from "@/components/layouts/MainLayout.astro";
+import { cookiesLifeTime } from "@/types/User";
+import { decodeToken, signToken } from "@/utils/JWT";
+
+// interface Props {
+//     children: JSX.Element[];
+// };
+
+const { token } = Astro.params;
+
+const userInfo = await decodeToken(token || "");
+
+if (!userInfo) return Astro.redirect("/");
+
+const newToken = signToken(userInfo, true);
+
+if (!newToken) return Astro.redirect("/");
+
+console.log("Hubo login");
+console.log({ userInfo });
+
+Astro.cookies.set("auth-token", newToken, {
+    path: "/",
+    httpOnly: true,
+    maxAge: cookiesLifeTime,
+});
+
+Astro.cookies.set("user-id", String(userInfo.id), {
+    path: "/",
+    maxAge: cookiesLifeTime,
+});
+
+return Astro.redirect("/feed");
+---
+
+<MainLayout title="Login">
+    <!-- <h2>Iniciando sesión</h2> -->
+</MainLayout>

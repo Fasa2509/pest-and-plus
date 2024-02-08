@@ -1,0 +1,82 @@
+.select-container {
+    box-shadow: 0 2px 10px -8px #2e2e2e;
+    color: gray;
+    border-radius: 5rem;
+    padding: .3rem .6rem;
+    font-size: .8rem;
+    position: relative;
+    display: inline-block;
+    width: max-content;
+    cursor: pointer;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.select-container.z-index {
+    z-index: 2;
+}
+
+.select-container .options-container {
+    display: none;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #fff;
+    min-width: 100%;
+    box-shadow: 0 2px 10px -6px #2e2e2e;
+    top: 0;
+    left: 0;
+    border-radius: 4px;
+    max-height: 16rem;
+    overflow-y: auto;
+}
+
+.options-container span {
+    padding: 0 .6rem;
+    font-size: 1.2rem;
+    height: 2rem;
+    line-height: 2rem;
+}
+
+@media screen and (min-width: 990px) {
+    .options-container span {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (hover:hover) {
+
+    .options-container span:hover,
+    .options-container span:focus-visible {
+        background-color: rgb(239, 239, 239);
+    }
+}
+
+.options-container .active {
+    background-color: rgb(239, 239, 239);
+}
+
+.select-selected {
+    display: inline-block;
+}
+
+.open-b-icon-container {
+    transform: rotate(-90deg);
+    display: inline-block;
+}
+
+.svg-icon.open-select-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.svg-icon.open-select-icon path,
+.svg-icon.open-select-icon polygon,
+.svg-icon.open-select-icon rect {
+    fill: var(--main-color);
+}
+
+.svg-icon.open-select-icon circle {
+    stroke: var(--main-color);
+    stroke-width: 1;
+}

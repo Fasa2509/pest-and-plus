@@ -1,0 +1,78 @@
+.loader {
+    background-color: #FFF;
+    padding: .8rem;
+    border-top-left-radius: 10rem;
+    border-bottom-left-radius: 10rem;
+    box-sizing: initial;
+    width: 48px;
+    height: 48px;
+    border-right: none;
+    /* box-shadow: -4px 6px 5px -3px #454545; */
+    box-shadow: 0 0 9px -6px #454545;
+    position: fixed;
+    z-index: 1000;
+    top: 20vh;
+    right: -6rem;
+    transition: right 650ms ease-in-out, top 500ms ease;
+}
+
+@media screen and (hover: hover) {
+    .loader {
+        top: 15vh;
+    }
+}
+
+.loader-active {
+    right: 0;
+}
+
+@keyframes slide {
+    from {
+        right: -5rem;
+    }
+
+    to {
+        right: 0;
+    }
+}
+
+.print,
+.big-print,
+.small-print {
+    width: 48px;
+    height: 48px;
+    background-image: url(/dog-print.png);
+    background-size: contain;
+    -webkit-animation-duration: 1.2s;
+    animation-duration: 1.2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-name: fade;
+    animation-name: fade;
+}
+
+.small-print {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.big-print {
+    width: 5rem;
+    height: 5rem;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,44 @@
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 1rem 0 0.4rem 0;
+}
+
+input,
+button {
+    border: none;
+    padding: 0.6rem;
+    box-shadow: 0.1rem 0.1rem 0.8rem -0.6rem #2e2e2e;
+    border-radius: 0.5rem;
+    transition:
+        transform 500ms ease,
+        outline 250ms ease;
+}
+
+input[type="submit"] {
+    margin-top: 1rem;
+    background-color: var(--secondary-color);
+}
+
+button {
+    background-color: var(--main-color);
+}
+
+@media screen and (hover: hover) {
+
+    input:hover,
+    input:focus-visible {
+        transition: transform 250ms ease;
+        transform: scale(1.05);
+        outline: thin solid var(--secondary-color);
+    }
+
+    button:hover,
+    button:focus-visible {
+        transition: transform 250ms ease;
+        transform: scale(1.05);
+    }
+}

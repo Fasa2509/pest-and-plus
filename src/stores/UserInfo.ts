@@ -1,0 +1,62 @@
+import type { IEditUser, IPetInfo, IPostInfo, IUser } from "@/types/User";
+import { action, deepMap } from "nanostores";
+
+export const $userInfo = deepMap<IUser | { id: undefined }>({ id: undefined });
+
+
+export const $updateUserInfo = action($userInfo, 'updateUserInfo', (store, info: IUser) => {
+    store.set(info);
+    return store.get();
+});
+
+export const $setUpdatedUserInfo = action($userInfo, 'setUpdateUserInfo', (store, info: IEditUser) => {
+    const userInfo = store.get();
+
+    const body: Record<string, string> = {};
+
+    if (info.bio) body.bio = info.bio;
+    if (info.image) body.image = info.image;
+
+    store.set({
+        ...userInfo,
+        ...body
+    });
+
+    return store.get();
+});
+
+export const $updateUserPosts = action($userInfo, 'updateUserPosts', (store, info: IPostInfo) => {
+    const state = store.get();
+
+    if (!state.id) return state;
+
+    store.set({
+        ...state,
+        posts: [info, ...state.posts],
+    });
+    return store.get();
+});
+
+export const $removeUserPost = action($userInfo, 'removeUserPost', (store, postId: number) => {
+    const state = store.get();
+
+    if (!state.id) return state;
+
+    store.set({
+        ...state,
+        posts: state.posts.filter((post) => post.id !== postId),
+    });
+    return store.get();
+});
+
+export const $updateUserPets = action($userInfo, 'updateUserPets', (store, info: IPetInfo) => {
+    const state = store.get();
+
+    if (!state.id) return state;
+
+    store.set({
+        ...state,
+        pets: [info, ...state.pets],
+    });
+    return store.get();
+});

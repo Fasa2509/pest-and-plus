@@ -1,0 +1,247 @@
+---
+import { ViewTransitions } from "astro:transitions";
+
+import Header from "@/components/ui/Header.astro";
+import Footer from "../ui/Footer.astro";
+import { NotificationsProvider } from "../hoc/NotificationsProvider";
+import { Loader } from "./Loader";
+import { Menu } from "./Menu";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title} | PetsAnd+</title>
+
+        <ViewTransitions />
+    </head>
+    <body>
+        <Header />
+
+        <slot />
+
+        <Menu client:load />
+
+        <Loader client:load />
+
+        <NotificationsProvider client:idle />
+
+        <Footer />
+
+        <section id="modal-root"></section>
+        <section id="window-root"></section>
+        <style is:global>
+            @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;700&family=Poppins:wght@200;300;400;500;600&display=swap");
+
+            body {
+                min-height: 100dvh;
+                min-width: 320px;
+                background-image: url("./bg.png");
+                background-size: 50%;
+                background-attachment: fixed;
+            }
+
+            ::-webkit-scrollbar {
+                width: 4px;
+                height: 4px;
+            }
+
+            body::-webkit-scrollbar-thumb {
+                box-shadow: 0 -100vh 0 100vh var(--main-color);
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background-color: var(--main-color);
+                border-radius: 1rem;
+            }
+
+            :root {
+                --main-color: #54dbdd;
+                --main-color-hover: rgb(78, 201, 203);
+                --secondary-color: #e55;
+                --secondary-color-hover: rgb(227, 73, 73);
+                --third-color: rgb(133, 243, 216);
+                --third-color-hover: rgb(102, 218, 189);
+                --header-height: 68px;
+                background-color: #fcfcfc;
+                color: #343434;
+                font-size: 13px;
+            }
+
+            .button {
+                border: none;
+                padding: 0.6rem;
+                box-shadow: 0.1rem 0.1rem 0.8rem -0.6rem #2e2e2e;
+                background-color: var(--main-color);
+                /* background-color: red; */
+                border-radius: 0.5rem;
+                font-size: 0.9rem;
+                transition:
+/* transform 500ms ease,
+outline 250ms ease, */ background-color
+                    250ms ease;
+            }
+
+            .full-width {
+                width: 100%;
+            }
+
+            .button-round {
+                border-radius: 10rem;
+            }
+
+            .img-container {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .img-container {
+                display: block;
+            }
+
+            .bg-secondary {
+                background-color: var(--secondary-color);
+            }
+
+            .bg-third {
+                background-color: var(--third-color);
+            }
+
+            input {
+                border: none;
+                padding: 0.6rem;
+                box-shadow: 0.1rem 0.1rem 0.8rem -0.6rem #2e2e2e;
+                border-radius: 0.5rem;
+            }
+
+            select {
+                border: none;
+                border-radius: 4px;
+                padding: 0.3rem;
+                box-shadow: 0.1rem 0.1rem 0.8rem -0.6rem #2e2e2e;
+            }
+
+            input:focus {
+                outline: thin solid var(--secondary-color);
+            }
+
+            .chip {
+                box-shadow: 0 2px 10px -8px #2e2e2e;
+                color: gray;
+                border-radius: 5rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                background-color: var(--third-color);
+                cursor: default;
+            }
+
+            /* @media screen and (hover: hover) { */
+            button:hover,
+            button:focus,
+            button:focus-visible {
+                background-color: var(--main-color-hover);
+                outline: none;
+                /* transition: transform 250ms ease;
+                    transform: scale(1.05); */
+            }
+
+            .bg-secondary:hover,
+            .bg-secondary:focus-visible {
+                background-color: var(--secondary-color-hover);
+            }
+
+            .bg-third:hover,
+            .bg-third:focus-visible {
+                background-color: var(--third-color-hover);
+            }
+
+            input:hover,
+            input:focus-visible,
+            select:hover,
+            select:focus-visible {
+                outline: thin solid var(--secondary-color);
+            }
+            /* } */
+
+            .shadow-island {
+                box-shadow: 0 0 1rem -0.8rem #000;
+                background-color: #fff;
+            }
+
+            *,
+            *::after,
+            *::before {
+                margin: 0;
+                box-sizing: border-box;
+                font-family: "Poppins", "Montserrat", Arial, Helvetica,
+                    sans-serif;
+                font-size: 1rem;
+            }
+
+            @media screen and (min-width: 480px) {
+                :root {
+                    font-size: 14px;
+                }
+            }
+
+            @media screen and (min-width: 776px) {
+                :root {
+                    font-size: 16px;
+                }
+            }
+
+            @media screen and (min-width: 990px) {
+                :root {
+                    font-size: 18px;
+                }
+            }
+
+            .fadeIn {
+                -webkit-animation-duration: 450ms;
+                animation-duration: 450ms;
+                -webkit-animation-fill-mode: both;
+                animation-fill-mode: both;
+                -webkit-animation-name: fadeIn;
+                animation-name: fadeIn;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .fadeOut {
+                -webkit-animation-duration: 450ms;
+                animation-duration: 450ms;
+                -webkit-animation-fill-mode: both;
+                animation-fill-mode: both;
+                -webkit-animation-name: fadeOut;
+                animation-name: fadeOut;
+            }
+
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                }
+
+                to {
+                    opacity: 0;
+                }
+            }
+        </style>
+    </body>
+</html>

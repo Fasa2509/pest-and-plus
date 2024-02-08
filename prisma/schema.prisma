@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  image     String?
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String
+  bio       String?
+  role      Role     @default(USER)
+  pets      Pet[]    @relation("Pets")
+  following Pet[]    @relation("Following")
+  posts     Post[]
+}
+
+model Pet {
+  id        Int        @id @default(autoincrement())
+  name      String
+  image     String?
+  petType   PetType
+  bio       String?
+  published Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  behaviors Behavior[]
+  owners    User[]     @relation("Pets")
+  followers User[]     @relation("Following")
+  posts     Post[]
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  published   Boolean  @default(true)
+  description String   @db.Text
+  images      String[]
+  authorId    Int
+  author      User     @relation(fields: [authorId], references: [id])
+  petId       Int?
+  pet         Pet?     @relation(fields: [petId], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Behavior {
+  funny
+  happy
+  angry
+  eater
+  dramatic
+  eager
+}
+
+enum PetType {
+  dog
+  cat
+  horse
+  rabbit
+  monkey
+  turtle
+  goat
+  bird
+  fish
+  pig
+  hedgehog
+  other
+}

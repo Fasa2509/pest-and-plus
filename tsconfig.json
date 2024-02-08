@@ -1,0 +1,25 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": "C:/Users/Miguel/Desktop/Proyectos/work-learning/src",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@components/*": [
+        "./components/*"
+      ],
+      "@customTypes/*": [
+        "./types/*"
+      ],
+      "@errors/*": [
+        "./errors/*"
+      ],
+      "@database/*": [
+        "./database/*"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  }
+}

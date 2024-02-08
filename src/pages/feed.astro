@@ -1,0 +1,32 @@
+---
+import MainLayout from "@/components/layouts/MainLayout.astro";
+
+import { FeedMain } from "@components/hoc/FeedMain";
+import type { IUser } from "@/types/User";
+import { decodeToken, signToken } from "@/utils/JWT";
+import { cookiesLifeTime } from "@/types/User";
+import { backGetInitialPosts } from "@/database/DbPost";
+
+const token = Astro.cookies.get("auth-token");
+
+let userInfo: Pick<IUser, "id" | "email" | "role" | "name"> | undefined;
+
+if (token) {
+    userInfo = await decodeToken(token.value);
+
+    if (userInfo) {
+        const newToken = signToken(userInfo, true);
+
+        if (newToken)
+            Astro.cookies.set("auth-token", newToken, {
+                path: "/",
+                httpOnly: true,
+                maxAge: cookiesLifeTime,
+            });
+    }
+}
+---
+
+<MainLayout title="Feed">
+    <FeedMain client:idle checkForSession={Boolean(userInfo)} />
+</MainLayout>

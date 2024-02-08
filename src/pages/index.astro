@@ -1,0 +1,207 @@
+---
+import IndexLayout from "@/components/layouts/IndexLayout.astro";
+import type { IUser } from "@/types/User";
+import { decodeToken } from "@/utils/JWT";
+import { LoginForm } from "@/components/ui/LoginForm";
+
+const token = Astro.cookies.get("auth-token");
+
+let userInfo: Pick<IUser, "id" | "email" | "role" | "name"> | undefined;
+
+try {
+    if (token) {
+        userInfo = await decodeToken(token.value);
+
+        // if (userInfo) return Astro.redirect("/feed");
+    }
+} catch (error: unknown) {
+    console.log(error);
+}
+---
+
+<IndexLayout>
+    <section class="container">
+        <div class="info">
+            <p class="shadow-island">
+                ¡PetsAnd+ es una red social donde podrás compartir una pequeña
+                fracción de todo el cariño que tus mascotas te dan! Muéstrale al
+                mundo cuánto te quieren.
+            </p>
+        </div>
+        <div class="login">
+            <div class="form-container shadow-island">
+                <div class="form-title">
+                    <svg class="svg-icon" viewBox="0 0 20 20">
+                        <path
+                            fill="none"
+                            d="M10,10.9c2.373,0,4.303-1.932,4.303-4.306c0-2.372-1.93-4.302-4.303-4.302S5.696,4.223,5.696,6.594C5.696,8.969,7.627,10.9,10,10.9z M10,3.331c1.801,0,3.266,1.463,3.266,3.263c0,1.802-1.465,3.267-3.266,3.267c-1.8,0-3.265-1.465-3.265-3.267C6.735,4.794,8.2,3.331,10,3.331z"
+                        ></path>
+                        <path
+                            fill="none"
+                            d="M10,12.503c-4.418,0-7.878,2.058-7.878,4.685c0,0.288,0.231,0.52,0.52,0.52c0.287,0,0.519-0.231,0.519-0.52c0-1.976,3.132-3.646,6.84-3.646c3.707,0,6.838,1.671,6.838,3.646c0,0.288,0.234,0.52,0.521,0.52s0.52-0.231,0.52-0.52C17.879,14.561,14.418,12.503,10,12.503z"
+                        ></path>
+                    </svg>
+                    <h2>Abrir Sesión</h2>
+                </div>
+                <p>
+                    ¡En PetsAnd+ no hace falta crear un usuario para abrir una
+                    cuenta o iniciar sesión! Solo pon tu correo electrónico y te
+                    facilitaremos un link de acceso.
+                </p>
+
+                <LoginForm client:load />
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="img">
+            <a
+                class="peep"
+                href="https://css-peeps.com/"
+                data-css-peeps="medium-straight cute coffee"
+                target="_blank"></a>
+        </div>
+    </section>
+</IndexLayout>
+<style>
+    @import url(https://unpkg.com/css-peeps@1/css-peeps.css);
+    .peep {
+        --peep-head: medium-straight;
+        --peep-face: eating-happy;
+        --peep-body: coffee;
+
+        --peep-hat-color: #fc03c2;
+        --peep-hair-color: #7300e6;
+        --peep-skin-color: #87ceeb;
+        --peep-accessory-color: #00ff00;
+        --peep-facial-hair-color: #ffd700;
+        --peep-object-color: #ffa500;
+        --peep-clothes-color: #ff0000;
+
+        display: inline-block;
+        width: 255px;
+        height: 231px;
+        background-color: transparent;
+    }
+
+    .svg-icon {
+        width: 1.8rem;
+        height: 1.8rem;
+    }
+
+    .svg-icon path,
+    .svg-icon polygon,
+    .svg-icon rect {
+        fill: #000;
+    }
+
+    .svg-icon circle {
+        stroke: #000;
+        stroke-width: 1;
+    }
+
+    .container {
+        padding: 0 1rem 0 1rem;
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.5rem;
+        height: calc(100dvh - var(--header-height));
+    }
+
+    .info {
+        grid-area: info;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .info p {
+        margin-top: 1.5rem;
+        padding: 1.2rem;
+    }
+
+    .divider {
+        flex-grow: 1;
+    }
+
+    .img {
+        grid-area: img;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .login {
+        grid-area: login;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-container {
+        border-radius: 1rem;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+    }
+
+    .form-title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 0.5rem;
+        font-size: 1.5rem;
+    }
+
+    .form-title h2 {
+        font-size: inherit;
+    }
+
+    @media screen and (min-width: 776px) {
+        .peep {
+            width: 510px;
+            height: 463px;
+        }
+
+        .divider {
+            display: none;
+        }
+
+        .container {
+            display: grid;
+            padding: 0 3rem 0 3rem;
+            grid-template-columns: 3fr 2fr;
+            grid-template-rows: 1fr 480px;
+            grid-template-areas:
+                "info login"
+                "img login";
+            row-gap: 0;
+        }
+
+        .info p {
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            width: 80%;
+        }
+
+        .form-container {
+            width: 85%;
+            row-gap: 0.6rem;
+        }
+    }
+
+    @media screen and (min-width: 990px) {
+        .form-container {
+            width: 70%;
+            row-gap: 1rem;
+        }
+
+        .container {
+            padding: 0 3rem 0 3rem;
+        }
+
+        .info p {
+            width: 70%;
+        }
+    }
+</style>

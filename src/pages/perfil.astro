@@ -1,0 +1,57 @@
+---
+import MainLayout from "@/components/layouts/MainLayout.astro";
+import { cookiesLifeTime, type IUser } from "@/types/User";
+import { decodeToken, signToken } from "@/utils/JWT";
+
+import { PerfilInfo } from "@/components/pages/PerfilInfo";
+import { PerfilPets } from "@/components/pages/PerfilPets";
+import { PerfilRecent } from "@/components/pages/PerfilRecent";
+import { PerfilPosts } from "@/components/pages/PerfilPosts";
+
+const token = Astro.cookies.get("auth-token");
+
+if (!token) return Astro.redirect("/feed");
+
+let userInfo = await decodeToken(token.value);
+
+if (!userInfo) return Astro.redirect("/feed");
+
+const newToken = signToken(userInfo, true);
+
+if (newToken)
+    Astro.cookies.set("auth-token", newToken, {
+        path: "/",
+        httpOnly: true,
+        maxAge: cookiesLifeTime,
+    });
+---
+
+<MainLayout title="Mi Perfil">
+    <section class="container">
+        <PerfilInfo client:load checkForSession={!!userInfo.id} />
+        <PerfilPets client:load />
+        <PerfilRecent client:load />
+        <PerfilPosts client:load />
+    </section>
+</MainLayout>
+<style>
+    .container {
+        padding-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+    }
+
+    @media screen and (min-width: 990px) {
+        .container {
+            padding: 1.5rem 1.5rem 0;
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 0fr 0fr;
+            grid-template-areas:
+                "perfil perfil perfil mascotas mascotas mascotas"
+                "recientes recientes publicaciones publicaciones publicaciones publicaciones";
+        }
+    }
+</style>

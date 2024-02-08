@@ -1,0 +1,149 @@
+/* Componente padre */
+.slider-info-container {
+    max-width: 100%;
+    display: flex;
+    margin: 1rem auto;
+    flex-wrap: nowrap;
+    position: relative;
+
+    --button-size: 2.8rem;
+}
+
+.slider-info-button-container {
+    align-self: stretch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.all-options {
+    display: flex;
+    flex-grow: 1;
+    width: calc(100% - var(--button-size) - var(--button-size));
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+.slider-option {
+    flex-basis: 33.34%;
+    min-width: 33.34%;
+    text-align: center;
+    transform: translateX(0);
+    transition: transform 500ms ease-in-out, background-color 350ms ease;
+}
+
+
+/* button.open-icon-container,
+button.close-icon-container {
+    padding: 0;
+    min-width: var(--button-size);
+    height: var(--button-size);
+    background-color: transparent;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5rem;
+    transition: background-color 350ms ease;
+} */
+
+/* button.open-icon-container:hover,
+    button.close-icon-container:hover,
+    button.open-icon-container:focus-visible,
+    button.close-icon-container:focus-visible {
+        background-color: rgba(215, 215, 215, 0.5);
+    }
+
+    .all-options>*:hover,
+    .all-options>*:focus-visible {
+        transition: transform 500ms ease-in-out, background-color 150ms ease;
+    } */
+
+.open-icon-container {
+    cursor: pointer;
+    left: 0;
+}
+
+.close-icon-container {
+    cursor: pointer;
+    transform: rotate(180deg);
+    right: -1rem;
+}
+
+.svg-icon.close-icon-pet,
+.svg-icon.open-icon-pet {
+    width: 2rem;
+    height: 2rem;
+}
+
+.svg-icon.open-icon-pet path,
+.svg-icon.open-icon-pet polygon,
+.svg-icon.open-icon-pet rect,
+.svg-icon.close-icon-pet path,
+.svg-icon.close-icon-pet polygon,
+.svg-icon.close-icon-pet rect {
+    fill: var(--main-color);
+}
+
+.svg-icon.open-icon-pet circle,
+.svg-icon.close-icon-pet circle {
+    stroke: var(--main-color);
+    stroke-width: 1;
+}
+
+
+/* PetInfo mostrado en el Modal */
+/* .pet-info-section {
+    min-width: 300px;
+    width: 100%;
+    max-width: 700px;
+    max-height: 85dvh;
+    overflow-y: auto;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.pet-type {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.pet-info-first {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+}
+
+.pet-info-first .img-container {
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.pet-info-first .img-container img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.pet-info-first p {
+    font-size: 1.2rem;
+    white-space: wrap;
+}
+
+.behaviors-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.behaviors-container>span {
+    border-radius: 5rem;
+    padding: .5rem 1rem;
+    cursor: default;
+} */

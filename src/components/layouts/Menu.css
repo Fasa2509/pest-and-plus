@@ -1,0 +1,220 @@
+.menu-container {
+    --icons-size: 48px;
+    --n-icons-size: -48px;
+
+    position: fixed;
+    z-index: 999;
+    right: 0;
+    top: 0;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    transform: translateX(100%);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    /* transform: translateX(var(--n-icons-size)); */
+    /* transform: translateX(-100%); */
+}
+
+.menu>* {
+    color: var(--main-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    background-color: #fff;
+    border: thin solid transparent;
+    border-radius: 5rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: 0 0 8px -4px rgb(78, 78, 78);
+    padding: 7px;
+    transform: translateX(var(--n-icons-size));
+    transition:
+        transform 500ms ease-out,
+        background-color 500ms ease-out;
+}
+
+.first {
+    cursor: pointer;
+}
+
+.first .svg-container {
+    transition: transform 500ms ease;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+.menu a span,
+.menu .first span {
+    font-size: 18px;
+}
+
+.menu>a:hover,
+.menu>.first:hover,
+.menu>a:focus-visible,
+.menu>.first:focus-visible {
+    border-top-color: var(--main-color);
+    border-left-color: var(--main-color);
+    border-bottom-color: var(--main-color);
+    transition:
+        transform 250ms ease-out,
+        background-color 250ms ease-out;
+    background-color: rgb(248, 248, 248);
+    /* transform: translateX(calc(-100% + var(--icons-size))); */
+    transform: translateX(-100%);
+}
+
+.menu>.active,
+.menu>.fisrt.active {
+    transition:
+        transform 250ms ease-out,
+        background-color 250ms ease-out;
+    /* transform: translateX(calc(-100% + var(--icons-size))); */
+    transform: translateX(-100%);
+    pointer-events: all;
+}
+
+.menu>.inactive,
+.menu>.inactive:focus,
+.menu>.first.inactive,
+.menu>.first.inactive:focus {
+    background-color: #fff;
+    transform: translateX(0);
+}
+
+.menu>.first.active:focus {
+    background-color: #fff;
+}
+
+/* .menu > .first.active:hover {
+        background - color: rgb(245, 245, 245);
+} */
+
+.disabled {
+    pointer-events: none;
+}
+
+.menu .first.hide-btn {
+    background-color: #fff;
+    border-color: transparent;
+    /* transform: translate(0); */
+    transform: translate(var(--n-icons-size));
+}
+
+@media screen and (hover: hover) {
+    .menu .first.hide-btn:hover {
+        border-top-color: var(--main-color);
+        border-left-color: var(--main-color);
+        border-bottom-color: var(--main-color);
+        transition:
+            transform 250ms ease-out,
+            background-color 250ms ease-out;
+        background-color: rgb(248, 248, 248);
+        transform: translateX(-100%);
+    }
+}
+
+.menu .first.hide-btn:focus {
+    background-color: #fff;
+}
+
+.svg-container {
+    width: calc(var(--icons-size) - 8px);
+    height: calc(var(--icons-size) - 8px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.svg-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* .svg-icon.open-icon {
+    width: 24px;
+    height: 24px;
+} */
+
+.svg-icon.open-icon path,
+.svg-icon.open-icon polygon,
+.svg-icon.open-icon rect {
+    fill: var(--main-color);
+}
+
+.svg-icon.open-icon circle {
+    stroke: var(--main-color);
+    stroke-width: 1;
+}
+
+/* .svg-icon.feed-icon {
+    width: 24px;
+    height: 24px;
+} */
+
+.svg-icon.feed-icon path,
+.svg-icon.feed-icon polygon,
+.svg-icon.feed-icon rect {
+    fill: var(--main-color);
+}
+
+.svg-icon.feed-icon circle {
+    stroke: var(--main-color);
+    stroke-width: 1;
+}
+
+/* .svg-icon.perfil-icon {
+    width: 24px;
+    height: 24px;
+} */
+
+.svg-icon.perfil-icon path,
+.svg-icon.perfil-icon polygon,
+.svg-icon.perfil-icon rect {
+    fill: var(--main-color);
+}
+
+.svg-icon.perfil-icon circle {
+    stroke: var(--main-color);
+    stroke-width: 1;
+}
+
+/* .svg-icon.self-icon {
+    width: 24px;
+    height: 24px;
+} */
+
+.svg-icon.self-icon path,
+.svg-icon.self-icon polygon,
+.svg-icon.self-icon rect {
+    fill: var(--main-color);
+}
+
+.svg-icon.self-icon circle {
+    stroke: var(--main-color);
+    stroke-width: 1;
+}
+
+/* .svg-icon.conf-icon {
+    width: 24px;
+    height: 24px;
+} */
+
+.svg-icon.conf-icon path,
+.svg-icon.conf-icon polygon,
+.svg-icon.conf-icon rect {
+    fill: var(--main-color);
+}
+
+.svg-icon.conf-icon circle {
+    stroke: var(--main-color);
+    stroke-width: 1;
+}
