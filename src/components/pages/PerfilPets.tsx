@@ -2,10 +2,13 @@ import { type FC } from "preact/compat";
 import { useStore } from "@nanostores/preact";
 
 import { $userInfo } from "@/stores/UserInfo";
-import { MyPetsInfo } from "@/components/ui/MyPetsInfo";
 import { UploadPetForm } from "@/components/ui/UploadPetForm";
 import { ModalButton } from "@components/hoc/ModalButton";
+import { SliderOptions } from "../hoc/SliderOptions";
+import { ModalCardButton } from "../hoc/ModalCardButton";
 import "./Perfil.css";
+import { PetInfo } from "../ui/PetInfo";
+import { TModalFullType } from "@/hooks/useModalFull";
 
 interface Props {
 
@@ -24,7 +27,8 @@ export const PerfilPets: FC<Props> = () => {
                 {
                     (userInfo.pets.length === 0)
                         ? <p>¡Vaya! ún no has publicado ninguna mascota. Intenta subir una.</p>
-                        : <MyPetsInfo pets={userInfo.pets} />
+                        : <SliderOptions children={userInfo.pets.map((pet) => <div class="slider-option"><ModalCardButton children={<PetInfo pet={pet} />} textTitle={pet.name} textButton={pet.name} imgSrc={pet.image} /></div>)} />
+                    // : <MyPetsInfo pets={userInfo.pets} />
                 }
                 {
                     (userInfo.pets.length > 0) && <p>He aquí todas tus mascotas, ¡cuéntanos algo nuevo de ellas o sube una nueva!</p>

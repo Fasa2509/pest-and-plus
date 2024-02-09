@@ -33,7 +33,7 @@ const { title } = Astro.props;
 
         <Loader client:load />
 
-        <NotificationsProvider client:idle />
+        <NotificationsProvider client:load />
 
         <Footer />
 
@@ -45,7 +45,7 @@ const { title } = Astro.props;
             body {
                 min-height: 100dvh;
                 min-width: 320px;
-                background-image: url("./bg.png");
+                background-image: url("/bg.png");
                 background-size: 50%;
                 background-attachment: fixed;
             }
@@ -130,10 +130,6 @@ outline 250ms ease, */ background-color
                 box-shadow: 0.1rem 0.1rem 0.8rem -0.6rem #2e2e2e;
             }
 
-            input:focus {
-                outline: thin solid var(--secondary-color);
-            }
-
             .chip {
                 box-shadow: 0 2px 10px -8px #2e2e2e;
                 color: gray;
@@ -144,33 +140,42 @@ outline 250ms ease, */ background-color
                 cursor: default;
             }
 
-            /* @media screen and (hover: hover) { */
-            button:hover,
-            button:focus,
-            button:focus-visible {
-                background-color: var(--main-color-hover);
+            button:focus {
                 outline: none;
-                /* transition: transform 250ms ease;
+                /* background-color: red; */
+            }
+
+            @media screen and (hover: hover) {
+                input:focus {
+                    outline: thin solid var(--secondary-color);
+                }
+
+                button:hover,
+                button:focus,
+                button:focus-visible {
+                    background-color: var(--main-color-hover);
+                    outline: none;
+                    /* transition: transform 250ms ease;
                     transform: scale(1.05); */
-            }
+                }
 
-            .bg-secondary:hover,
-            .bg-secondary:focus-visible {
-                background-color: var(--secondary-color-hover);
-            }
+                .bg-secondary:hover,
+                .bg-secondary:focus-visible {
+                    background-color: var(--secondary-color-hover);
+                }
 
-            .bg-third:hover,
-            .bg-third:focus-visible {
-                background-color: var(--third-color-hover);
-            }
+                .bg-third:hover,
+                .bg-third:focus-visible {
+                    background-color: var(--third-color-hover);
+                }
 
-            input:hover,
-            input:focus-visible,
-            select:hover,
-            select:focus-visible {
-                outline: thin solid var(--secondary-color);
+                input:hover,
+                input:focus-visible,
+                select:hover,
+                select:focus-visible {
+                    outline: thin solid var(--secondary-color);
+                }
             }
-            /* } */
 
             .shadow-island {
                 box-shadow: 0 0 1rem -0.8rem #000;

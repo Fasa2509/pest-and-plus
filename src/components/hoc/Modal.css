@@ -136,13 +136,13 @@
 } */
 
 /* ModalPet component */
-.button-pet {
+/* .button-pet {
     background-color: transparent;
     box-shadow: none;
     text-align: center;
     padding: .5rem 0;
     transition: backgroun-color 500ms ease;
-}
+} */
 
 /* @media screen and (hover: hover) {
 
@@ -152,32 +152,34 @@
     }
 } */
 
-.button-pet .pet-modal-img {
+/* .button-pet .pet-modal-img {
     width: 70%;
     max-width: 120px;
     margin: 0 auto .5rem;
     border-radius: 10rem;
     overflow: hidden;
     aspect-ratio: 1;
-}
+} */
 
 
 /* ModalCard component */
 .button-card {
     background-color: transparent;
+    /* background-color: var(--third-color-hover); */
     box-shadow: none;
     text-align: center;
     padding: .5rem 0;
-    transition: backgroun-color 500ms ease;
+    transition: background-color 350ms ease;
 }
 
-/* @media screen and (hover: hover) {
+@media screen and (hover: hover) {
 
-    .button-pet:hover,
-    .button-pet:focus-visible {
-        background-color: var(--main-color-hover);
+    .button-card:hover,
+    .button-card:focus-visible {
+        transition: background-color 200ms ease;
+        background-color: var(--third-color-hover);
     }
-} */
+}
 
 .button-card .card-modal-img {
     width: 70%;

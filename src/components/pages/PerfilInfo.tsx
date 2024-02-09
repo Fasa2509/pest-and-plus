@@ -123,7 +123,7 @@ export const PerfilInfo: FC<Props> = ({ checkForSession }) => {
                                 ? "El usuario no proveyó ninguna descripción."
                                 : (!isEditing)
                                     ? <p>{userInfo.bio}</p>
-                                    : <textarea ref={bioRef} name="bio" id="textarea-bio" rows={7} value={userInfo.bio}></textarea>
+                                    : <textarea ref={bioRef} name="bio" id="textarea-bio" rows={5} value={userInfo.bio}></textarea>
                         }
                     </div>
                 </section>

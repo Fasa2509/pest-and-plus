@@ -9,6 +9,8 @@ import { decodeToken, signToken } from "@/utils/JWT";
 
 const { token } = Astro.params;
 
+console.log(Astro.params);
+
 const userInfo = await decodeToken(token || "");
 
 if (!userInfo) return Astro.redirect("/");

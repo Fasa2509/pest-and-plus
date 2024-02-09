@@ -3,38 +3,62 @@ import MainLayout from "@/components/layouts/MainLayout.astro";
 import { cookiesLifeTime, type IUser } from "@/types/User";
 import { decodeToken, signToken } from "@/utils/JWT";
 
+import { backGetUserInfo } from "@/database/DbUser";
 import { PerfilInfo } from "@/components/pages/PerfilInfo";
 import { PerfilPets } from "@/components/pages/PerfilPets";
 import { PerfilRecent } from "@/components/pages/PerfilRecent";
 import { PerfilPosts } from "@/components/pages/PerfilPosts";
 
+let { userId: id } = Astro.params;
+
+let userId = Number(id);
+
+if (isNaN(userId)) return Astro.redirect("/feed");
+
 const token = Astro.cookies.get("auth-token");
 
-if (!token) return Astro.redirect("/feed");
+let userInfo: Pick<IUser, "id" | "email" | "role" | "name"> | undefined;
 
-let userInfo = await decodeToken(token.value);
+if (token) {
+    userInfo = await decodeToken(token.value);
 
-if (!userInfo) return Astro.redirect("/feed");
+    if (userInfo && userInfo.id === userId) return Astro.redirect("/perfil");
+}
 
-const newToken = signToken(userInfo, true);
+const user = await backGetUserInfo(userId);
 
-if (newToken)
-    Astro.cookies.set("auth-token", newToken, {
-        path: "/",
-        httpOnly: true,
-        maxAge: cookiesLifeTime,
-    });
+// const token = Astro.cookies.get("auth-token");
+
+// if (!token) return Astro.redirect("/feed");
+
+// let userInfo = await decodeToken(token.value);
+
+// if (!userInfo) return Astro.redirect("/feed");
+
+// const newToken = signToken(userInfo, true);
+
+// if (newToken)
+//     Astro.cookies.set("auth-token", newToken, {
+//         path: "/",
+//         httpOnly: true,
+//         maxAge: cookiesLifeTime,
+//     });
 ---
 
 <MainLayout title="Mi Perfil">
     <section class="container">
-        <PerfilInfo client:load checkForSession={!!userInfo.id} />
+        <PerfilInfo client:load checkForSession={!!user} />
         <PerfilPets client:load />
         <PerfilRecent client:load />
+        <!-- <div></div> -->
         <PerfilPosts client:load />
     </section>
 </MainLayout>
 <style>
+    body {
+        min-height: 100dvh;
+    }
+
     .container {
         padding-top: 1rem;
         display: flex;

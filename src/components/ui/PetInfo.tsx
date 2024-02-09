@@ -4,10 +4,12 @@ import { useStore } from "@nanostores/preact";
 import type { IPetInfo } from "@/types/User";
 import { petBehaviorTranslations, type IPet, petTypeTranslations } from "@/types/Pet";
 import { $updateTasks } from "@/stores/Loading";
-import { $petsLoaded, $updatePets } from "@/stores/PetsLoaded";
+import { $dataLoaded, $updatePets } from "@/stores/DataLoaded";
 import { getNewPet } from "@/database/DbPet";
 import { $userInfo } from "@/stores/UserInfo";
 import "./PetsInfo.css";
+import { SliderOptions } from "../hoc/SliderOptions";
+import { ModalCardButton } from "../hoc/ModalCardButton";
 
 interface Props {
     pet: IPetInfo;
@@ -15,7 +17,7 @@ interface Props {
 
 export const PetInfo: FC<Props> = ({ pet }) => {
 
-    const allPets = useStore($petsLoaded);
+    const allPets = useStore($dataLoaded);
     const userInfo = useStore($userInfo);
 
     const [petInfo, setPetInfo] = useState<IPet | undefined>(undefined);
@@ -24,14 +26,14 @@ export const PetInfo: FC<Props> = ({ pet }) => {
 
     useEffect(() => {
         (async () => {
-            const isMyPetLoaded = allPets.myPets.some((p) => p.id === pet.id);
-            const isOtherPetLoaded = allPets.otherPets.some((p) => p.id === pet.id);
+            const isMyPetLoaded = allPets.myPets.find((p) => p.id === pet.id);
+            const isOtherPetLoaded = allPets.otherPets.find((p) => p.id === pet.id);
 
             if (isMyPetLoaded) {
-                setPetInfo(allPets.myPets.find((p) => p.id === pet.id));
+                setPetInfo(isMyPetLoaded);
                 return;
             } else if (isOtherPetLoaded) {
-                setPetInfo(allPets.otherPets.find((p) => p.id === pet.id));
+                setPetInfo(isOtherPetLoaded);
                 return;
             };
 
@@ -62,6 +64,9 @@ export const PetInfo: FC<Props> = ({ pet }) => {
                     <p>
                         {(petInfo.bio) ? petInfo.bio : "No hay bio de esta mascota :("}
                     </p>
+                </div>
+                <div>
+                    <SliderOptions children={petInfo.owners.map((user) => <div class="slider-option"><ModalCardButton textTitle={user.name} children={<></>} textButton={user.name} imgSrc={user.image} /></div>)} />
                 </div>
             </div>
         </section>

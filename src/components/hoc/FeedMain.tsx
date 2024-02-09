@@ -4,14 +4,13 @@ import { useStore } from "@nanostores/preact";
 
 import { $updateUserInfo, $userInfo } from "@/stores/UserInfo";
 import { useNotifications } from "@/hooks/useNotifications";
-import { PromiseConfirmHelper } from "@/stores/Notifications";
 import { frontGetUserInfo } from "@/database/DbUser";
 import { PostContainer } from "./PostsContainer";
-import { SliderOptions } from "./SliderOptions";
-import { ModalCardButton } from "./ModalCardButton";
 import { $updateTasks } from "@/stores/Loading";
-import { $updateCachedPets, $updatePets } from "@/stores/PetsLoaded";
-import { getInfo } from "@/database/DbInfo";
+import { $updateCachedInfo, $updateCounts } from "@/stores/DataLoaded";
+import { getData, getInfo } from "@/database/DbInfo";
+import { AsideInfo } from "../ui/AsideInfo";
+import { AsideData } from "../ui/AsideData";
 import "./Feed.css";
 
 interface Props {
@@ -45,42 +44,27 @@ export const FeedMain: FC<Props> = ({ checkForSession }) => {
             const res = await getInfo();
             $updateTasks("Buscando mascotas...")
 
-            console.log(res)
-
-            !res.error && $updateCachedPets(res.payload.petsInfo);
+            !res.error && $updateCachedInfo(res.payload);
             res.error && createNotification({ type: "error", content: res.message[0] });
         })();
     }, []);
 
-    const handleClick = async () => {
-        // const id = createNotification({
-        //     type: "success",
-        //     content: "Confirma que quiere cerrar la cuenta?",
-        //     confirmation: true,
-        //     duration: 1000,
-        // });
+    useEffect(() => {
+        (async () => {
+            $updateTasks("Buscando data...")
+            const res = await getData();
+            $updateTasks("Buscando data...")
 
-        // const accepted = await PromiseConfirmHelper(id, 1000);
-
-        // console.log({ accepted })
-    };
+            !res.error && $updateCounts(res.payload.count);
+            res.error && createNotification({ type: "error", content: res.message[0] });
+        })();
+    }, []);
 
     return (
         <section class="main-container">
             <div class="asides-container">
-                <aside>
-                    <h3>Últimos usuarios</h3>
-                    <SliderOptions children={Array(10).fill(0).map(() => <div class="slider-option"><ModalCardButton textTitle="Hola" children={<></>} textButton="Prueba" imgSrc={null} /></div>)} />
-                    <h3>Últimas mascotas</h3>
-                    <SliderOptions children={Array(10).fill(0).map(() => <div class="slider-option"><ModalCardButton textTitle="Hola" children={<></>} textButton="Prueba" imgSrc={null} /></div>)} />
-                </aside>
-                <aside>
-                    <h3>En PetsAnd+ hay...</h3>
-                    <p>🐶 123</p>
-                    <p>🐱 123</p>
-                    <p>🐵 123</p>
-                    <p>🐴 123</p>
-                </aside>
+                <AsideInfo />
+                <AsideData />
             </div>
             <PostContainer />
             <div></div>

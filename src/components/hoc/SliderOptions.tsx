@@ -1,4 +1,4 @@
-import { useState, type FC, type JSX } from "preact/compat";
+import { type FC, type JSX, useRef } from "preact/compat";
 
 import "./SliderOptions.css";
 
@@ -8,21 +8,21 @@ interface Props {
 
 export const SliderOptions: FC<Props> = ({ children }) => {
 
-    const [chunk, setChunk] = useState(1);
+    const optionsRef = useRef<HTMLDivElement>(null);
 
-    const updateChunk = (direction: "left" | "right") => {
-        let max = Math.floor(children.length / 3);
+    const updateChunk = (direction: -1 | 1) => {
+        let scrolled = optionsRef.current!.scrollLeft;
+        let boxWidth = Number(window.getComputedStyle(optionsRef.current!).width.slice(0, -2));
 
-        if (chunk === max && direction === "right") return;
-        if ((chunk * 3 + 3) - children.length === 0 && direction === "right") return;
-        if (chunk === 1 && direction === "left") return;
-
-        setChunk(chunk + ((direction === "left") ? -1 : 1));
+        optionsRef.current!.scroll({
+            left: scrolled + boxWidth * direction,
+            behavior: "smooth",
+        });
     };
 
     return (
         <div className="slider-info-container">
-            <div className="slider-info-button-container" onClick={() => updateChunk("left")}>
+            <div className="slider-info-button-container" onClick={() => updateChunk(-1)}>
                 <button className="open-icon-container">
                     <svg class="svg-icon open-icon-pet" viewBox="0 0 20 20">
                         <path
@@ -33,11 +33,11 @@ export const SliderOptions: FC<Props> = ({ children }) => {
                 </button>
             </div>
 
-            <div className="all-options">
+            <div ref={optionsRef} className="all-options">
                 {children}
             </div>
 
-            <div className="slider-info-button-container" onClick={() => updateChunk("right")}>
+            <div className="slider-info-button-container" onClick={() => updateChunk(1)}>
                 <button className="close-icon-container">
                     <svg class="svg-icon close-icon-pet" viewBox="0 0 20 20">
                         <path

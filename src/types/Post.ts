@@ -37,8 +37,9 @@ const PetTypeEnum = z.enum([
 const ZPetInfo = z.object({
     id       : z.number({ required_error: 'El id de la mascota es requerido' }),
     name     : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(3).max(20),
-    image    : z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
     petType  : PetTypeEnum,
+    image    : z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
+    createdAt: z.date(),
     behaviors: z.array(PetBehaviorEnum).min(1, 'Tu mascota debe tener al menos un atributo'),
 });
 

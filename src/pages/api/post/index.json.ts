@@ -45,6 +45,7 @@ export const GET: APIRoute = async ({ url, cookies }) => {
                         name: true,
                         image: true,
                         petType: true,
+                        createdAt: true,
                         behaviors: true,
                     },
                 },

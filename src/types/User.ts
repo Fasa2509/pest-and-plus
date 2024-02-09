@@ -99,14 +99,6 @@ export const ZUser = z.object({
 
 export type IUser = z.infer<typeof ZUser>;
 
-export const ZUserInfo = z.object({
-    id   : z.number({ required_error: 'El id de usuario es requerido' }),
-    image: z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
-    name : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(2, 'El nombre es muy corto'),
-});
-
-export type IUserInfo = z.infer<typeof ZUserInfo>;
-
 export const ZEditUser = z.object({
     image    : z.string({ invalid_type_error: 'La imagen debe ser un texto' }).optional(),
     bio      : z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta').optional(),
