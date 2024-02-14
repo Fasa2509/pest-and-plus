@@ -1,6 +1,6 @@
 /* Componente padre */
 .slider-info-container {
-    max-width: 100%;
+    width: 100%;
     display: flex;
     margin: 1rem auto;
     flex-wrap: nowrap;
@@ -42,8 +42,8 @@ button.close-icon-container {
     padding: 0;
     min-width: var(--button-size);
     height: var(--button-size);
-    background-color: transparent;
-    background-color: transparent;
+    /* background-color: transparent;
+    background-color: transparent; */
     border: none;
     display: flex;
     justify-content: center;

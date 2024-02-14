@@ -8,7 +8,7 @@ interface Props {
 
 }
 
-export const PerfilRecent: FC<Props> = () => {
+export const ProfileRecent: FC<Props> = () => {
 
     const userInfo = useStore($userInfo);
 

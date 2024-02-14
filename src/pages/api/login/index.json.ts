@@ -212,7 +212,7 @@ export const PATCH: APIRoute = async ({ request }) => {
         // });
         return CustomResponse<ApiResponsePayload<{ token: string }>>({
             error: false,
-            message: ["Usuario creado correctamente", "Te enviamos un correo eléctronico de inicio de sesión"],
+            message: ["Te enviamos un correo eléctronico de inicio de sesión"],
             payload: {
                 token
             }

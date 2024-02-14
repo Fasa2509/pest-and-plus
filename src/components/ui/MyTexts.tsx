@@ -12,9 +12,10 @@ import { PromiseConfirmHelper } from "@/stores/Notifications";
 interface Props {
     post: IPostInfo;
     userInfo: IUser;
+    mine?: boolean;
 }
 
-export const MyTexts: FC<Props> = ({ post, userInfo }) => {
+export const MyTexts: FC<Props> = ({ post, userInfo, mine }) => {
 
     const { createNotification } = useNotifications();
 
@@ -47,7 +48,7 @@ export const MyTexts: FC<Props> = ({ post, userInfo }) => {
             <div className="post-info">
                 {pet && <span class="chip">{pet.name}</span>}
                 <div>
-                    <button className="button bg-secondary delete-btn" onClick={handleDeletePost}>Eliminar</button>
+                    {mine && <button className="button bg-secondary delete-btn" onClick={handleDeletePost}>Eliminar</button>}
                     <span>{getTimeToNow(post.createdAt)}</span>
                 </div>
             </div>

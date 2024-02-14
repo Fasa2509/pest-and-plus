@@ -1,6 +1,7 @@
 ---
 import Header from "@components/ui/Header.astro";
 import { Loader } from "./Loader";
+import { NotificationsProvider } from "../hoc/NotificationsProvider";
 ---
 
 <html lang="es">
@@ -17,6 +18,8 @@ import { Loader } from "./Loader";
         <slot />
 
         <Loader client:load />
+
+        <NotificationsProvider client:load />
     </body>
 </html>
 <style is:global>
@@ -47,12 +50,17 @@ import { Loader } from "./Loader";
         outline: thin solid var(--secondary-color);
     }
 
+    button:focus {
+        outline: none;
+    }
+
     *,
     *::after,
     *::before {
         margin: 0;
         box-sizing: border-box;
         font-family: "Poppins", "Montserrat", Arial, Helvetica, sans-serif;
+        font-size: 1rem;
     }
 
     @media screen and (min-width: 480px) {

@@ -3,10 +3,10 @@ import MainLayout from "@/components/layouts/MainLayout.astro";
 import { cookiesLifeTime, type IUser } from "@/types/User";
 import { decodeToken, signToken } from "@/utils/JWT";
 
-import { PerfilInfo } from "@/components/pages/PerfilInfo";
-import { PerfilPets } from "@/components/pages/PerfilPets";
-import { PerfilRecent } from "@/components/pages/PerfilRecent";
-import { PerfilPosts } from "@/components/pages/PerfilPosts";
+import { ProfileInfo } from "@/components/pages/ProfileInfo";
+import { ProfilePets } from "@/components/pages/ProfilePets";
+import { ProfileRecent } from "@/components/pages/ProfileRecent";
+import { ProfilePosts } from "@/components/pages/ProfilePosts";
 
 const token = Astro.cookies.get("auth-token");
 
@@ -28,11 +28,11 @@ if (newToken)
 
 <MainLayout title="Mi Perfil">
     <section class="container">
-        <PerfilInfo client:load checkForSession={!!userInfo.id} />
-        <PerfilPets client:load />
-        <PerfilRecent client:load />
+        <ProfileInfo client:load checkForSession={!!userInfo.id} />
+        <ProfilePets client:load />
+        <ProfileRecent client:load />
         <!-- <div></div> -->
-        <PerfilPosts client:load />
+        <ProfilePosts client:load />
     </section>
 </MainLayout>
 <style>
@@ -56,3 +56,5 @@ if (newToken)
         }
     }
 </style>
+@/components/pages/ProfileInfo @/components/pages/ProfilePets @/components/pages/ProfilePosts
+@/components/pages/ProfileRecent

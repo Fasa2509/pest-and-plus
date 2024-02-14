@@ -6,15 +6,15 @@ import { UploadPetForm } from "@/components/ui/UploadPetForm";
 import { ModalButton } from "@components/hoc/ModalButton";
 import { SliderOptions } from "../hoc/SliderOptions";
 import { ModalCardButton } from "../hoc/ModalCardButton";
-import "./Perfil.css";
 import { PetInfo } from "../ui/PetInfo";
 import { TModalFullType } from "@/hooks/useModalFull";
+import "./Perfil.css";
 
 interface Props {
 
 }
 
-export const PerfilPets: FC<Props> = () => {
+export const ProfilePets: FC<Props> = () => {
 
     const userInfo = useStore($userInfo);
 

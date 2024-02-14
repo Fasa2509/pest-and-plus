@@ -4,10 +4,10 @@ import { cookiesLifeTime, type IUser } from "@/types/User";
 import { decodeToken, signToken } from "@/utils/JWT";
 
 import { backGetUserInfo } from "@/database/DbUser";
-import { PerfilInfo } from "@/components/pages/PerfilInfo";
-import { PerfilPets } from "@/components/pages/PerfilPets";
-import { PerfilRecent } from "@/components/pages/PerfilRecent";
-import { PerfilPosts } from "@/components/pages/PerfilPosts";
+import { OtherProfileInfo } from "@/components/pages/OtherProfileInfo";
+import { OtherProfilePets } from "@/components/pages/OtherProfilePets";
+import { ProfileRecent } from "@/components/pages/ProfileRecent";
+import { OtherProfilePosts } from "@/components/pages/OtherProfilePosts";
 
 let { userId: id } = Astro.params;
 
@@ -47,11 +47,18 @@ const user = await backGetUserInfo(userId);
 
 <MainLayout title="Mi Perfil">
     <section class="container">
-        <PerfilInfo client:load checkForSession={!!user} />
-        <PerfilPets client:load />
-        <PerfilRecent client:load />
-        <!-- <div></div> -->
-        <PerfilPosts client:load />
+        {
+            !user ? (
+                <span>No se encontró el usuario</span>
+            ) : (
+                <>
+                    <OtherProfileInfo client:load user={user} />
+                    <OtherProfilePets client:load user={user} />
+                    <ProfileRecent client:load />
+                    <OtherProfilePosts client:load user={user} />
+                </>
+            )
+        }
     </section>
 </MainLayout>
 <style>

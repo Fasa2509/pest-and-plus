@@ -18,7 +18,7 @@ export const frontGetUserInfo = async (userId: number): Promise<ApiResponsePaylo
 };
 
 
-export const backGetUserInfo = async (userId: number): Promise<{ user: IUser } | undefined> => {
+export const backGetUserInfo = async (userId: number): Promise<IUser | undefined> => {
     try {
         const user = await DbClient.user.findUnique({
             where: {
@@ -59,7 +59,7 @@ export const backGetUserInfo = async (userId: number): Promise<{ user: IUser } |
 
         if (!user) throw new CustomError("No se encontró usuario por ese id", 404);
 
-        return { user }
+        return user;
     } catch (error: unknown) {
         return undefined;
     };

@@ -164,12 +164,14 @@
 
 /* ModalCard component */
 .button-card {
-    background-color: transparent;
-    /* background-color: var(--third-color-hover); */
-    box-shadow: none;
-    text-align: center;
+    cursor: pointer;
+    /* background-color: transparent; */
+    background-color: var(--third-color-hover);
+    /* box-shadow: none; */
+    /* text-align: center; */
     padding: .5rem 0;
     transition: background-color 350ms ease;
+    /* box-shadow: -.1rem -.1rem .5rem .1rem inset; */
 }
 
 @media screen and (hover: hover) {

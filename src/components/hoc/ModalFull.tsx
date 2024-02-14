@@ -13,8 +13,6 @@ export const ModalFull: FC<Props> = ({ children, isOpen, closeModal, title }) =>
 
     const [didMount, setDidMount] = useState(false);
 
-    console.log("renderer")
-
     useEffect(() => setDidMount(true), []);
 
     useEffect(() => {

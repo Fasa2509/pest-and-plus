@@ -14,9 +14,10 @@ import "./MyPerfilInfo.css";
 interface Props {
     post: IPostInfo;
     userInfo: IUser;
+    mine?: boolean;
 }
 
-export const MyPost: FC<Props> = ({ post, userInfo }) => {
+export const MyPost: FC<Props> = ({ post, userInfo, mine }) => {
 
     const { createNotification } = useNotifications();
 
@@ -44,7 +45,7 @@ export const MyPost: FC<Props> = ({ post, userInfo }) => {
 
     return (
         <div class="post-container">
-            <ModalImg imgSrc={post.images[0]} textTitle="Mis publicaciones" full>
+            <ModalImg imgSrc={post.images[0]} textTitle={mine ? "Mis publicaciones" : `Publicación de ${userInfo.name}`} full>
                 <div class="post-data-container">
                     {
                         (post.images.length === 1)
@@ -68,7 +69,9 @@ export const MyPost: FC<Props> = ({ post, userInfo }) => {
                     <div id="post-info" class="post-info">
                         {pet && <span class="chip">{pet.name}</span>}
                         <div>
-                            <button className="button bg-secondary delete-btn" onClick={handleDeletePost}>Eliminar</button>
+                            {
+                                (mine) && <button className="button bg-secondary delete-btn" onClick={handleDeletePost}>Eliminar</button>
+                            }
                             <span class={!pet ? "span-justify" : ""}>{getTimeToNow(post.createdAt)}</span>
                         </div>
                     </div>
