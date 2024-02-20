@@ -57,7 +57,7 @@ export const MyPost: FC<Props> = ({ post, userInfo, mine }) => {
                             : (
                                 <div class="post-slider-container">
                                     <Slider identifier={"id-" + post.id} autorun={false} duration={10000} children={post.images.map((img) =>
-                                        <div className="img-container post-img-container">
+                                        <div className="img-container post-img-container post-img-container-multiple">
                                             <img src={img || "/default-image.png"} alt="Imagen del post" />
                                         </div>
                                     )} />

@@ -7,12 +7,16 @@ import { ProfileInfo } from "@/components/pages/ProfileInfo";
 import { ProfilePets } from "@/components/pages/ProfilePets";
 import { ProfileRecent } from "@/components/pages/ProfileRecent";
 import { ProfilePosts } from "@/components/pages/ProfilePosts";
+import { AsideData } from "@/components/ui/AsideData";
 
 const token = Astro.cookies.get("auth-token");
+
+console.log({ token });
 
 if (!token) return Astro.redirect("/feed");
 
 let userInfo = await decodeToken(token.value);
+console.log({ userInfo });
 
 if (!userInfo) return Astro.redirect("/feed");
 
@@ -28,9 +32,10 @@ if (newToken)
 
 <MainLayout title="Mi Perfil">
     <section class="container">
-        <ProfileInfo client:load checkForSession={!!userInfo.id} />
+        <ProfileInfo client:load />
         <ProfilePets client:load />
-        <ProfileRecent client:load />
+        <!-- <ProfileRecent client:load /> -->
+        <AsideData client:load />
         <!-- <div></div> -->
         <ProfilePosts client:load />
     </section>
@@ -56,5 +61,3 @@ if (newToken)
         }
     }
 </style>
-@/components/pages/ProfileInfo @/components/pages/ProfilePets @/components/pages/ProfilePosts
-@/components/pages/ProfileRecent

@@ -8,10 +8,10 @@ import { $tasks, $updateTasks } from "@/stores/Loading";
 import "./Perfil.css";
 
 interface Props {
-    checkForSession: Boolean;
+
 }
 
-export const ProfileInfo: FC<Props> = ({ checkForSession }) => {
+export const ProfileInfo: FC<Props> = () => {
 
     const userInfo = useStore($userInfo);
     const tasks = useStore($tasks);
@@ -23,25 +23,6 @@ export const ProfileInfo: FC<Props> = ({ checkForSession }) => {
 
     const bioRef = useRef<HTMLTextAreaElement>(null);
     const fileRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        (async () => {
-            if (!checkForSession || userInfo.id) return;
-
-            const id = new URLSearchParams(document.cookie).get("user-id");
-            if (!id || isNaN(Number(id)) || Number(id) < 1) {
-                console.error("Otra vez el temita con el id de inicio de sesion");
-                return;
-            };
-
-            const res = await frontGetUserInfo(Number(id));
-
-            console.log({ res })
-
-            !res.error && $updateUserInfo(res.payload.user);
-            res.error && createNotification({ type: "error", content: res.message[0] });
-        })();
-    }, []);
 
     if (!userInfo.id) return <></>;
 
@@ -119,11 +100,11 @@ export const ProfileInfo: FC<Props> = ({ checkForSession }) => {
                             </svg>
                         </button>
                         {
-                            (!userInfo.bio)
-                                ? "El usuario no proveyó ninguna descripción."
-                                : (!isEditing)
-                                    ? <p>{userInfo.bio}</p>
-                                    : <textarea ref={bioRef} name="bio" id="textarea-bio" rows={5} value={userInfo.bio}></textarea>
+                            (isEditing)
+                                ? <textarea ref={bioRef} name="bio" id="textarea-bio" rows={5} value={userInfo.bio || ""}></textarea>
+                                : (!userInfo.bio)
+                                    ? "Aún no tienes ninguna descripción en tu perfil. Escribe algo para que todos lo vean."
+                                    : <p>{userInfo.bio}</p>
                         }
                     </div>
                 </section>

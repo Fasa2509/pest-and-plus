@@ -5,7 +5,7 @@ import { FeedMain } from "@components/hoc/FeedMain";
 import type { IUser } from "@/types/User";
 import { decodeToken, signToken } from "@/utils/JWT";
 import { cookiesLifeTime } from "@/types/User";
-import { backGetInitialPosts } from "@/database/DbPost";
+// import { backGetInitialPosts } from "@/database/DbPost";
 
 const token = Astro.cookies.get("auth-token");
 
@@ -28,5 +28,5 @@ if (token) {
 ---
 
 <MainLayout title="Feed">
-    <FeedMain client:idle checkForSession={Boolean(userInfo)} />
+    <FeedMain client:idle />
 </MainLayout>

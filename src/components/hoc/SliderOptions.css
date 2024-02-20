@@ -22,13 +22,11 @@
     width: calc(100% - var(--button-size) - var(--button-size));
     overflow-x: hidden;
     max-width: 100%;
-}
 
-.all-options::-webkit-scrollbar-thumb {
-    background-color: var(--third-color);
 }
 
 .slider-option {
+    padding: 0 3px;
     flex-basis: 33.34%;
     min-width: 33.34%;
     text-align: center;
@@ -36,6 +34,9 @@
     transition: transform 500ms ease-in-out, background-color 350ms ease;
 }
 
+.all-options::-webkit-scrollbar-thumb {
+    background-color: var(--third-color);
+}
 
 button.open-icon-container,
 button.close-icon-container {

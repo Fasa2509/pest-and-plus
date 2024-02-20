@@ -6,6 +6,7 @@ import Footer from "../ui/Footer.astro";
 import { NotificationsProvider } from "../hoc/NotificationsProvider";
 import { Loader } from "./Loader";
 import { Menu } from "./Menu";
+import { SessionFetcher } from "./SessionFetcher";
 
 interface Props {
     title: string;
@@ -37,6 +38,8 @@ const { title } = Astro.props;
 
         <Footer />
 
+        <SessionFetcher client:load />
+
         <section id="modal-root"></section>
         <section id="window-root"></section>
         <style is:global>
@@ -67,11 +70,19 @@ const { title } = Astro.props;
             :root {
                 --main-color: #54dbdd;
                 --main-color-hover: rgb(78, 201, 203);
-                --secondary-color: #e55;
-                --secondary-color-hover: rgb(227, 73, 73);
+                /* --secondary-color: #e55; */
+                --secondary-color: rgb(244, 91, 91);
+                /* --secondary-color-hover: rgb(227, 73, 73); */
+                --secondary-color-hover: rgb(222, 68, 68);
                 --third-color: rgb(133, 243, 216);
                 --third-color-hover: rgb(102, 218, 189);
                 --header-height: 68px;
+
+                --success-color: rgb(0, 201, 0);
+                --error-color: rgb(255, 55, 55);
+                --warning-color: rgb(245, 255, 50);
+                --info-color: rgb(79, 108, 255);
+
                 background-color: #fcfcfc;
                 color: #343434;
                 font-size: 13px;
@@ -151,7 +162,7 @@ outline 250ms ease, */ background-color
                 }
 
                 button:hover,
-                button:focus,
+                /* button:focus, */
                 button:focus-visible {
                     background-color: var(--main-color-hover);
                     outline: none;
@@ -162,6 +173,7 @@ outline 250ms ease, */ background-color
                 .bg-secondary:hover,
                 .bg-secondary:focus-visible {
                     background-color: var(--secondary-color-hover);
+                    /* background-color: yellow; */
                 }
 
                 .bg-third:hover,

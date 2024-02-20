@@ -64,7 +64,7 @@ export const $addNotification = action($notifications, 'addNotification', (store
     return store.get();
 });
 
-export const $hideNotification = action($notifications, "removeNotification", (store, id: string) => {
+export const $hideNotification = action($notifications, "hideNotification", (store, id: string) => {
     const prevState = store.get();
 
     store.set({
@@ -77,7 +77,7 @@ export const $hideNotification = action($notifications, "removeNotification", (s
 export const $removeNotification = action($notifications, "removeNotification", (store, id: string) => {
     const prevState = store.get();
 
-    if (prevState.nots.filter((not) => not.status !== "hidden").length === 1) {
+    if (prevState.nots.filter((not) => not.status !== "hidden").length === 1 && !prevState.nots.some((not) => not.status === "render")) {
         store.set({
             nots: [],
         });

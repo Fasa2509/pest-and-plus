@@ -22,7 +22,7 @@ let userInfo: Pick<IUser, "id" | "email" | "role" | "name"> | undefined;
 if (token) {
     userInfo = await decodeToken(token.value);
 
-    if (userInfo && userInfo.id === userId) return Astro.redirect("/perfil");
+    if (userInfo && userInfo.id === userId) return Astro.redirect("/profile");
 }
 
 const user = await backGetUserInfo(userId);

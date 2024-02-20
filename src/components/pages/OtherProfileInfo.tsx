@@ -1,10 +1,6 @@
-import { useEffect, useRef, type FC, useState } from "preact/compat";
-import { useStore } from "@nanostores/preact";
+import { useEffect, type FC } from "preact/compat";
 
-import { $setUpdatedUserInfo, $updateUserInfo, $userInfo } from "@/stores/UserInfo";
 import { useNotifications } from "@/hooks/useNotifications";
-import { frontGetUserInfo, updateUserInfo } from "@/database/DbUser";
-import { $tasks, $updateTasks } from "@/stores/Loading";
 import type { IUser } from "@/types/User";
 import "./Perfil.css";
 
@@ -14,22 +10,11 @@ interface Props {
 
 export const OtherProfileInfo: FC<Props> = ({ user }) => {
 
-    // const userInfo = useStore($userInfo);
-    // const tasks = useStore($tasks);
-
     const { createNotification } = useNotifications();
-
-    // const [isEditing, setIsEditing] = useState(false);
-    // const [auxImg, setAuxImg] = useState('');
-
-    // const bioRef = useRef<HTMLTextAreaElement>(null);
-    // const fileRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
 
     }, []);
-
-    // if (!userInfo.id) return <></>;
 
     return (
         <article class="sub-container first-element">

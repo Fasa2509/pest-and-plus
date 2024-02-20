@@ -54,6 +54,7 @@ export const checkUserValidSession = async ({ cookies }: { cookies: AstroCookies
     return userInfo;
 };
 
+
 export const safeCheckUserValidSession = async ({ cookies }: { cookies: AstroCookies }): Promise<Pick<IUser, 'id' | 'email' | 'role' | 'name'> | undefined> => {
     const token = cookies.get("auth-token");
 
@@ -65,6 +66,7 @@ export const safeCheckUserValidSession = async ({ cookies }: { cookies: AstroCoo
 
     return userInfo;
 };
+
 
 export const checkUserValidCookies = async ({ cookies, params }: { cookies: AstroCookies, params: Record<string, string | undefined> }): Promise<number> => {
     let userId = Number(params.userId);

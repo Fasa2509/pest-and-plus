@@ -18,7 +18,7 @@ export const GET: APIRoute = async () => {
             data: postSeed,
         });
 
-        await DbClient.$transaction([userQuery, postQuery]);
+        // await DbClient.$transaction([userQuery]);
 
         const addingPets = petSeed.map((pet) => DbClient.pet.create({
             data: {
@@ -29,7 +29,7 @@ export const GET: APIRoute = async () => {
             },
         }));
 
-        await DbClient.$transaction(addingPets);
+        await DbClient.$transaction([...addingPets, postQuery]);
 
         return CustomResponse<ApiResponse>({
             error: false,

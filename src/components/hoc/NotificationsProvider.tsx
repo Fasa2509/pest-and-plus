@@ -38,8 +38,8 @@ export const NotificationsProvider: FC<Props> = ({ hidingDuration, lifeDuration 
     return (
         <section class="not-section">
             {
-                notifications.nots.map((not, i) =>
-                    <NotificationInfo not={not} index={i} />
+                notifications.nots.map((not) =>
+                    <NotificationInfo not={not} />
                 )
             }
         </section>

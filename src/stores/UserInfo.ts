@@ -60,3 +60,14 @@ export const $updateUserPets = action($userInfo, 'updateUserPets', (store, info:
     });
     return store.get();
 });
+
+export const $toggleFollowingPet = action($userInfo, "toggleFollowingPet", (store, pet: IPetInfo, isFollowed: boolean) => {
+    const state = store.get();
+
+    if (!state.id) return state;
+
+    store.set({
+        ...state,
+        following: (isFollowed) ? state.following.filter((p) => p.id !== pet.id) : [...state.following, pet],
+    });
+});

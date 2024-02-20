@@ -27,7 +27,7 @@ export const ConfirmNotificationButtons: FC<Props> = ({ id }) => {
     );
 };
 
-export const CloseNotificatinButton: FC<Props> = ({ id }) => {
+export const CloseNotificationButton: FC<Props> = ({ id }) => {
 
     const { removeNotification } = useNotifications();
 
@@ -39,5 +39,5 @@ export const CloseNotificatinButton: FC<Props> = ({ id }) => {
                 </svg>
             </button>
         </div>
-    )
-}
+    );
+};

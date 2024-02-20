@@ -31,11 +31,13 @@ export const ModalCardButton: FC<Props> = ({ children, textButton, imgSrc, textT
 
     return (
         <>
-            <button class={`button button-card ${extendClass || ""}`} style={styles} onClick={openModal}>
+            <button class={`button bg-third button-card ${extendClass || ""}`} style={styles} onClick={openModal}>
                 <div className="img-container card-modal-img">
                     <img src={imgSrc || "/default-image.png"} alt={textTitle} />
                 </div>
-                {(textButton.length < 10) ? textButton : textButton.slice(0, 9) + '...'}
+                <span>
+                    {(textButton.length < 8) ? textButton : textButton.slice(0, 7) + '...'}
+                </span>
             </button>
             {
                 (isOpen) && (

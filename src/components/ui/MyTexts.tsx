@@ -5,9 +5,9 @@ import { getTimeToNow } from "@/utils/StringFormatters";
 import { $removeUserPost } from "@/stores/UserInfo";
 import { $updateTasks } from "@/stores/Loading";
 import { deletePostById } from "@/database/DbPost";
-import "./MyPerfilInfo.css";
 import { useNotifications } from "@/hooks/useNotifications";
 import { PromiseConfirmHelper } from "@/stores/Notifications";
+import "./MyPerfilInfo.css";
 
 interface Props {
     post: IPostInfo;

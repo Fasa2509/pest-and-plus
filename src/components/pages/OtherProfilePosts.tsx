@@ -44,11 +44,18 @@ export const OtherProfilePosts: FC<Props> = ({ user }) => {
                 <div className="title-container">
                     <h3>Publicaciones de {user.name}</h3>
                 </div>
-                <div className="posts-container">
-                    {
-                        user.posts.filter((post) => post.images.length > 0).map((post) => <MyPost key={post.id} post={post} userInfo={user} />)
-                    }
-                </div>
+                {
+                    (user.posts.length === 0)
+                        ? (
+                            <p style={{ padding: "0 1rem", marginBottom: "1rem" }}>Parece que este usuario aún no ha publicado nada.</p>
+                        ) : (
+                            <div className="posts-container">
+                                {
+                                    user.posts.filter((post) => post.images.length > 0).map((post) => <MyPost key={post.id} post={post} userInfo={user} />)
+                                }
+                            </div>
+                        )
+                }
             </div>
         </main>
     )

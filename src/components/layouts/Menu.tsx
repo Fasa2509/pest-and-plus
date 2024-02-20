@@ -3,12 +3,18 @@ import { useEffect, useRef, useState } from "preact/hooks";
 
 import { $menu, $toggleMenu } from "@/stores/Menu";
 import "./Menu.css";
+import { useNotifications } from "@/hooks/useNotifications";
+import { PromiseConfirmHelper } from "@/stores/Notifications";
+import { $userInfo } from "@/stores/UserInfo";
 
 export const Menu = () => {
 
     const menuState = useStore($menu);
+    const userInfo = useStore($userInfo);
 
     const [disableLinks, setDisableLinks] = useState(false);
+
+    const { createNotification } = useNotifications();
 
     const firstRef = useRef<HTMLButtonElement>(null)!;
     const secondRef = useRef<HTMLAnchorElement>(null)!;
@@ -48,18 +54,32 @@ export const Menu = () => {
         };
     }, []);
 
-    const handleClick = () => {
-        if (menuState) {
-            $toggleMenu(false);
-        } else {
-            $toggleMenu(true);
+    const handleCloseSession = async (e: MouseEvent) => {
+        e.preventDefault();
+
+        if (userInfo.id === undefined) {
+            createNotification({ type: "info", content: "No has iniciado sesión" });
+            return;
         }
+
+        const notId = createNotification({
+            type: "info",
+            content: "¿Quieres cerrar sesión?",
+            confirmation: true,
+        });
+
+        const accepted = await PromiseConfirmHelper(notId);
+
+        if (!accepted) return;
+
+        // TODO: corregir direccion
+        window.location.replace("http://localhost:4321/logout");
     };
 
     return (
         <section class="menu-container">
             <nav class="menu">
-                <button ref={firstRef} class={`first ${menuState ? "active" : "hide-btn"}`} onClick={handleClick}>
+                <button ref={firstRef} class={`first ${menuState ? "active" : "hide-btn"}`} onClick={() => $toggleMenu(!menuState)}>
                     <div ref={svgContainerRef} class={`svg-container ${menuState ? "rotate" : ""}`}>
                         <svg class="svg-icon open-icon" viewBox="0 0 20 20">
                             <path
@@ -80,7 +100,7 @@ export const Menu = () => {
                     </div>
                     <span>Feed</span>
                 </a>
-                <a ref={thirdRef} href="/perfil" class={`${menuState ? "active" : disableLinks ? "disabled" : ""}`}>
+                <a ref={thirdRef} href={"/profile"} class={`${menuState ? "active" : disableLinks ? "disabled" : ""}`}>
                     <div class="svg-container">
                         <svg class="svg-icon perfil-icon" viewBox="0 0 20 20">
                             <path
@@ -94,7 +114,7 @@ export const Menu = () => {
                             ></path>
                         </svg>
                     </div>
-                    <span>Mi Perfil</span>
+                    <span>{(userInfo.id !== undefined) ? "Mi Perfil" : "Iniciar sesión"}</span>
                 </a>
                 <a ref={fourthRef} href="/petsandplus" class={`${menuState ? "active" : disableLinks ? "disabled" : ""}`}>
                     <div class="svg-container">
@@ -107,7 +127,7 @@ export const Menu = () => {
                     </div>
                     <span>PetsAnd+</span>
                 </a>
-                <a ref={fifthRef} href="#" class={`${menuState ? "active" : disableLinks ? "disabled" : ""}`}>
+                <a ref={fifthRef} href="/logout" class={`${menuState ? "active" : disableLinks ? "disabled" : ""}`} onClick={handleCloseSession}>
                     <div class="svg-container">
                         <svg class="svg-icon conf-icon" viewBox="0 0 20 20">
                             <path
@@ -115,7 +135,7 @@ export const Menu = () => {
                             ></path>
                         </svg>
                     </div>
-                    <span>Configuración</span>
+                    <span>Cerrar sesión</span>
                 </a>
             </nav>
         </section>

@@ -14,6 +14,15 @@ export const SliderOptions: FC<Props> = ({ children }) => {
         let scrolled = optionsRef.current!.scrollLeft;
         let boxWidth = Number(window.getComputedStyle(optionsRef.current!).width.slice(0, -2));
 
+        if (((boxWidth * 2) - (scrolled + boxWidth * direction)) < 10) {
+            optionsRef.current!.scroll({
+                left: scrolled + boxWidth * direction + 10,
+                behavior: "smooth",
+            });
+
+            return;
+        }
+
         optionsRef.current!.scroll({
             left: scrolled + boxWidth * direction,
             behavior: "smooth",

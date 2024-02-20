@@ -15,7 +15,7 @@ export const ProfileRecent: FC<Props> = () => {
     return (
         <aside class="sub-container thirst-element">
             <div class="content-container">
-                <h3>Publicaciones más recientes</h3>
+                <h3>Publicaciones de mis seguidos</h3>
                 <p>
                     Fugiat ipsum laborum incididunt consequat Lorem. Do
                     cupidatat consectetur tempor velit aute fugiat id culpa

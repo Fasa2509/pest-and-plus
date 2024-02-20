@@ -24,6 +24,10 @@ h3 {
     margin-bottom: .5rem;
 }
 
+/* .bio {
+
+} */
+
 @media screen and (hover: hover) {
     .content-container:hover {
         box-shadow: 0 3px 6px 0px rgba(155, 155, 155, 0.6);
@@ -33,12 +37,12 @@ h3 {
 
 .first-element {
     grid-area: perfil;
-    /* max-height: 350px; */
+    /* max-height: 50dvh; */
 }
 
 .second-element {
     grid-area: mascotas;
-    /* max-height: 350px; */
+    /* max-height: 50dvh; */
 }
 
 .thirst-element {
@@ -117,6 +121,11 @@ h3 {
     .fourth-element .content-container {
         border-radius: .5rem;
     }
+
+    .first-element,
+    .second-element {
+        max-height: 60dvh;
+    }
 }
 
 
@@ -171,7 +180,7 @@ h3 {
     cursor: pointer;
     font-size: 4rem;
     color: #fff;
-    z-index: 1000;
+    z-index: 1;
 }
 
 .perfil-data {

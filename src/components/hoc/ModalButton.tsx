@@ -31,7 +31,7 @@ export const ModalButton: FC<Props> = ({ children, textButton, textTitle, initia
 
     return (
         <>
-            <button class={`button ${round ? "button-round" : ""} ${extendClass}`} onClick={openModal}>{textButton}</button>
+            <button class={`button modal-button ${round ? "button-round" : ""} ${extendClass}`} onClick={openModal}>{textButton}</button>
             {
                 (isOpen && !full) ?
                     (

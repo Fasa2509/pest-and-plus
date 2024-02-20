@@ -24,9 +24,10 @@ export const getNewPet = async (petId: number): Promise<ApiResponsePayload<{ pet
 
         return data;
     } catch (error: unknown) {
-        return ApiErrorHandler({ error, defaultErrorMessage: 'Error buscando mascota', noPrintError: true });
+        return ApiErrorHandler({ error, defaultErrorMessage: 'Ocurrió un error buscando la mascota', noPrintError: true });
     };
 };
+
 
 
 // export const frontGetPets = async (): Promise<ApiResponsePayload<{ pets: IPetInfo[] }>> => {

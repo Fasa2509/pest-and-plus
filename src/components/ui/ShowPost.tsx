@@ -19,12 +19,12 @@ export const ShowPost: FC<Props> = ({ post, authorInfo = true }) => {
         <article class="post-article">
             {
                 authorInfo && (
-                    <div class="author-info">
+                    <a class="author-info" href={`/profile/${post.author.id}`}>
                         <div className="img-container">
                             <img src={post.author.image || "/default-image.png"} alt={post.author.name} />
                         </div>
                         <span>{post.author.name}</span>
-                    </div>
+                    </a>
                 )
             }
             {

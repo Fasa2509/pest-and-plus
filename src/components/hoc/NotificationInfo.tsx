@@ -1,14 +1,13 @@
-import { memo, useMemo, useRef, type FC, useState, useEffect } from "preact/compat";
+import { memo, type FC } from "preact/compat";
 
-import { $hideNotification, $removeNotification, hidingDuration, marginY, type Notification } from "@/stores/Notifications";
-import { CloseNotificatinButton, ConfirmNotificationButtons } from "@/utils/NotificationActions";
+import { type Notification } from "@/stores/Notifications";
+import { CloseNotificationButton, ConfirmNotificationButtons } from "@/utils/NotificationActions";
 
 interface Props {
     not: Notification;
-    index: number;
 }
 
-export const NotificationInfo: FC<Props> = memo(({ not, index }) => {
+export const NotificationInfo: FC<Props> = memo(({ not }) => {
 
     return (
         <div
@@ -24,7 +23,7 @@ export const NotificationInfo: FC<Props> = memo(({ not, index }) => {
                 }
                 {
                     (!not.nonClose && !not.confirmation) && (
-                        <CloseNotificatinButton id={not.id} />
+                        <CloseNotificationButton id={not.id} />
                     )
                 }
             </div>

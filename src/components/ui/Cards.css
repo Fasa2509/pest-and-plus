@@ -1,29 +1,46 @@
+.link-container {
+    transition: background-color 350ms ease;
+    margin: 0 auto;
+    box-shadow: 0 3px 10px -4px #2e2e2e88;
+    cursor: pointer;
+    width: clamp(80px, 100%, 130px);
+}
+
+.link-container span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+}
+
 .link-card {
     color: #343434;
     text-align: center;
-    cursor: pointer;
     text-decoration: none;
-    padding: .5rem 0;
 }
 
-.link-container {
-    background-color: var(--third-color-hover);
-    transition: background-color 350ms ease;
-    padding: .5rem 0;
-    border-radius: 1rem;
-}
-
-.card-img {
-    width: 70%;
-    max-width: 120px;
+.link-container .img-container.card-img {
+    width: 90%;
     margin: 0 auto .5rem;
     border-radius: 10rem;
     overflow: hidden;
     aspect-ratio: 1;
 }
 
-.card-img img {
+.link-container .img-container.card-img img {
     max-width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
+}
+
+@media screen and (min-width: 480px) {
+    .link-container .img-container.card-img {
+        width: 75%;
+    }
+}
+
+@media screen and (min-width: 990px) {
+    .link-container .img-container.card-img {
+        width: 80%;
+    }
 }

@@ -1,0 +1,13 @@
+---
+import MainLayout from "@/components/layouts/MainLayout.astro";
+
+Astro.cookies.delete("auth-token");
+
+Astro.cookies.delete("user-id");
+
+return Astro.redirect("/feed");
+---
+
+<MainLayout title="Cerrar sesión">
+    <h1>Cerrando sesión...</h1>
+</MainLayout>

@@ -28,6 +28,11 @@ main {
     align-items: center;
 }
 
+.post-article a {
+    color: #343434;
+    text-decoration: none;
+}
+
 .post-article .img-container {
     border-radius: 10rem;
     overflow: hidden;

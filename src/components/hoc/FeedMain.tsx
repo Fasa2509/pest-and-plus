@@ -2,44 +2,30 @@ import type { FC } from "preact/compat";
 import { useEffect } from "preact/hooks";
 import { useStore } from "@nanostores/preact";
 
-import { $updateUserInfo, $userInfo } from "@/stores/UserInfo";
 import { useNotifications } from "@/hooks/useNotifications";
-import { frontGetUserInfo } from "@/database/DbUser";
 import { PostContainer } from "./PostsContainer";
 import { $updateTasks } from "@/stores/Loading";
-import { $updateCachedInfo, $updateCounts } from "@/stores/DataLoaded";
+import { $dataLoaded, $updateCachedInfo, $updateCounts } from "@/stores/DataLoaded";
 import { getData, getInfo } from "@/database/DbInfo";
 import { AsideInfo } from "../ui/AsideInfo";
 import { AsideData } from "../ui/AsideData";
+import { ProfileRecent } from "../pages/ProfileRecent";
 import "./Feed.css";
 
 interface Props {
-    checkForSession: Boolean;
+
 }
 
-export const FeedMain: FC<Props> = ({ checkForSession }) => {
+export const FeedMain: FC<Props> = () => {
 
-    const userInfo = useStore($userInfo);
+    const { cachedPets, cachedUsers } = useStore($dataLoaded);
 
     const { createNotification } = useNotifications();
 
     useEffect(() => {
         (async () => {
-            if (!checkForSession || userInfo.id) return;
+            if (cachedPets.length >= 1 && cachedUsers.length >= 1) return;
 
-            const id = new URLSearchParams(document.cookie).get("user-id");
-
-            if (!id || isNaN(Number(id)) || Number(id) < 1) return;
-
-            const res = await frontGetUserInfo(Number(id));
-
-            !res.error && $updateUserInfo(res.payload.user);
-            res.error && createNotification({ type: "error", content: res.message[0] });
-        })();
-    }, []);
-
-    useEffect(() => {
-        (async () => {
             $updateTasks("Buscando mascotas...")
             const res = await getInfo();
             $updateTasks("Buscando mascotas...")
@@ -49,22 +35,12 @@ export const FeedMain: FC<Props> = ({ checkForSession }) => {
         })();
     }, []);
 
-    useEffect(() => {
-        (async () => {
-            $updateTasks("Buscando data...")
-            const res = await getData();
-            $updateTasks("Buscando data...")
-
-            !res.error && $updateCounts(res.payload.count);
-            res.error && createNotification({ type: "error", content: res.message[0] });
-        })();
-    }, []);
-
     return (
         <section class="main-container">
             <div class="asides-container">
                 <AsideInfo />
-                <AsideData />
+                {/* <AsideData /> */}
+                <ProfileRecent />
             </div>
             <PostContainer />
             <div></div>

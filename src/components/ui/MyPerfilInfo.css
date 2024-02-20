@@ -11,7 +11,6 @@
 }
 
 .post-container .img-container {
-    /* border-radius: 4px; */
     overflow: hidden;
 }
 
@@ -107,15 +106,18 @@
 
 .post-data-container .post-img-container {
     max-width: 450px;
-    border-radius: .5rem;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 1rem;
-    /* overflow: hidden; */
+}
+
+.post-img-container.post-img-container-multiple {
+    margin-top: 1rem;
 }
 
 .post-data-container .post-img-container img {
     /* margin: 0 auto 1rem; */
     display: block;
+    width: 100%;
     border-radius: 4px;
 }

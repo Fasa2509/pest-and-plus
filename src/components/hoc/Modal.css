@@ -73,6 +73,10 @@
     }
 }
 
+button.modal-button {
+    padding: .4rem 1rem;
+}
+
 .modal-window {
     background-color: #fafafa;
     min-width: 320px;
@@ -165,13 +169,17 @@
 /* ModalCard component */
 .button-card {
     cursor: pointer;
-    /* background-color: transparent; */
-    background-color: var(--third-color-hover);
-    /* box-shadow: none; */
-    /* text-align: center; */
-    padding: .5rem 0;
+    /* background-color: var(--third-color); */
     transition: background-color 350ms ease;
-    /* box-shadow: -.1rem -.1rem .5rem .1rem inset; */
+    box-shadow: 0 3px 10px -4px #2e2e2e88;
+    width: clamp(80px, 100%, 130px);
+}
+
+.button-card span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
 }
 
 @media screen and (hover: hover) {
@@ -183,13 +191,24 @@
     }
 }
 
-.button-card .card-modal-img {
-    width: 70%;
-    max-width: 120px;
+.button-card div.card-modal-img {
+    width: 90%;
     margin: 0 auto .5rem;
     border-radius: 10rem;
     overflow: hidden;
     aspect-ratio: 1;
+}
+
+@media screen and (min-width: 480px) {
+    .button-card div.card-modal-img {
+        width: 75%;
+    }
+}
+
+@media screen and (min-width: 990px) {
+    .button-card div.card-modal-img {
+        width: 80%;
+    }
 }
 
 .button-card .card-modal-img img {

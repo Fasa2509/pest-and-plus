@@ -4,6 +4,7 @@ import { DbClient } from "@/database/Db";
 import { CustomError, DbError, ParsingError, EndpointErrorHandler, ValidationError } from "@errors/index";
 import { CustomResponse, type ApiResponsePayload, type ApiResponse } from "@customTypes/Api";
 import type { IPet } from "@customTypes/Pet";
+import { checkUserValidCookies } from "@/utils/JWT";
 
 
 export const GET: APIRoute = async ({ params }) => {

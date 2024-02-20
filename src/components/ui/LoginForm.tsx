@@ -39,7 +39,7 @@ export const LoginForm: FC = () => {
         const res = await requestLogin(method, body);
         $updateTasks('login');
 
-        res.message.map((r) => createNotification({ type: !res.error ? "info" : "error", content: r }));
+        res.message.map((r) => createNotification({ type: !res.error ? "info" : "error", content: r, duration: 100000 }));
     };
 
     return (
