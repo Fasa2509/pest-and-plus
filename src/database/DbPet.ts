@@ -1,7 +1,6 @@
 import { ApiErrorHandler, ValidationError } from "@/errors";
 import type { ApiResponse, ApiResponsePayload } from "@/types/Api";
 import { ZNewPet, type INewPet, type IPet } from "@/types/Pet";
-import type { IPetInfo } from "@/types/User";
 import { AxiosApi } from "@/utils/AxiosApi";
 
 
@@ -27,7 +26,6 @@ export const getNewPet = async (petId: number): Promise<ApiResponsePayload<{ pet
         return ApiErrorHandler({ error, defaultErrorMessage: 'Ocurrió un error buscando la mascota', noPrintError: true });
     };
 };
-
 
 
 // export const frontGetPets = async (): Promise<ApiResponsePayload<{ pets: IPetInfo[] }>> => {

@@ -28,6 +28,7 @@ export const backGetInitialPosts = async (userId: number): Promise<IPost[] | und
                 select: {
                     id: true,
                     name: true,
+                    createdAt: true,
                     image: true,
                     petType: true,
                     behaviors: true,
@@ -55,6 +56,21 @@ export const frontGetMorePosts = async (pagination: ApiPagination & { max: numbe
         return data;
     } catch (error: unknown) {
         return ApiErrorHandler({ error, defaultErrorMessage: 'Error solicitando login', noPrintError: true });
+    };
+};
+
+
+export const getFollowedPetPosts = async (pagination: ApiPagination & { max: number }): Promise<ApiResponsePayload<{ posts: IPost[] }>> => {
+    try {
+        if (pagination.limit > PAGINATION_POST || pagination.max > new Date().getTime()) throw new ParsingError("Paginación no válida", 400);
+
+        const { limit, offset } = ZApiPagination.parse({ limit: String(pagination.limit), offset: String(pagination.offset) });
+
+        const { data } = await AxiosApi.patch<ApiResponsePayload<{ posts: IPost[] }>>(`/post.json?limit=${limit}&offset=${offset}&max=${pagination.max}`);
+
+        return data;
+    } catch (error: unknown) {
+        return ApiErrorHandler({ error, defaultErrorMessage: 'Ocurrió un error solicitando las publicaciones de seguidos', noPrintError: true });
     };
 };
 

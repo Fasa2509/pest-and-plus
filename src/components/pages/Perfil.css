@@ -48,7 +48,19 @@ h3 {
 .thirst-element {
     grid-area: recientes;
     align-self: flex-start;
+    width: 100%;
 }
+
+.thirst-element p {
+    padding: 0 1rem 4px;
+    font-size: 1.5rem;
+}
+
+/* .thirst-element>.content-container { */
+/* display: block;
+    width: 100%;
+    background-color: red; */
+/* } */
 
 .fourth-element {
     grid-area: publicaciones;
@@ -59,7 +71,14 @@ h3 {
 .fourth-element .content-container {
     border-radius: 0;
     padding: .5rem 0 0 0;
-    row-gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* row-gap: 1rem; */
+}
+
+.grow {
+    flex-grow: 1;
 }
 
 .texts-container {

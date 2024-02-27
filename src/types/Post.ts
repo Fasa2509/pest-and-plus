@@ -43,6 +43,17 @@ const ZPetInfo = z.object({
     behaviors: z.array(PetBehaviorEnum).min(1, 'Tu mascota debe tener al menos un atributo'),
 });
 
+// export const ZPostFollowedPet = z.object({
+//     id         : z.number({ required_error: 'El id de la publicación es requerido' }),
+//     createdAt  : z.date(),
+//     description: z.string({ required_error: 'La descripción es requerida', invalid_type_error: 'La descripción debe ser un texto' }).trim().max(999, 'La descripción es demasiado larga'),
+//     images     : z.array(z.string({ invalid_type_error: 'La imagen debe ser un texto' })).default([]),
+//     author     : ZUserInfo,
+//     pet        : z.union([ZPetInfo, z.null()]),
+// });
+
+// export type IPostFollowedPet = z.infer<typeof ZPostFollowedPet>;
+
 export const ZPost = z.object({
     id         : z.number({ required_error: 'El id de la publicación es requerido' }),
     createdAt  : z.date(),

@@ -8,6 +8,7 @@ import { checkUserValidSession } from "@/utils/JWT";
 import type { IPetInfo } from "@/types/User";
 
 
+// TODO: parece que no hace nada
 export const GET: APIRoute = async ({ url }) => {
     try {
         const pagination = ZApiPagination.parse(Object.fromEntries(url.searchParams.entries()));

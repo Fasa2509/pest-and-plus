@@ -143,7 +143,7 @@ export const ZPet = z.object({
 export type IPet = z.infer<typeof ZPet>;
 
 export const ZNewPet = z.object({
-    name     : z.string({ required_error: 'El id de la mascota es requerido' }).trim().min(3).max(20),
+    name     : z.string({ invalid_type_error: "El nombre de la mascota debe ser texto", required_error: 'El nombre de la mascota es requerido' }).trim().min(2, 'El nombre de tu mascota es muy corto').max(20),
     image    : z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
     bio      : z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta').optional(),
     petType  : PetTypeEnum,

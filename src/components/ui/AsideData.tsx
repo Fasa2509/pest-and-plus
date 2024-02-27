@@ -30,20 +30,22 @@ export const AsideData: FC<Props> = () => {
     }, []);
 
     return (
-        <aside>
-            <h3>En PetsAnd+ hay...</h3>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🐶 {count.dogCount ?? "..."} perro{(count.dogCount !== 1) ? "s" : ""}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🐱 {count.catCount ?? "..."} gato{(count.catCount !== 1) ? "s" : ""}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🐴 {count.horseCount ?? "..."} caballo{(count.horseCount !== 1) ? "s" : ""}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🐰 {count.rabbitCount ?? "..."} conejo{(count.rabbitCount !== 1) ? "s" : ""}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🐵 {count.monkeyCount ?? "..."} mono{(count.monkeyCount !== 1) ? "s" : ""}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🐢 {count.turtleCount ?? "..."} tortuga{(count.turtleCount !== 1) ? "s" : ""}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🐐 {count.goatCount ?? "..."} cabra{(count.goatCount !== 1) ? "s" : ""}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🐦 {count.birdCount ?? "..."} ave{(count.birdCount !== 1) ? "s" : ""}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🐟 {count.fishCount ?? "..."} {(count.fishCount === 1) ? "pez" : "peces"}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🐷 {count.pigCount ?? "..."} cerdo{(count.pigCount !== 1) ? "s" : ""}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>🦔 {count.hedgehogCount ?? "..."} erizo{(count.hedgehogCount !== 1) ? "s" : ""}</p>
-            <p style={{ padding: "0 1rem 4px", fontSize: "1.5rem" }}>❔ {count.otherCount ?? "..."} otro{(count.otherCount !== 1) ? "s" : ""}</p>
-        </aside>
+        <section class="sub-container thirst-element">
+            <aside class="content-container">
+                <h3>En PetsAnd+ hay...</h3>
+                <p>🐶 {count.dogCount ?? "..."} perro{(count.dogCount !== 1) ? "s" : ""}</p>
+                <p>🐱 {count.catCount ?? "..."} gato{(count.catCount !== 1) ? "s" : ""}</p>
+                <p>🐴 {count.horseCount ?? "..."} caballo{(count.horseCount !== 1) ? "s" : ""}</p>
+                <p>🐰 {count.rabbitCount ?? "..."} conejo{(count.rabbitCount !== 1) ? "s" : ""}</p>
+                <p>🐵 {count.monkeyCount ?? "..."} mono{(count.monkeyCount !== 1) ? "s" : ""}</p>
+                <p>🐢 {count.turtleCount ?? "..."} tortuga{(count.turtleCount !== 1) ? "s" : ""}</p>
+                <p>🐐 {count.goatCount ?? "..."} cabra{(count.goatCount !== 1) ? "s" : ""}</p>
+                <p>🐦 {count.birdCount ?? "..."} ave{(count.birdCount !== 1) ? "s" : ""}</p>
+                <p>🐟 {count.fishCount ?? "..."} {(count.fishCount === 1) ? "pez" : "peces"}</p>
+                <p>🐷 {count.pigCount ?? "..."} cerdo{(count.pigCount !== 1) ? "s" : ""}</p>
+                <p>🦔 {count.hedgehogCount ?? "..."} erizo{(count.hedgehogCount !== 1) ? "s" : ""}</p>
+                <p>❔ {count.otherCount ?? "..."} otro{(count.otherCount !== 1) ? "s" : ""}</p>
+            </aside>
+        </section>
     );
 };

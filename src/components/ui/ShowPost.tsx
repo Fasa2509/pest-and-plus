@@ -9,18 +9,18 @@ import "./PostsStyles.css";
 
 interface Props {
     post: IPost;
-    authorInfo?: boolean;
+    authorActions?: boolean;
 }
 
-export const ShowPost: FC<Props> = ({ post, authorInfo = true }) => {
+export const ShowPost: FC<Props> = ({ post, authorActions = true }) => {
 
 
     return (
         <article class="post-article">
             {
-                authorInfo && (
+                authorActions && (
                     <a class="author-info" href={`/profile/${post.author.id}`}>
-                        <div className="img-container">
+                        <div className="img-container img-author-container">
                             <img src={post.author.image || "/default-image.png"} alt={post.author.name} />
                         </div>
                         <span>{post.author.name}</span>
@@ -42,7 +42,7 @@ export const ShowPost: FC<Props> = ({ post, authorInfo = true }) => {
             }
             <p>{post.description}</p>
             <div className="post-info">
-                {post.pet && <ModalButton children={<PetInfo pet={post.pet} />} textButton={post.pet.name} textTitle={post.pet.name} round full />}
+                {post.pet && <ModalButton children={<PetInfo pet={post.pet} />} textButton={post.pet.name} textTitle={post.pet.name} extendClass="modal-button-less" round full />}
                 <span style={{ justifySelf: "flex-end" }}>{getTimeToNow(post.createdAt)}</span>
             </div>
         </article>

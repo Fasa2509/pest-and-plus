@@ -12,18 +12,27 @@ interface Props {
 export const ModalFull: FC<Props> = ({ children, isOpen, closeModal, title }) => {
 
     const [didMount, setDidMount] = useState(false);
+    const [closing, setClosing] = useState(false);
 
     useEffect(() => setDidMount(true), []);
 
     useEffect(() => {
         document.addEventListener("keyup", (e: KeyboardEvent) => {
-            if (e.key === "Escape") closeModal();
+            if (e.key === "Escape") {
+                setClosing(true);
+                closeModal();
+                setTimeout(() => setClosing(false), 500);
+            };
         });
     }, []);
 
     const handleClose = (e: MouseEvent) => {
         // @ts-ignore
-        if (e.target.matches(".modal-full .modal-close *")) closeModal();
+        if (e.target.matches(".modal-full .modal-close *")) {
+            setClosing(true);
+            closeModal();
+            setTimeout(() => setClosing(false), 500);
+        };
     };
 
     return !didMount
@@ -39,7 +48,7 @@ export const ModalFull: FC<Props> = ({ children, isOpen, closeModal, title }) =>
                     </div>
                 </div>
                 {
-                    isOpen && children
+                    (isOpen || closing) && children
                 }
             </section>
             , document.getElementById("window-root")!

@@ -33,7 +33,10 @@ export const backGetUserInfo = async (userId: number): Promise<IUser | undefined
                         petType: true,
                         behaviors: true,
                         createdAt: true,
-                    }
+                    },
+                    orderBy: {
+                        createdAt: "desc",
+                    },
                 },
                 following: {
                     select: {

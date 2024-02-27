@@ -12,6 +12,8 @@ import { SliderOptions } from "../hoc/SliderOptions";
 import { LinkCard } from "./LinkCard";
 import { useNotifications } from "@/hooks/useNotifications";
 import { PromiseConfirmHelper } from "@/stores/Notifications";
+import { ModalButton } from "../hoc/ModalButton";
+import { LinkPetForm } from "./LinkPetForm";
 import "./PetsInfo.css";
 
 interface Props {
@@ -79,7 +81,7 @@ export const PetInfo: FC<Props> = ({ pet }) => {
     if (!petInfo) return <></>;
 
     return (
-        <section class="pet-info-section fadeIn">
+        <section class="pet-info-section">
             <div style={{ display: "flex", marginBottom: ".5rem" }}>
                 <span class="pet-type" style={{ flexGrow: "1" }}>{petTypeTranslations[petInfo.petType]}</span>
                 <div style={{ marginRight: "1rem" }}>
@@ -134,11 +136,14 @@ export const PetInfo: FC<Props> = ({ pet }) => {
                         {(petInfo.bio) ? petInfo.bio : "No hay bio de esta mascota :("}
                     </p>
                 </div>
-                <div>
+                <div style={{ display: "flex", flexDirection: "column" }}>
                     <h3>Otros dueños de {pet.name}</h3>
                     <SliderOptions children={petInfo.owners.map((user) => <div class="slider-option"><LinkCard href={`/profile/${user.id}`} imgSrc={user.image} textLink={user.name} /></div>)} />
+                    {(userInfo.id && userInfo.pets.some((p) => p.id === pet.id)) &&
+                        <ModalButton children={<LinkPetForm petInfo={pet} />} textButton={`Enlazar ${pet.name} a otro usuario`} textTitle={`Enlazar ${pet.name}`} extendClass="bg-secondary button-round" extendStyles={{ alignSelf: "flex-end", color: "#fafafa" }} full />
+                    }
                 </div>
             </div>
         </section>
-    )
+    );
 };

@@ -46,11 +46,27 @@ div[data-stretch] {
     overflow-y: auto;
 }
 
-.behaviors-container {
+.behaviors-container,
+.ids-container {
     display: flex;
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.ids-container {
+    justify-content: flex-start;
+}
+
+.id-span {
+    cursor: pointer;
+    transition: background-color 300ms ease;
+}
+
+@media screen and (hover: hover) {
+    .id-span:hover {
+        background-color: var(--third-color-hover);
+    }
 }
 
 @media screen and (min-width: 990px) {

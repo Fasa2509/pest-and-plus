@@ -78,164 +78,195 @@ export const GET: APIRoute = async ({ url, cookies }) => {
 };
 
 
-let cachingCount: TPetCount = {};
+let cachingCount: TPetCount & { updatedAt: Date } = {
+    dogCount: undefined,
+    catCount: undefined,
+    horseCount: undefined,
+    rabbitCount: undefined,
+    monkeyCount: undefined,
+    turtleCount: undefined,
+    goatCount: undefined,
+    birdCount: undefined,
+    fishCount: undefined,
+    pigCount: undefined,
+    hedgehogCount: undefined,
+    otherCount: undefined,
+    updatedAt: new Date(2024, 2, 23),
+};
 
-export const PATCH: APIRoute = async ({ url, cookies }) => {
+export const PATCH: APIRoute = async () => {
     try {
-        const dogCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "dog"
-            }
-        });
+        let checkForCounts = false;
 
-        const catCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "cat"
-            }
-        });
+        for (let [key, value] of Object.entries(cachingCount)) {
+            if (key !== "updatedAt" && value === undefined) checkForCounts = true;
+        };
 
-        const horseCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "horse"
-            }
-        });
+        if (cachingCount.updatedAt.getHours() !== new Date().getHours()) {
+            checkForCounts = true;
+        }
+        // if (cachingCount.updatedAt.getDate() !== new Date().getDate()) {
+        //     checkForCounts = true;
+        // }
 
-        const rabbitCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "rabbit"
-            }
-        });
+        if (checkForCounts) {
+            const dogCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "dog"
+                }
+            });
 
-        const monkeyCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "monkey"
-            }
-        });
+            const catCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "cat"
+                }
+            });
 
-        const turtleCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "turtle"
-            }
-        });
+            const horseCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "horse"
+                }
+            });
 
-        const goatCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "goat"
-            }
-        });
+            const rabbitCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "rabbit"
+                }
+            });
 
-        const birdCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "bird"
-            }
-        });
+            const monkeyCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "monkey"
+                }
+            });
 
-        const fishCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "fish"
-            }
-        });
+            const turtleCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "turtle"
+                }
+            });
 
-        const pigCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "pig"
-            }
-        });
+            const goatCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "goat"
+                }
+            });
 
-        const hedgehogCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "hedgehog"
-            }
-        });
+            const birdCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "bird"
+                }
+            });
 
-        const otherCountQuery = DbClient.pet.aggregate({
-            _count: {
-                petType: true,
-            },
-            where: {
-                petType: "other"
-            }
-        });
+            const fishCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "fish"
+                }
+            });
 
-        let [
-            dogCount,
-            catCount,
-            horseCount,
-            rabbitCount,
-            monkeyCount,
-            turtleCount,
-            goatCount,
-            birdCount,
-            fishCount,
-            pigCount,
-            hedgehogCount,
-            otherCount,
-        ] = await DbClient.$transaction([
-            dogCountQuery,
-            catCountQuery,
-            horseCountQuery,
-            rabbitCountQuery,
-            monkeyCountQuery,
-            turtleCountQuery,
-            goatCountQuery,
-            birdCountQuery,
-            fishCountQuery,
-            pigCountQuery,
-            hedgehogCountQuery,
-            otherCountQuery,
-        ]);
+            const pigCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "pig"
+                }
+            });
+
+            const hedgehogCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "hedgehog"
+                }
+            });
+
+            const otherCountQuery = DbClient.pet.aggregate({
+                _count: {
+                    petType: true,
+                },
+                where: {
+                    petType: "other"
+                }
+            });
+
+            let [
+                dogCount,
+                catCount,
+                horseCount,
+                rabbitCount,
+                monkeyCount,
+                turtleCount,
+                goatCount,
+                birdCount,
+                fishCount,
+                pigCount,
+                hedgehogCount,
+                otherCount,
+            ] = await DbClient.$transaction([
+                dogCountQuery,
+                catCountQuery,
+                horseCountQuery,
+                rabbitCountQuery,
+                monkeyCountQuery,
+                turtleCountQuery,
+                goatCountQuery,
+                birdCountQuery,
+                fishCountQuery,
+                pigCountQuery,
+                hedgehogCountQuery,
+                otherCountQuery,
+            ]);
+
+            cachingCount.updatedAt = new Date();
+
+            cachingCount.dogCount = dogCount._count.petType;
+            cachingCount.catCount = catCount._count.petType;
+            cachingCount.horseCount = horseCount._count.petType;
+            cachingCount.rabbitCount = rabbitCount._count.petType;
+            cachingCount.monkeyCount = monkeyCount._count.petType;
+            cachingCount.turtleCount = turtleCount._count.petType;
+            cachingCount.goatCount = goatCount._count.petType;
+            cachingCount.birdCount = birdCount._count.petType;
+            cachingCount.fishCount = fishCount._count.petType;
+            cachingCount.pigCount = pigCount._count.petType;
+            cachingCount.hedgehogCount = hedgehogCount._count.petType;
+            cachingCount.otherCount = otherCount._count.petType;
+        }
 
         return CustomResponse<ApiResponsePayload<{ count: TPetCount }>>({
             error: false,
             message: ["Información obtenida"],
             payload: {
-                count: {
-                    dogCount: dogCount._count.petType,
-                    catCount: catCount._count.petType,
-                    horseCount: horseCount._count.petType,
-                    rabbitCount: rabbitCount._count.petType,
-                    monkeyCount: monkeyCount._count.petType,
-                    turtleCount: turtleCount._count.petType,
-                    goatCount: goatCount._count.petType,
-                    birdCount: birdCount._count.petType,
-                    fishCount: fishCount._count.petType,
-                    pigCount: pigCount._count.petType,
-                    hedgehogCount: hedgehogCount._count.petType,
-                    otherCount: otherCount._count.petType,
-                }
+                count: cachingCount,
             },
         });
     } catch (error: unknown) {

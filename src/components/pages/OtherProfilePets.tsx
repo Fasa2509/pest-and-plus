@@ -22,6 +22,7 @@ export const OtherProfilePets: FC<Props> = ({ user }) => {
                         : <SliderOptions children={user.pets.map((pet) => <div class="slider-option"><ModalCardButton children={<PetInfo pet={pet} />} textTitle={pet.name} textButton={pet.name} imgSrc={pet.image} /></div>)} />
                 }
                 <div style={{ flexGrow: 1 }}></div>
+                <p>¿Quieres enlazar a {user.name.split(" ")[0]} a alguna de tus mascotas? Usa su <b>id de usuario: {user.id}</b>.</p>
             </div>
         </article>
     )

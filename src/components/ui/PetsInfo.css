@@ -156,6 +156,7 @@ button.close-icon-container {
     padding: 4px;
     padding-right: 1rem;
     border-radius: 10rem;
+    cursor: pointer;
 }
 
 .pet-followed {

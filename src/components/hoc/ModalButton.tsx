@@ -1,5 +1,6 @@
-import type { FC, JSX } from "preact/compat";
-import { useEffect, useState } from "preact/hooks"
+import type { CSSProperties, FC, JSX } from "preact/compat";
+import { useEffect, useState } from "preact/hooks";
+
 import { ModalWindow } from "./ModalWindow";
 import { ModalFull } from "./ModalFull";
 
@@ -9,16 +10,16 @@ interface Props {
     textTitle?: string;
     initialState?: boolean;
     extendClass?: string;
+    extendStyles?: CSSProperties;
     full?: boolean;
     round?: boolean;
 }
 
-export const ModalButton: FC<Props> = ({ children, textButton, textTitle, initialState = false, extendClass = "", full = false, round = false }) => {
+export const ModalButton: FC<Props> = ({ children, textButton, textTitle, initialState = false, extendClass = "", extendStyles = {}, full = false, round = false }) => {
 
     if (full && !textTitle) console.error("No se proveyó título de modal full");
 
     const [isOpen, setIsOpen] = useState(initialState);
-    // const [didMount, setIsOpen] = useState(initialState);
 
     useEffect(() => {
         (isOpen)
@@ -31,7 +32,7 @@ export const ModalButton: FC<Props> = ({ children, textButton, textTitle, initia
 
     return (
         <>
-            <button class={`button modal-button ${round ? "button-round" : ""} ${extendClass}`} onClick={openModal}>{textButton}</button>
+            <button class={`button modal-button ${round ? "button-round" : ""} ${extendClass}`} style={extendStyles} onClick={openModal}>{textButton}</button>
             {
                 (isOpen && !full) ?
                     (

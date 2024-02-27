@@ -21,6 +21,7 @@ export const SessionFetcher: FC<Props> = () => {
 
             const id = new URLSearchParams(document.cookie).get("user-id");
             if (!id || isNaN(Number(id)) || Number(id) < 1) {
+                // TODO
                 console.error("Otra vez el temita con el id de inicio de sesion");
                 return;
             };

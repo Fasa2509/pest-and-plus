@@ -77,7 +77,7 @@ export const checkUserValidCookies = async ({ cookies, params }: { cookies: Astr
 
     const userInfo = await decodeToken(token.value);
 
-    if (!userInfo) throw new AuthError("La información de usuario no es válida", 403);
+    if (!userInfo || userInfo.id !== userId) throw new AuthError("La información de usuario no es válida", 403);
 
     if (userId !== userInfo.id) throw new AuthError("El id de usuario no coincide", 403);
 

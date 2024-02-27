@@ -7,8 +7,8 @@ import { SelectOptions } from "./SelectOptions";
 import type { IUser } from "@/types/User";
 import { uploadNewPet } from "@/database/DbPet";
 import { ValidPetBehavior, ValidPetType, petBehaviorTranslations, petTypeTranslations, getRandomImg, type INewPet, EnumPetTypeTranslations, EnumPetBehaviorTranslations, reversePetTypeTranslations, reversePetBehaviorTranslations } from "@/types/Pet";
-import "./UploadPostForm.css";
 import { useNotifications } from "@/hooks/useNotifications";
+import "./UploadPostForm.css";
 
 interface Props {
     userInfo: IUser;

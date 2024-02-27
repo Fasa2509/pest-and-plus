@@ -2,6 +2,7 @@ import { action, map } from "nanostores";
 
 import { type IPet, type IUserInfo } from "@/types/Pet";
 import type { IPetInfo } from "@/types/User";
+import type { IPost } from "@/types/Post";
 
 export type TPetCount = {
     dogCount?: number;
@@ -23,6 +24,7 @@ export type TDataLoaded = {
     otherPets: IPet[];
     cachedPets: IPetInfo[];
     cachedUsers: IUserInfo[];
+    cachedPosts: IPost[];
     count: TPetCount;
 };
 
@@ -31,7 +33,8 @@ export const $dataLoaded = map<TDataLoaded>({
     otherPets: [],
     cachedPets: [],
     cachedUsers: [],
-    count: {}
+    cachedPosts: [],
+    count: {},
 });
 
 
@@ -85,6 +88,15 @@ export const $updateCachedUsers = action($dataLoaded, 'updateCachedUsers', (stor
     });
 
     return store.get();
+});
+
+export const $updateFollowedPosts = action($dataLoaded, "updateFollowedPosts", (store, posts: IPost[]) => {
+    const value = store.get();
+
+    store.set({
+        ...value,
+        cachedPosts: [...value.cachedPosts, ...posts],
+    });
 });
 
 export const $updateCounts = action($dataLoaded, "updateCount", (store, count: TPetCount) => {

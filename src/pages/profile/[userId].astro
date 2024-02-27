@@ -1,12 +1,12 @@
 ---
 import MainLayout from "@/components/layouts/MainLayout.astro";
-import { cookiesLifeTime, type IUser } from "@/types/User";
-import { decodeToken, signToken } from "@/utils/JWT";
+import { type IUser } from "@/types/User";
+import { decodeToken } from "@/utils/JWT";
 
 import { backGetUserInfo } from "@/database/DbUser";
 import { OtherProfileInfo } from "@/components/pages/OtherProfileInfo";
 import { OtherProfilePets } from "@/components/pages/OtherProfilePets";
-import { ProfileRecent } from "@/components/pages/ProfileRecent";
+import { AsideData } from "@/components/ui/AsideData";
 import { OtherProfilePosts } from "@/components/pages/OtherProfilePosts";
 
 let { userId: id } = Astro.params;
@@ -54,7 +54,7 @@ const user = await backGetUserInfo(userId);
                 <>
                     <OtherProfileInfo client:load user={user} />
                     <OtherProfilePets client:load user={user} />
-                    <ProfileRecent client:load />
+                    <AsideData client:load />
                     <OtherProfilePosts client:load user={user} />
                 </>
             )
@@ -62,6 +62,7 @@ const user = await backGetUserInfo(userId);
     </section>
 </MainLayout>
 <style>
+    /* <ProfileRecent client:load /> */
     body {
         min-height: 100dvh;
     }

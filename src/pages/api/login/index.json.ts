@@ -210,12 +210,9 @@ export const PATCH: APIRoute = async ({ request }) => {
         //     error: false,
         //     message: ["Enviamos un correo eléctronico de inicio de sesión"],
         // });
-        return CustomResponse<ApiResponsePayload<{ token: string }>>({
+        return CustomResponse<ApiResponse>({
             error: false,
-            message: ["Te enviamos un correo eléctronico de inicio de sesión"],
-            payload: {
-                token
-            }
+            message: ["Hemos enviado un correo eléctronico de inicio de sesión"],
         });
     } catch (error: unknown) {
         return EndpointErrorHandler({ error, defaultErrorMessage: 'Ocurrió un error iniciando sesión' });

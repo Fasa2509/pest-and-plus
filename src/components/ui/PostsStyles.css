@@ -37,8 +37,21 @@ main {
     border-radius: 10rem;
     overflow: hidden;
     aspect-ratio: 1;
-    max-width: 70px;
+    max-width: 55px;
 }
+
+@media screen and (min-width: 776px) {
+    .post-article .img-container {
+        border-radius: 10rem;
+        overflow: hidden;
+        aspect-ratio: 1;
+        max-width: 70px;
+    }
+}
+
+/* .post-article .img-author-container {
+    max-width: 50%;
+} */
 
 .post-article .img-container img {
     aspect-ratio: 1;

@@ -9,7 +9,7 @@ import { $dataLoaded, $updateCachedInfo, $updateCounts } from "@/stores/DataLoad
 import { getData, getInfo } from "@/database/DbInfo";
 import { AsideInfo } from "../ui/AsideInfo";
 import { AsideData } from "../ui/AsideData";
-import { ProfileRecent } from "../pages/ProfileRecent";
+import { RecentPosts } from "../pages/RecentPosts";
 import "./Feed.css";
 
 interface Props {
@@ -40,7 +40,7 @@ export const FeedMain: FC<Props> = () => {
             <div class="asides-container">
                 <AsideInfo />
                 {/* <AsideData /> */}
-                <ProfileRecent />
+                <RecentPosts />
             </div>
             <PostContainer />
             <div></div>
