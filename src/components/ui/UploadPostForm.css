@@ -1,4 +1,4 @@
-.upload-form-container {
+.upload-form {
     display: flex;
     justify-content: center;
     height: 90dvh;
@@ -17,15 +17,17 @@ div[data-stretch] {
     flex-grow: 1;
 }
 
-.upload-form-container form {
+.upload-form form {
+    margin: 0 auto;
     min-width: 300px;
     width: 100%;
     max-width: 760px;
     display: flex;
     flex-direction: column;
+    /* justify-content: flex-start; */
 }
 
-.upload-form-container .pet-form {
+.upload-form .pet-form {
     row-gap: 1rem;
 }
 
@@ -70,6 +72,10 @@ div[data-stretch] {
 }
 
 @media screen and (min-width: 990px) {
+    .upload-form {
+        height: 84dvh;
+    }
+
     .behaviors-container {
         justify-content: flex-start;
     }

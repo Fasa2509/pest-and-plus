@@ -3,7 +3,7 @@ import { useStore } from "@nanostores/preact";
 
 import { MyPost } from "@/components/ui/MyPost";
 import { MyTexts } from "@components/ui/MyTexts";
-import { ModalButton } from "@components/hoc/ModalButton";
+// import { ModalButton } from "@components/hoc/ModalButton";
 import type { IUser } from "@/types/User";
 import "./Perfil.css";
 

@@ -16,6 +16,7 @@ interface Props {
 export const ModalImg: FC<Props> = ({ children, imgSrc, textTitle, initialState = false, full = false }) => {
 
     const [isOpen, setIsOpen] = useState(initialState);
+    const [closing, setClosing] = useState(false);
 
     useEffect(() => {
         (isOpen)
@@ -24,7 +25,11 @@ export const ModalImg: FC<Props> = ({ children, imgSrc, textTitle, initialState 
     }, [isOpen]);
 
     const openModal = () => setIsOpen(true);
-    const closeModal = () => setIsOpen(false);
+    const closeModal = () => {
+        setClosing(true);
+        setIsOpen(false);
+        setTimeout(() => setClosing(false), 500);
+    };
 
     return (
         <>
@@ -34,12 +39,13 @@ export const ModalImg: FC<Props> = ({ children, imgSrc, textTitle, initialState 
                 }
             </button>
             {
-                (isOpen) &&
-                <ModalFull closeModal={closeModal} isOpen={isOpen} title={textTitle || ""}>
-                    {
-                        children
-                    }
-                </ModalFull>
+                (isOpen || closing) && (
+                    <ModalFull closeModal={closeModal} isOpen={isOpen} title={textTitle || ""} closing={closing}>
+                        {
+                            children
+                        }
+                    </ModalFull>
+                )
             }
         </>
     );

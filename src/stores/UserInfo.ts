@@ -71,3 +71,15 @@ export const $toggleFollowingPet = action($userInfo, "toggleFollowingPet", (stor
         following: (isFollowed) ? state.following.filter((p) => p.id !== pet.id) : [...state.following, pet],
     });
 });
+
+export const $responseLinkRequest = action($userInfo, "responseLinkRequest", (store, id: number, pet: IPetInfo, response: "accept" | "reject") => {
+    const state = store.get();
+
+    if (!state.id) return state;
+
+    store.set({
+        ...state,
+        linkRequests: state.linkRequests.filter((req) => req.id !== id),
+        pets: (response === "accept") ? [pet, ...state.pets] : state.pets,
+    });
+});

@@ -28,7 +28,7 @@ export interface ApiResponseError extends ApiResponse {
 export type ApiResponsePayload<T> = ApiResponseWithPayload<T> | ApiResponseError;
 
 export const ZApiPagination = z.object({
-    limit: z.string().pipe(z.coerce.number({ required_error: 'El límite de la petición es obligatorio', invalid_type_error: 'El límite de la query debe ser un número' }).positive('El límite de entradas no es válido').lte(100, 'El límite de la query es muy grande'),),
+    limit : z.string().pipe(z.coerce.number({ required_error: 'El límite de la petición es obligatorio', invalid_type_error: 'El límite de la query debe ser un número' }).positive('El límite de entradas no es válido').lte(100, 'El límite de la query es muy grande'),),
     offset: z.string().pipe(z.coerce.number({ required_error: 'El número de partida es obligatorio', invalid_type_error: 'El inicio de la query debe ser un número' }).nonnegative('El límite de entradas no es válido'),),
 });
 

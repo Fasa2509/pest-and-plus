@@ -54,7 +54,7 @@ export const UploadPostForm: FC<Props> = () => {
         navigator.userAgent.match(/Windows Phone/i))
 
     return (
-        <div className="upload-form-container">
+        <div className="upload-form">
             <form onSubmit={handleSubmit}>
                 <p>Toda <span style={{ fontWeight: '600' }}>publicación sin imágenes</span> irá a tu muro.</p>
 
@@ -75,10 +75,12 @@ export const UploadPostForm: FC<Props> = () => {
                     <input data-space ref={publishedRef} type="checkbox" id="public" />
                 </div> */}
 
-                {isMobile && <div data-stretch></div>}
+                {/* {isMobile && <div data-stretch></div>} */}
 
                 <input ref={fileRef} type="file" style={{ display: "none" }} />
                 <button data-space type="button" id="button-post-imgs" className="button" disabled={tasks.includes("Creando mascota")} onClick={() => fileRef.current!.click()}>Subir imágenes</button>
+
+                <div data-stretch></div>
 
                 <button type="submit" class="button bg-secondary upload-submit-button" disabled={tasks.includes("Creando mascota")}>Subir publicación</button>
             </form>

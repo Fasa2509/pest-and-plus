@@ -31,7 +31,7 @@ export const RecentPosts: FC<Props> = () => {
     useEffect(() => {
         (async () => {
             // const lastCachedPost = cachedPosts.at(1);
-            if (cachedPosts.length > 0) return;
+            if (cachedPosts.length > 0 || !userInfo.id) return;
             $updateTasks("Buscando publicaciones de seguidos...");
             const res = await getFollowedPetPosts({ limit: 9, offset: 0, max: new Date().getTime() });
             $updateTasks("Buscando publicaciones de seguidos...");
@@ -39,7 +39,7 @@ export const RecentPosts: FC<Props> = () => {
             res.error && createNotification({ type: "error", content: res.message[0] });
             !res.error && $updateFollowedPosts(res.payload.posts);
         })();
-    }, []);
+    }, [userInfo.id]);
 
     const selectChild = (idx: number) => {
         setSelectedPosts(postsToMap[idx]);

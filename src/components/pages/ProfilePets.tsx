@@ -7,6 +7,7 @@ import { ModalButton } from "@components/hoc/ModalButton";
 import { SliderOptions } from "../hoc/SliderOptions";
 import { ModalCardButton } from "../hoc/ModalCardButton";
 import { PetInfo } from "../ui/PetInfo";
+import { DisplayLinkRequests } from "../ui/DisplayLinkRequests";
 import "./Perfil.css";
 
 interface Props {
@@ -32,10 +33,20 @@ export const ProfilePets: FC<Props> = () => {
                 {/* {
                     (userInfo.pets.length > 0) && <p>He aquí todas tus mascotas, ¡cuéntanos algo nuevo de ellas o sube una nueva!</p>
                 } */}
-                <p>¿Quieres recibir una solicitud de enlace de mascotas de alguien más? Envíale tu <b>id de usuario: {userInfo.id ? userInfo.id : "..."}</b></p>
+                <p>¿Quieres recibir una solicitud de enlace de mascotas de alguien más? Envíale tu <b>id de usuario: {userInfo.id ? userInfo.id : "..."}</b>.</p>
+                {
+                    (userInfo.linkRequests.length > 0) && (
+                        <p style={{ display: "flex", alignItems: "center" }}>¡Tienes
+                            <ModalButton textButton={String(userInfo.linkRequests.length)} textTitle="Solicitudes de enlace" children={<DisplayLinkRequests userInfo={userInfo} />} extendClass="bg-secondary" extendStyles={{ display: "flex", justifyContent: "center", alignItems: "center", width: "1.6rem", height: "1.6rem", borderRadius: "50%", margin: "0 .5rem", color: "#fff" }} full />
+                            solicitud{(userInfo.linkRequests.length > 1) ? "es" : ""} de enlace!</p>
+                    )
+                }
                 <div style={{ flexGrow: 1 }}></div>
-                <ModalButton textButton="Subir mascota" textTitle="Subir nueva mascota" children={<UploadPetForm userInfo={userInfo} />} extendClass="full-width bg-third" full />
+                <ModalButton textButton="Subir mascota" textTitle="Subir nueva mascota" children={<UploadPetForm userInfo={userInfo} />} extendClass="bg-third" full />
             </div>
         </article>
     )
 };
+
+
+// el extendClass del modalbutton tenia full-width 

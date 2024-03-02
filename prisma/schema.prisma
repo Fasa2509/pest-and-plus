@@ -8,30 +8,35 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  image     String?
-  createdAt DateTime @default(now())
-  email     String   @unique
-  name      String
-  bio       String?
-  role      Role     @default(USER)
-  pets      Pet[]    @relation("Pets")
-  following Pet[]    @relation("Following")
-  posts     Post[]
+  id           Int           @id @default(autoincrement())
+  image        String?
+  createdAt    DateTime      @default(now())
+  email        String        @unique
+  name         String
+  bio          String?
+  role         Role          @default(USER)
+  pets         Pet[]         @relation("Pets")
+  following    Pet[]         @relation("Following")
+  posts        Post[]
+  ownPets      Pet[]         @relation("OwnPets")
+  linkRequests LinkRequest[]
 }
 
 model Pet {
-  id        Int        @id @default(autoincrement())
-  name      String
-  image     String?
-  petType   PetType
-  bio       String?
-  published Boolean    @default(true)
-  createdAt DateTime   @default(now())
-  behaviors Behavior[]
-  owners    User[]     @relation("Pets")
-  followers User[]     @relation("Following")
-  posts     Post[]
+  id           Int           @id @default(autoincrement())
+  name         String
+  image        String?
+  petType      PetType
+  bio          String?
+  published    Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  creatorId    Int           @default(1)
+  creator      User          @relation("OwnPets", fields: [creatorId], references: [id])
+  behaviors    Behavior[]
+  owners       User[]        @relation("Pets")
+  followers    User[]        @relation("Following")
+  posts        Post[]
+  linkRequests LinkRequest[]
 }
 
 model Post {
@@ -44,6 +49,14 @@ model Post {
   author      User     @relation(fields: [authorId], references: [id])
   petId       Int?
   pet         Pet?     @relation(fields: [petId], references: [id])
+}
+
+model LinkRequest {
+  id             Int  @id @default(autoincrement())
+  requestingUser User @relation(fields: [userId], references: [id])
+  userId         Int
+  askedPet       Pet  @relation(fields: [petId], references: [id])
+  petId          Int
 }
 
 enum Role {

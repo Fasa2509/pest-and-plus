@@ -55,7 +55,17 @@ export const backGetUserInfo = async (userId: number): Promise<IUser | undefined
                         images: true,
                         createdAt: true,
                         petId: true,
+                    },
+                    orderBy: {
+                        createdAt: "desc",
                     }
+                },
+                linkRequests: {
+                    select: {
+                        id: true,
+                        requestingUser: true,
+                        askedPet: true,
+                    },
                 },
             },
         });

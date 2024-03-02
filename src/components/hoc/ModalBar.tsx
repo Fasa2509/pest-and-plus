@@ -18,6 +18,7 @@ interface Props {
 export const ModalBar: FC<Props> = ({ children, textButton, imgSrc, selectChild, textTitle, count, initialState = false, extendClass = "", index }) => {
 
     const [isOpen, setIsOpen] = useState(initialState);
+    const [closing, setClosing] = useState(false);
 
     useEffect(() => {
         (isOpen)
@@ -26,7 +27,12 @@ export const ModalBar: FC<Props> = ({ children, textButton, imgSrc, selectChild,
     }, [isOpen]);
 
     const openModal = () => setIsOpen(true);
-    const closeModal = () => setIsOpen(false);
+    const closeModal = () => {
+        setClosing(true);
+        setIsOpen(false);
+        setTimeout(() => setClosing(false), 500);
+    };
+
 
     return (
         <>
@@ -49,9 +55,9 @@ export const ModalBar: FC<Props> = ({ children, textButton, imgSrc, selectChild,
                 }
             </button>
             {
-                (isOpen) &&
+                (isOpen || closing) &&
                 (
-                    <ModalWindow closeModal={closeModal} title={textTitle} restrict>
+                    <ModalWindow closeModal={closeModal} title={textTitle} closing={closing} restrict>
                         {
                             children
                         }

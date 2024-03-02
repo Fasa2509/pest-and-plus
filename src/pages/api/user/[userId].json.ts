@@ -45,6 +45,13 @@ export const GET: APIRoute = async ({ params }) => {
                         petId: true,
                     }
                 },
+                linkRequests: {
+                    select: {
+                        id: true,
+                        requestingUser: true,
+                        askedPet: true,
+                    },
+                },
             },
         });
 
@@ -138,6 +145,13 @@ export const PATCH: APIRoute = async ({ params, cookies }) => {
                     },
                     orderBy: {
                         createdAt: 'desc',
+                    },
+                },
+                linkRequests: {
+                    select: {
+                        id: true,
+                        requestingUser: true,
+                        askedPet: true,
                     },
                 },
             },

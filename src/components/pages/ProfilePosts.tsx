@@ -21,6 +21,7 @@ export const ProfilePosts: FC<Props> = () => {
     if (!userInfo.id) return <></>;
 
     const textPosts = useMemo(() => userInfo.posts.filter((post) => post.images.length === 0), [userInfo.posts]);
+    const imagePosts = useMemo(() => userInfo.posts.filter((post) => post.images.length > 0), [userInfo.posts]);
 
     return (
         <main class="sub-container fourth-element">
@@ -33,7 +34,7 @@ export const ProfilePosts: FC<Props> = () => {
                     <div className="texts-container">
                         {
                             (textPosts.length === 0)
-                                ? <p>¡Vaya! Aún no has subido ninguna publicación. Intenta subir una.</p>
+                                ? <p style={{ alignSelf: "flex-start", paddingLeft: "1rem" }}>¡Vaya! Aún no has subido ninguna publicación. Intenta subir una.</p>
                                 : (textPosts.length <= 5)
                                     ? textPosts.map((p) => <MyTexts post={p} userInfo={userInfo} mine />)
                                     : (displayPosts)
@@ -52,7 +53,7 @@ export const ProfilePosts: FC<Props> = () => {
                     </div>
                     <div className="posts-container">
                         {
-                            userInfo.posts.filter((post) => post.images.length > 0).map((post) => <MyPost key={post.id} post={post} userInfo={userInfo} mine />)
+                            imagePosts.map((post) => <MyPost key={post.id} post={post} userInfo={userInfo} mine />)
                         }
                     </div>
                 </div>

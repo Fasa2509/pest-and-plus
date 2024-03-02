@@ -19,9 +19,7 @@ export const ModalCardButton: FC<Props> = ({ children, textButton, imgSrc, textT
     if (!textTitle) console.error("No se proveyó título de modal full");
 
     const [isOpen, setIsOpen] = useState(false);
-
-    const openModal = () => setIsOpen(true);
-    const closeModal = () => setIsOpen(false);
+    const [closing, setClosing] = useState(false);
 
     useEffect(() => {
         (isOpen)
@@ -29,19 +27,26 @@ export const ModalCardButton: FC<Props> = ({ children, textButton, imgSrc, textT
             : document.querySelector("body")!.classList.remove("disable-body")
     }, [isOpen]);
 
+    const openModal = () => setIsOpen(true);
+    const closeModal = () => {
+        setClosing(true);
+        setIsOpen(false);
+        setTimeout(() => setClosing(false), 500);
+    };
+
     return (
         <>
-            <button class={`button bg-third button-card ${extendClass || ""}`} style={styles} onClick={openModal}>
+            <button class={`button bg-third button-card ${extendClass}`} style={styles} onClick={openModal}>
                 <div className="img-container card-modal-img">
                     <img src={imgSrc || "/default-image.png"} alt={textTitle} />
                 </div>
                 <span>
-                    {(textButton.length < 8) ? textButton : textButton.slice(0, 7) + '...'}
+                    {textButton}
                 </span>
             </button>
             {
-                (isOpen) && (
-                    <ModalFull closeModal={closeModal} isOpen={isOpen} title={textTitle || ""}>
+                (isOpen || closing) && (
+                    <ModalFull closeModal={closeModal} isOpen={isOpen} title={textTitle || ""} closing={closing}>
                         {
                             children
                         }

@@ -134,10 +134,11 @@ export const ZPet = z.object({
     petType  : PetTypeEnum,
     bio      : z.union([z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta'), z.null()]),
     behaviors: z.array(PetBehaviorEnum).min(1, 'Tu mascota debe tener al menos un atributo'),
-    createdAt  : z.date(),
+    createdAt: z.date(),
     owners   : z.array(ZUserInfo),
     followers: z.array(ZUserInfo),
     posts    : z.array(ZPostInfo),
+    creator  : ZUserInfo,
 });
 
 export type IPet = z.infer<typeof ZPet>;
@@ -150,6 +151,7 @@ export const ZNewPet = z.object({
     published: z.boolean({ invalid_type_error: 'El estado de la mascota debe ser un booleano' }).default(false).optional(),
     behaviors: z.array(PetBehaviorEnum).min(1, 'Tu mascota debe tener al menos un atributo'),
     owners   : z.array(z.number()).min(1, 'La mascota debe tener al menos un dueño'),
+    creatorId: z.number({ invalid_type_error: 'El id de usuario no es válido', required_error: 'El id del usuario es requerido' }),
 });
 
 export type INewPet = z.infer<typeof ZNewPet>;
@@ -166,7 +168,7 @@ export const getRandomImg = () => {
     return images.at(Math.ceil((Math.random() * images.length) - 1)) || null;
 };
 
-export const petSeed: Array<INewPet> = [
+export const petSeed: Array<Omit<INewPet, "creatorId">> = [
     {
         name: "Maya",
         behaviors: [

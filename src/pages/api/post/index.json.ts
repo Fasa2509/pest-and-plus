@@ -93,7 +93,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 };
 
 
-export const PATCH: APIRoute = async ({ request, cookies, url }) => {
+export const PATCH: APIRoute = async ({ cookies, url }) => {
     try {
         const paginationParams = Object.fromEntries(url.searchParams.entries());
 
@@ -103,12 +103,14 @@ export const PATCH: APIRoute = async ({ request, cookies, url }) => {
 
         const userInfo = await checkUserValidSession({ cookies });
 
+        console.log({ userInfo })
+
         const user = await DbClient.user.findUnique({
             where: {
                 id: userInfo.id,
-                createdAt: {
-                    lt: new Date(Number(paginationParams.max)),
-                },
+                // createdAt: {
+                //     lt: new Date(Number(paginationParams.max)),
+                // },
             },
             select: {
                 following: {

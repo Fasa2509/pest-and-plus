@@ -7,38 +7,38 @@ interface Props {
     closeModal: Function;
     isOpen: boolean;
     title: string;
+    closing: boolean;
 };
 
-export const ModalFull: FC<Props> = ({ children, isOpen, closeModal, title }) => {
+export const ModalFull: FC<Props> = ({ children, isOpen, closeModal, title, closing }) => {
 
     const [didMount, setDidMount] = useState(false);
-    const [closing, setClosing] = useState(false);
 
     useEffect(() => setDidMount(true), []);
 
     useEffect(() => {
-        document.addEventListener("keyup", (e: KeyboardEvent) => {
+        const cb = (e: KeyboardEvent) => {
             if (e.key === "Escape") {
-                setClosing(true);
                 closeModal();
-                setTimeout(() => setClosing(false), 500);
             };
-        });
+        }
+
+        document.addEventListener("keyup", cb);
+
+        return () => document.removeEventListener("keyup", cb);
     }, []);
 
     const handleClose = (e: MouseEvent) => {
         // @ts-ignore
         if (e.target.matches(".modal-full .modal-close *")) {
-            setClosing(true);
             closeModal();
-            setTimeout(() => setClosing(false), 500);
         };
     };
 
     return !didMount
         ? <></>
         : createPortal(
-            <section class={`modal-full ${isOpen ? "opened" : ""}`} onClick={handleClose}>
+            <section class={`modal-full ${closing ? "closing" : ""}`} onClick={handleClose}>
                 <div className="modal-full-title-container" style={{ justifyContent: title ? 'flex-between' : 'flex-end' }}>
                     <span>{title}</span>
                     <div className="modal-close" onClick={handleClose}>

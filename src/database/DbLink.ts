@@ -1,5 +1,6 @@
 import { ApiErrorHandler, ValidationError } from "@/errors";
 import type { ApiResponse } from "@/types/Api";
+import { ZResponseLinkRequest, type IResponseLinkRequest } from "@/types/LinkRequest";
 import { AxiosApi } from "@/utils/AxiosApi";
 
 
@@ -13,5 +14,17 @@ export const requestLinkPet = async ({ usersIds, petId }: { usersIds: number[], 
         return data;
     } catch (error: unknown) {
         return ApiErrorHandler({ error, defaultErrorMessage: 'Ocurrió un error enlazando la mascota', noPrintError: true });
+    };
+};
+
+export const responseLinkRequest = async (resInfo: IResponseLinkRequest): Promise<ApiResponse> => {
+    try {
+        const body = ZResponseLinkRequest.parse(resInfo);
+
+        const { data } = await AxiosApi.patch<ApiResponse>(`/link.json`, body);
+
+        return data;
+    } catch (error: unknown) {
+        return ApiErrorHandler({ error, defaultErrorMessage: 'Ocurrió un error aceptando la solicitud', noPrintError: true });
     };
 };

@@ -10,15 +10,11 @@ import { userSeed } from "@/types/User";
 
 export const GET: APIRoute = async () => {
     try {
-        let userQuery = DbClient.user.createMany({
+        let userQuery = await DbClient.user.createMany({
             data: userSeed,
         });
 
-        let postQuery = DbClient.post.createMany({
-            data: postSeed,
-        });
-
-        // await DbClient.$transaction([userQuery]);
+        let allUsers = await DbClient.user.findMany();
 
         const addingPets = petSeed.map((pet) => DbClient.pet.create({
             data: {
@@ -26,10 +22,26 @@ export const GET: APIRoute = async () => {
                 owners: {
                     connect: pet.owners.map((owner) => ({ id: owner })),
                 },
+                creator: {
+                    connect: { id: allUsers.at(Math.floor(Math.random() * allUsers.length))!.id }
+                }
             },
         }));
 
-        await DbClient.$transaction([...addingPets, postQuery]);
+        await DbClient.$transaction([...addingPets]);
+
+        let postsQuery = postSeed.map((post) => DbClient.post.create({
+            data: {
+                ...post,
+                author: {
+                    connect: {
+                        id: 4
+                    },
+                },
+            },
+        }));
+
+        await DbClient.$transaction(postsQuery);
 
         return CustomResponse<ApiResponse>({
             error: false,

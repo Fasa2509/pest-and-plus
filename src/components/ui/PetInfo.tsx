@@ -53,8 +53,9 @@ export const PetInfo: FC<Props> = ({ pet }) => {
     }, []);
 
     const toggleFollowPet = async () => {
+        if (!petInfo) return;
         if (!userInfo.id) return createNotification({ type: "error", content: "Inicia sesión para seguir a esta mascota" });
-        if (userInfo.pets.some((p) => p.id === pet.id)) return createNotification({ type: "error", content: "Esta mascota es tuya" });
+        if (petInfo.creator.id === userInfo.id) return createNotification({ type: "error", content: "No puedes seguir una mascota que tú subiste" });
 
         let isFollowed = userInfo.following.some((p) => p.id === pet.id);
 
@@ -90,7 +91,6 @@ export const PetInfo: FC<Props> = ({ pet }) => {
                             ? (
                                 <button class="button follow-pet-button fadeIn" onClick={() => {
                                     createNotification({ type: "info", content: "Inicia sesión para seguir a una mascota" })
-                                    console.log(userInfo)
                                 }}>
                                     <div class="follow-pet-icon-container">
                                         <svg class="svg-icon icon-follow-pet" viewBox="0 0 20 20">
@@ -102,7 +102,7 @@ export const PetInfo: FC<Props> = ({ pet }) => {
                                     </span>
                                 </button>
                             )
-                            : (userInfo.pets.some((p) => p.id === pet.id))
+                            : (petInfo.creator.id === userInfo.id)
                                 ? <></>
                                 : (
                                     <button class={`button follow-pet-button fadeIn ${userInfo.following.some((p) => p.id === pet.id) ? "pet-followed" : ""}`} disabled={tasks.includes("Siguiendo mascota...")} onClick={toggleFollowPet}>
@@ -139,7 +139,7 @@ export const PetInfo: FC<Props> = ({ pet }) => {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <h3>Otros dueños de {pet.name}</h3>
                     <SliderOptions children={petInfo.owners.map((user) => <div class="slider-option"><LinkCard href={`/profile/${user.id}`} imgSrc={user.image} textLink={user.name} /></div>)} />
-                    {(userInfo.id && userInfo.pets.some((p) => p.id === pet.id)) &&
+                    {(userInfo.id && petInfo.creator.id === userInfo.id) &&
                         <ModalButton children={<LinkPetForm petInfo={pet} />} textButton={`Enlazar ${pet.name} a otro usuario`} textTitle={`Enlazar ${pet.name}`} extendClass="bg-secondary button-round" extendStyles={{ alignSelf: "flex-end", color: "#fafafa" }} full />
                     }
                 </div>

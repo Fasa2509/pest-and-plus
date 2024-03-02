@@ -43,6 +43,7 @@ export const UploadPetForm: FC<Props> = ({ userInfo }) => {
             bio: bioRef.current.value ? bioRef.current.value : undefined,
             behaviors: selectedBehaviors.map((b) => reversePetBehaviorTranslations[b]),
             owners: [userInfo.id],
+            creatorId: userInfo.id,
         };
 
         $updateTasks("Creando mascota");
@@ -52,7 +53,7 @@ export const UploadPetForm: FC<Props> = ({ userInfo }) => {
         createNotification({ type: !res.error ? "success" : "error", content: res.message[0] });
 
         if (!res.error) {
-            $updateUserPets({ id: res.payload.petId, name: data.name, petType: data.petType, image: data.image, behaviors: data.behaviors, createdAt: new Date() });
+            $updateUserPets({ id: res.payload.petId, name: data.name, petType: data.petType, image: data.image, behaviors: data.behaviors });
             nameRef.current.value = "";
             bioRef.current.value = "";
             setSelectedBehaviors([]);
@@ -69,7 +70,7 @@ export const UploadPetForm: FC<Props> = ({ userInfo }) => {
         navigator.userAgent.match(/Windows Phone/i))
 
     return (
-        <div className="upload-form-container upload-pet-form-container">
+        <div className="upload-form upload-pet-form-container">
             <form class="pet-form" onSubmit={handleSubmit}>
                 <p>¡Comparte con todos lo que tu mascota hace! Seguro a alguien le alegrará el día ;{")"}</p>
 

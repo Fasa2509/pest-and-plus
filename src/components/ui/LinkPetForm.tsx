@@ -5,7 +5,8 @@ import type { IPetInfo } from "@/types/User";
 import { $tasks, $updateTasks } from "@/stores/Loading";
 import { useNotifications } from "@/hooks/useNotifications";
 import { requestLinkPet } from "@/database/DbLink";
-// import "./UploadPostForm.css";
+import { $userInfo } from "@/stores/UserInfo";
+import "./UploadPostForm.css";
 
 interface Props {
     petInfo: IPetInfo;
@@ -14,6 +15,7 @@ interface Props {
 export const LinkPetForm: FC<Props> = ({ petInfo }) => {
 
     const tasks = useStore($tasks);
+    const userInfo = useStore($userInfo);
 
     const { createNotification } = useNotifications();
 
@@ -39,10 +41,14 @@ export const LinkPetForm: FC<Props> = ({ petInfo }) => {
     };
 
     const handleAddId = () => {
-        // @ts-ignore
+        if (!userInfo.id) return;
+        if (Number(inputRef.current!.value) === 0) return;
         if (isNaN(Number(inputRef.current!.value)) || !Number.isInteger(Number(inputRef.current!.value))) return createNotification({ type: "warning", content: "El id debe ser un número" });
         if (ids.includes(Number(inputRef.current!.value))) return createNotification({ type: "warning", content: "Ese id ya fue agregado" });
+        if (Number(inputRef.current!.value) === userInfo.id) return createNotification({ type: "error", content: "Ese es tu id de usuario" });
         setIds((prevState) => [...prevState, Number(inputRef.current!.value)]);
+        inputRef.current!.value = "";
+        inputRef.current!.focus();
     };
 
     // const isMobile = (navigator.userAgent.match(/Android/i) ||
@@ -54,7 +60,7 @@ export const LinkPetForm: FC<Props> = ({ petInfo }) => {
     //     navigator.userAgent.match(/Windows Phone/i))
 
     return (
-        <div className="upload-form-container">
+        <div className="upload-form">
             <form class="pet-form" onSubmit={handleSubmit}>
                 <p>¡Enlaza a {petInfo.name} a alguien más! Escribe su <b>id de usuario</b> aquí y ese usuario recibirá una solicitad para ser dueño de {petInfo.name}.</p>
 

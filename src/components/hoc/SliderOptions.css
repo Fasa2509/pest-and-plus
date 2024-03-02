@@ -2,7 +2,7 @@
 .slider-info-container {
     width: 100%;
     display: flex;
-    margin: 1rem auto;
+    margin: .8rem auto;
     flex-wrap: nowrap;
     position: relative;
 

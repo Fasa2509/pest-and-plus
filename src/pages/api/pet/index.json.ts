@@ -37,6 +37,13 @@ export const GET: APIRoute = async ({ url }) => {
                         createdAt: true,
                         images: true,
                         authorId: true,
+                    },
+                },
+                creator: {
+                    select: {
+                        id: true,
+                        name: true,
+                        image: true,
                     }
                 }
             },

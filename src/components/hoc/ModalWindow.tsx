@@ -1,4 +1,4 @@
-import { createPortal, type FC, type JSX } from "preact/compat";
+import { createPortal, useEffect, type FC, type JSX } from "preact/compat";
 
 import "./Modal.css";
 
@@ -6,11 +6,12 @@ import "./Modal.css";
 interface Props {
     children: JSX.Element | JSX.Element[];
     closeModal: Function;
+    closing: boolean;
     title?: string;
     restrict?: boolean;
 };
 
-export const ModalWindow: FC<Props> = ({ children, closeModal, title, restrict }) => {
+export const ModalWindow: FC<Props> = ({ children, closeModal, title, closing, restrict }) => {
 
     const handleClose = (e: MouseEvent) => {
         let closables = [".modal", ".modal .modal-close *", ".modal .modal-close-restrict *", ".modal-window-restrict", ".followed-posts-container"]
@@ -18,8 +19,20 @@ export const ModalWindow: FC<Props> = ({ children, closeModal, title, restrict }
         if (closables.some((str) => e.target.matches(str))) closeModal();
     };
 
+    useEffect(() => {
+        const cb = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                closeModal();
+            };
+        }
+
+        document.addEventListener("keyup", cb);
+
+        return () => document.removeEventListener("keyup", cb);
+    }, []);
+
     return createPortal(
-        <section class={`modal fadeIn ${restrict ? "modal-restrict" : ""}`} onClick={handleClose}>
+        <section class={`modal ${restrict ? "modal-restrict" : ""} ${closing ? "window-closing" : ""}`} onClick={handleClose}>
             <div class={`modal-window modal-window-slice ${restrict ? "modal-window-restrict" : ""}`}>
                 <div className="modal-title-container" style={{ justifyContent: (restrict) ? "flex-start" : (title) ? 'flex-between' : 'flex-end' }}>
                     {title && <span>{title}</span>}

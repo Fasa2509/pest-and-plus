@@ -5,7 +5,7 @@ import { checkUserValidSession } from "@/utils/JWT";
 import type { APIRoute } from "astro";
 
 
-export const PATCH: APIRoute = async ({ params, cookies, url }) => {
+export const PATCH: APIRoute = async ({ cookies, url }) => {
     try {
         let petId = Number(Object.fromEntries(url.searchParams.entries()).petId);
 
@@ -24,7 +24,19 @@ export const PATCH: APIRoute = async ({ params, cookies, url }) => {
 
         if (!user) throw new ValidationError("No se encontró su usuario", 404);
 
-        let isFollowing = user.following.find((pet) => pet.id == petId);
+        // const petExists = await DbClient.pet.findUnique({
+        //     where: {
+        //         id: petId,
+        //     },
+        //     select: {
+        //         id: true,
+        //         name: true,
+        //     },
+        // });
+
+        // if (!petExists) throw new ValidationError("No se encontró la mascota", 404);
+
+        let isFollowing = user.following.find((pet) => pet.id === petId);
 
         await DbClient.user.update({
             where: {
