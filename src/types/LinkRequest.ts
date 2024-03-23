@@ -35,23 +35,24 @@ const PetTypeEnum = z.enum([
     invalid_type_error: 'El tipo de mascota no es válido',
 });
 
-const ZPetInfo = z.object({
-    id       : z.number({ required_error: 'El id de la mascota es requerido' }),
-    name     : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(3).max(20),
-    petType  : PetTypeEnum,
-    image    : z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
-    behaviors: z.array(PetBehaviorEnum).min(1, 'Tu mascota debe tener al menos un atributo'),
-});
-
 const ZUserInfo = z.object({
     id   : z.number({ required_error: 'El id de usuario es requerido' }),
     image: z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
     name : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(2, 'El nombre es muy corto'),
 });
 
+const ZPetLinkRequestInfo = z.object({
+    id       : z.number({ required_error: 'El id de la mascota es requerido' }),
+    name     : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(3).max(20),
+    petType  : PetTypeEnum,
+    image    : z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
+    behaviors: z.array(PetBehaviorEnum).min(1, 'Tu mascota debe tener al menos un atributo'),
+    creator  : ZUserInfo,
+});
+
 export const ZLinkRequest = z.object({
     id            : z.number({ required_error: 'El id de solicitud es requerido' }),
-    askedPet      : ZPetInfo,
+    askedPet      : ZPetLinkRequestInfo,
     requestingUser: ZUserInfo,
 });
 

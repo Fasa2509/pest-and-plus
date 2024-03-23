@@ -99,7 +99,7 @@ button.close-icon-container {
     min-width: 300px;
     width: 100%;
     max-width: 700px;
-    max-height: 85dvh;
+    max-height: 88dvh;
     overflow-y: auto;
     margin: 0 auto;
     display: flex;
@@ -121,11 +121,16 @@ button.close-icon-container {
     padding: 0;
 }
 
+.pet-info-first .img-container .img-editing {
+    font-size: 7rem;
+}
+
 .pet-info-first .img-container {
     max-width: 400px;
     margin: 0 auto;
     border-radius: 4px;
     overflow: hidden;
+    position: relative;
 }
 
 .pet-info-first .img-container img {
@@ -137,7 +142,7 @@ button.close-icon-container {
 
 .pet-info-first p {
     font-size: 1.2rem;
-    white-space: wrap;
+    white-space: pre-wrap;
 }
 
 .behaviors-container {
@@ -213,6 +218,10 @@ button.close-icon-container {
     .follow-pet-icon {
         width: 2.3rem;
         height: 2.3rem;
+    }
+
+    .pet-info-section {
+        max-height: 85dvh;
     }
 }
 

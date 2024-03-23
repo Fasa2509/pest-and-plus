@@ -1,3 +1,4 @@
+<div class="content-divider"></div>
 <div class="bg-container">
     <img src="/layered-waves.svg" alt="Background-waves" />
 </div>
@@ -26,7 +27,19 @@
     </p>
 </footer>
 <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
+    }
+
+    .content-divider {
+        flex-grow: 1;
+    }
+
     .bg-container {
+        flex-grow: unset;
+        flex-shrink: 0;
         margin-top: 2rem;
     }
 
@@ -36,6 +49,8 @@
     }
 
     footer {
+        flex-grow: unset;
+        flex-shrink: 0;
         background-color: var(--third-color-hover);
         padding: 3.5rem 1.5rem;
     }

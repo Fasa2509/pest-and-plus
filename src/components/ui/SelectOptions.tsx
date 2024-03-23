@@ -14,10 +14,11 @@ interface Props {
     setSelected: Function;
     defaultValue?: string;
     defaultText?: string;
+    lastValue?: string;
     multiple?: boolean;
 }
 
-export const SelectOptions: FC<Props> = ({ id, options, selected, setSelected, defaultValue, defaultText, multiple = false }) => {
+export const SelectOptions: FC<Props> = ({ id, options, selected, setSelected, defaultValue, defaultText, lastValue, multiple = false }) => {
 
     const [display, setDisplay] = useState(false);
 
@@ -48,7 +49,7 @@ export const SelectOptions: FC<Props> = ({ id, options, selected, setSelected, d
                     ></path>
                 </svg>
             </div>
-            <span class="select-selected select-clickable">{(selected instanceof Array) ? (selected.at(-1) || defaultText || "------") : (selected || defaultText || "------")}</span>
+            <span class="select-selected select-clickable">{(selected instanceof Array) ? (lastValue || selected.at(-1) || defaultText || "------") : (lastValue || selected || defaultText || "------")}</span>
             {
                 display && <div className={`options-container fadeIn ${multiple ? "select-clickable" : ""}`}>
                     {

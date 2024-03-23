@@ -44,7 +44,7 @@ div[data-stretch] {
 
 /* Upload Pet Form */
 .upload-pet-form-container {
-    max-height: 85dvh;
+    /* max-height: 85dvh; */
     overflow-y: auto;
 }
 

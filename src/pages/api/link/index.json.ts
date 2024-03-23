@@ -12,7 +12,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         let usersIds = body.usersIds.map((n) => Number(n));
         let { petId } = body;
 
-        if (isNaN(Number(petId)) || Number(petId) < 1) throw new ValidationError("El id de la mascota no es válido", 400);
+        if (isNaN(Number(petId)) || Number(petId) < 1 || !Number.isInteger(petId)) throw new ValidationError("El id de la mascota no es válido", 400);
 
         if (usersIds.some((id) => isNaN(id) || id < 1 || !Number.isInteger(id))) throw new ValidationError("Hay ids no válidos", 400);
 
@@ -20,7 +20,18 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
         if (usersIds.includes(userInfo.id)) throw new ValidationError("No puedes enlazar tu mascota a ti mism@", 400);
 
-        // TODO: chequear si el usuario ya sigue a esa mascota
+        const allUsers = await DbClient.user.findMany({
+            where: {
+                id: {
+                    in: usersIds,
+                },
+            },
+            select: {
+                id: true,
+            },
+        });
+
+        if (allUsers.length === 0) throw new ValidationError("No se encontraron usuarios a enlazar", 400);
 
         const petInfo = await DbClient.pet.findUnique({
             where: {
@@ -32,49 +43,28 @@ export const POST: APIRoute = async ({ request, cookies }) => {
                         id: true,
                     },
                 },
+                followers: {
+                    select: {
+                        id: true,
+                    },
+                },
                 creatorId: true,
             },
         });
 
         if (!petInfo) throw new DbError("No se encontró la mascota", 400);
 
-        // if (!petInfo.owners.some(({ id }) => id === userInfo.id)) throw new ValidationError("No eres dueño de esta mascota", 400);
-        if (petInfo.creatorId !== userInfo.id) throw new ValidationError("Solo el creador de una mascota pueden solicitar enlaces", 400);
+        if (petInfo.creatorId !== userInfo.id) throw new ValidationError("Solo el creador de una mascota puede solicitar enlaces", 400);
 
         for (let { id } of petInfo.owners) {
             if (usersIds.includes(id)) usersIds = usersIds.filter((n) => n !== id);
         }
 
-        // const usersToConnect = await DbClient.user.findMany({
-        //     where: {
-        //         id: {
-        //             in: usersIds,
-        //         },
-        //     },
-        //     select: {
-        //         id: true,
-        //         pets: {
-        //             select: {
-        //                 id: true,
-        //             },
-        //         },
-        //     },
-        // });
-
-        await DbClient.linkRequest.createMany({
+        let linkRequestQuery = await DbClient.linkRequest.createMany({
             data: usersIds.map((userId) => ({ petId, userId })),
         });
 
-        // await DbClient.pet.update({
-        //     where: {
-        //         id: petId,
-        //     },
-        //     data: {
-        //         owners: {
-        //             connect: usersIds.map((userId) => ({ id: userId })),
-        //         },
-        //     },
-        // });
+        // await DbClient.$transaction([linkRequestQuery, ...disconnectQuery]);
 
         return CustomResponse<ApiResponse>({
             error: false,
@@ -85,6 +75,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     };
 };
 
+// endpoint para aceptar o rechazar un link request
 export const PATCH: APIRoute = async ({ request, cookies }) => {
     try {
         const body = ZResponseLinkRequest.parse(await request.json());
@@ -108,11 +99,33 @@ export const PATCH: APIRoute = async ({ request, cookies }) => {
             where: {
                 id: body.id,
             },
+            include: {
+                askedPet: {
+                    select: {
+                        followers: {
+                            select: {
+                                id: true,
+                            }
+                        }
+                    }
+                }
+            }
         });
 
-        console.log(linkRequest)
-
         if (!linkRequest) throw new ValidationError("No se encontró la solicitud de enlace", 404);
+
+        if (linkRequest.askedPet.followers.some(({ id }) => userInfo.id === id)) {
+            await DbClient.user.update({
+                where: {
+                    id: userInfo.id,
+                },
+                data: {
+                    following: {
+                        disconnect: [{ id: linkRequest.petId }],
+                    },
+                },
+            });
+        }
 
         if (body.response === "accept") {
             await DbClient.pet.update({
@@ -127,13 +140,11 @@ export const PATCH: APIRoute = async ({ request, cookies }) => {
             });
         }
 
-        let res = await DbClient.linkRequest.delete({
+        await DbClient.linkRequest.delete({
             where: {
                 id: body.id
             },
         });
-
-        console.log(res)
 
         return CustomResponse<ApiResponse>({
             error: false,
@@ -141,5 +152,5 @@ export const PATCH: APIRoute = async ({ request, cookies }) => {
         });
     } catch (error: unknown) {
         return EndpointErrorHandler({ error, defaultErrorMessage: "Ocurrió un error aceptando la solicitud de enlace" });
-    }
+    };
 };

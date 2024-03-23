@@ -1,7 +1,41 @@
 ---
 import MainLayout from "@/components/layouts/MainLayout.astro";
+
+export const prerender = true;
 ---
 
 <MainLayout title="Nosotros">
-    <h1>PetsAnd+</h1>
+    <main class="shadow-island pets-and-plus-info">
+        <h3>¿Qué es PetsAnd+?</h3>
+        <p>
+            <b>PetsAnd+</b> es una pequeña red social desarollada para que todos
+            los dueños de mascotas puedan compartir con los demás sus experiencias,
+            vivencias o situaciones día a día con ellas.
+        </p>
+        <p>
+            Lejos de la toxicidad de las redes sociales más comunes, PetsAnd+ no
+            se trata de aparentar, presumir o resaltar, se trata simplemente de
+            compartir una parte de esa alegría que nuestras mascotas nos
+            conceden.
+        </p>
+
+        <p>
+            Si te ha gustado la plataforma, ¡compártela con más personas!
+            Mientras más alcance tengamos, mejor, y nos ayudarías mucho a seguir
+            dándole mantenimiento a largo plazo.
+        </p>
+    </main>
 </MainLayout>
+<style>
+    .pets-and-plus-info {
+        margin: 3vw;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .pets-and-plus-info h3 {
+        font-size: 1.5rem;
+    }
+</style>

@@ -48,8 +48,29 @@ export const GET: APIRoute = async ({ params }) => {
                 linkRequests: {
                     select: {
                         id: true,
-                        requestingUser: true,
-                        askedPet: true,
+                        requestingUser: {
+                            select: {
+                                id: true,
+                                name: true,
+                                image: true,
+                            }
+                        },
+                        askedPet: {
+                            select: {
+                                id: true,
+                                name: true,
+                                petType: true,
+                                image: true,
+                                behaviors: true,
+                                creator: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        image: true,
+                                    }
+                                }
+                            }
+                        },
                     },
                 },
             },
@@ -150,8 +171,29 @@ export const PATCH: APIRoute = async ({ params, cookies }) => {
                 linkRequests: {
                     select: {
                         id: true,
-                        requestingUser: true,
-                        askedPet: true,
+                        requestingUser: {
+                            select: {
+                                id: true,
+                                name: true,
+                                image: true,
+                            }
+                        },
+                        askedPet: {
+                            select: {
+                                id: true,
+                                name: true,
+                                petType: true,
+                                image: true,
+                                behaviors: true,
+                                creator: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        image: true,
+                                    }
+                                }
+                            }
+                        },
                     },
                 },
             },

@@ -1,18 +1,18 @@
-import { ApiErrorHandler, ValidationError } from "@/errors";
+import { ApiErrorHandler, ParsingError, ValidationError } from "@/errors";
 import type { ApiResponse, ApiResponsePayload } from "@/types/Api";
-import { ZNewPet, type INewPet, type IPet } from "@/types/Pet";
+import { ZNewPet, type INewPet, type IPet, type IUpdatePet, ZUpdatePet } from "@/types/Pet";
 import { AxiosApi } from "@/utils/AxiosApi";
 
 
-export const createNewPet = async (body: INewPet): Promise<ApiResponse> => {
-    try {
-        const { data } = await AxiosApi.put<ApiResponse>("/pet.json", body);
+// export const createNewPet = async (body: INewPet): Promise<ApiResponse> => {
+//     try {
+//         const { data } = await AxiosApi.put<ApiResponse>("/pet.json", body);
 
-        return data;
-    } catch (error: unknown) {
-        return ApiErrorHandler({ error, defaultErrorMessage: 'Error solicitando login', noPrintError: true });
-    };
-};
+//         return data;
+//     } catch (error: unknown) {
+//         return ApiErrorHandler({ error, defaultErrorMessage: 'Error solicitando login', noPrintError: true });
+//     };
+// };
 
 
 export const getNewPet = async (petId: number): Promise<ApiResponsePayload<{ pet: IPet }>> => {
@@ -48,5 +48,19 @@ export const uploadNewPet = async (petInfo: INewPet): Promise<ApiResponsePayload
         return data;
     } catch (error: unknown) {
         return ApiErrorHandler({ error, defaultErrorMessage: 'Error subiendo la mascota', noPrintError: true });
+    };
+};
+
+
+export const updatePetInfo = async (petId: number, petInfo: IUpdatePet): Promise<ApiResponse> => {
+    try {
+        if (!Number.isInteger(petId) || petId < 1) throw new ParsingError("El id de la mascota no es válido", 400);
+        const body = ZUpdatePet.parse(petInfo);
+
+        const { data } = await AxiosApi.put<ApiResponse>(`/pet/${petId}.json`, body);
+
+        return data;
+    } catch (error: unknown) {
+        return ApiErrorHandler({ error, defaultErrorMessage: 'Error actualizando la mascota', noPrintError: true });
     };
 };

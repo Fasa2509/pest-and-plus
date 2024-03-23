@@ -156,6 +156,15 @@ export const ZNewPet = z.object({
 
 export type INewPet = z.infer<typeof ZNewPet>;
 
+export const ZUpdatePet = z.object({
+    name     : z.string({ invalid_type_error: "El nombre de la mascota debe ser texto", required_error: 'El nombre de la mascota es requerido' }).trim().min(2, 'El nombre de tu mascota es muy corto').max(20),
+    image    : z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
+    bio      : z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta'),
+    behaviors: z.array(PetBehaviorEnum).min(1, 'Tu mascota debe tener al menos un atributo'),
+});
+
+export type IUpdatePet = z.infer<typeof ZUpdatePet>;
+
 export const getRandomImg = () => {
     const images = [
         "/src/assets/dog-1.jpg",

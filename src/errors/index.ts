@@ -17,12 +17,6 @@ type TObjectValues<T> = T[keyof T];
 
 export type TErrorNames = TObjectValues<typeof ERROR_NAMES>;
 
-// export interface IError {
-//     name: string;
-//     message: string;
-//     stack?: string;
-// }
-
 export type SuccessStatusCode = 200 | 201 | 202
 
 export type ErrorStatusCode = 400 | 401 | 403 | 404 | 500;

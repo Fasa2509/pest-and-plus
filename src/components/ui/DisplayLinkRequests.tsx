@@ -1,16 +1,16 @@
 import { useState, type FC } from "preact/compat";
+import { useStore } from "@nanostores/preact";
 
 import type { IPetInfo, IUser } from "@/types/User";
-import { useStore } from "@nanostores/preact";
 import { $tasks, $updateTasks } from "@/stores/Loading";
 import { useNotifications } from "@/hooks/useNotifications";
 import { PromiseConfirmHelper } from "@/stores/Notifications";
-import "./DisplayLinkRequest.css";
 import { ModalButton } from "../hoc/ModalButton";
 import { PetInfo } from "./PetInfo";
 import type { IResponseLinkRequest } from "@/types/LinkRequest";
 import { responseLinkRequest } from "@/database/DbLink";
 import { $responseLinkRequest } from "@/stores/UserInfo";
+import "./DisplayLinkRequest.css";
 
 interface Props {
     userInfo: IUser;
@@ -54,11 +54,11 @@ export const DisplayLinkRequests: FC<Props> = ({ userInfo }) => {
                     <div className={`request-bar ${(!alreadyDisplayed) ? "request-slide-in" : ""} ${disappear === `link-request-${req.id}` ? "fade-out-request" : ""}`} style={{ animationDelay: `${Number(index) * 200}ms` }} id={`link-request-${req.id}`}>
                         {
                             <div className="bar-img-container">
-                                <img src={req.requestingUser.image || "/default-image.png"} alt={`Solicitud de ${req.requestingUser.name}`} />
+                                <img src={req.askedPet.creator.image || "/default-image.png"} alt={`Solicitud de ${req.requestingUser.name}`} />
                             </div>
                         }
                         <span class="bar-title">
-                            ¡{req.requestingUser.name} quiere enlazarte con <ModalButton children={<PetInfo pet={req.askedPet} />} textButton={req.askedPet.name} textTitle={req.askedPet.name} round full />!
+                            ¡{req.askedPet.creator.name} quiere enlazarte con <ModalButton children={<PetInfo pet={req.askedPet} />} textButton={req.askedPet.name} textTitle={req.askedPet.name} round full />!
                             <div style={{ display: "flex", columnGap: "1rem" }}>
                                 <button disabled={tasks.includes("Respondiendo solicitud")} className="button" style={{ backgroundColor: "var(--success-color)", color: "#fff", padding: ".4rem .8rem", borderRadius: "5rem" }} onClick={() => handleResponse({ id: req.id, petInfo: req.askedPet, response: "accept" })}>Aceptar</button>
                                 <button disabled={tasks.includes("Respondiendo solicitud")} className="button" style={{ backgroundColor: "var(--error-color)", color: "#fff", padding: ".4rem .8rem", borderRadius: "5rem" }} onClick={() => handleResponse({ id: req.id, petInfo: req.askedPet, response: "reject" })}>Rechazar</button>

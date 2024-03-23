@@ -1,3 +1,4 @@
+import type { IUpdatePet } from "@/types/Pet";
 import type { IEditUser, IPetInfo, IPostInfo, IUser } from "@/types/User";
 import { action, deepMap } from "nanostores";
 
@@ -34,6 +35,7 @@ export const $updateUserPosts = action($userInfo, 'updateUserPosts', (store, inf
         ...state,
         posts: [info, ...state.posts],
     });
+
     return store.get();
 });
 
@@ -46,6 +48,7 @@ export const $removeUserPost = action($userInfo, 'removeUserPost', (store, postI
         ...state,
         posts: state.posts.filter((post) => post.id !== postId),
     });
+
     return store.get();
 });
 
@@ -58,6 +61,7 @@ export const $updateUserPets = action($userInfo, 'updateUserPets', (store, info:
         ...state,
         pets: [info, ...state.pets],
     });
+
     return store.get();
 });
 
@@ -70,6 +74,8 @@ export const $toggleFollowingPet = action($userInfo, "toggleFollowingPet", (stor
         ...state,
         following: (isFollowed) ? state.following.filter((p) => p.id !== pet.id) : [...state.following, pet],
     });
+
+    return store.get();
 });
 
 export const $responseLinkRequest = action($userInfo, "responseLinkRequest", (store, id: number, pet: IPetInfo, response: "accept" | "reject") => {
@@ -82,4 +88,19 @@ export const $responseLinkRequest = action($userInfo, "responseLinkRequest", (st
         linkRequests: state.linkRequests.filter((req) => req.id !== id),
         pets: (response === "accept") ? [pet, ...state.pets] : state.pets,
     });
+
+    return store.get();
+});
+
+export const $updateUserPetInfo = action($userInfo, "updateUserPetInfo", (store, petId: number, petInfo: IUpdatePet) => {
+    const state = store.get();
+
+    if (!state.id) return state;
+
+    store.set({
+        ...state,
+        pets: state.pets.map((pet) => pet.id !== petId ? pet : { ...pet, ...petInfo }),
+    });
+
+    return store.get();
 });
