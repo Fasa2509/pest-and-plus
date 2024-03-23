@@ -20,6 +20,8 @@ import { NotificationsProvider } from "../hoc/NotificationsProvider";
         <Loader client:load />
 
         <NotificationsProvider client:load />
+
+        <a href="/feed" class="continue-link">Continuar sin sesión</a>
     </body>
 </html>
 <style is:global>
@@ -44,7 +46,27 @@ import { NotificationsProvider } from "../hoc/NotificationsProvider";
 
     body {
         background-image: url("/bg.png");
+        position: relative;
         /* background-size: 25%; */
+    }
+
+    .continue-link {
+        background-color: var(--info-color);
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        color: #fafafa;
+        text-decoration: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 5rem;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 12px -8px #343434;
+        transition: transform 250ms ease;
+    }
+
+    .continue-link:hover,
+    .continue-link:focus-visible {
+        transform: scale(1.02);
     }
 
     .shadow-island {

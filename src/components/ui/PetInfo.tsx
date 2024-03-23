@@ -15,6 +15,7 @@ import { PromiseConfirmHelper } from "@/stores/Notifications";
 import { ModalButton } from "../hoc/ModalButton";
 import { LinkPetForm } from "./LinkPetForm";
 import { SelectOptions } from "./SelectOptions";
+import { MyImage } from "../layouts/MyImage";
 import "./PetsInfo.css";
 
 interface Props {
@@ -155,20 +156,21 @@ export const PetInfo: FC<Props> = ({ pet }) => {
                 </div>
             </div>
             <div className="pet-info-first">
-                <div className="img-container">
-                    <img src={petInfo.image || "/default-image.png"} alt={pet.name} />
-                    {
-                        isEditing && (
-                            <div className="img-editing fadeIn" onClick={() => fileRef.current!.click()}>
-                                <input ref={fileRef} type="file" style={{ display: "none" }} />
-                                {
-                                    (auxImg)
-                                        ? <img src="" alt="" />
-                                        : '+'
-                                }
-                            </div>
-                        )
-                    }
+                <div>
+                    <MyImage src={petInfo.image || "/default-image.png"} alt={pet.name} size="lg" center>
+                        {
+                            isEditing && (
+                                <div className="img-editing fadeIn" onClick={() => fileRef.current!.click()}>
+                                    <input ref={fileRef} type="file" style={{ display: "none" }} />
+                                    {
+                                        (auxImg)
+                                            ? <img src="" alt="" />
+                                            : '+'
+                                    }
+                                </div>
+                            )
+                        }
+                    </MyImage>
                 </div>
                 <div className="behaviors-container">
                     {
@@ -199,7 +201,7 @@ export const PetInfo: FC<Props> = ({ pet }) => {
                 </div>
                 {
                     (!isEditing) && (
-                        <div class="fadeInf" style={{ display: "flex", flexDirection: "column" }}>
+                        <div class="fadeIn" style={{ display: "flex", flexDirection: "column" }}>
                             <h3>Otros dueños de {pet.name}</h3>
                             <SliderOptions children={petInfo.owners.map((user) => <div class="slider-option"><LinkCard href={`/profile/${user.id}`} imgSrc={user.image} textLink={user.name} /></div>)} />
                             {(userInfo.id && petInfo.creator.id === userInfo.id) &&

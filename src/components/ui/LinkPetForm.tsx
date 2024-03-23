@@ -68,17 +68,17 @@ export const LinkPetForm: FC<Props> = ({ petInfo }) => {
                     <input ref={inputRef} class="input" type="number" name="id" id="pet-id" placeholder="ID de usuario" min={0} step={1} />
                 </div>
 
+                <button class="button" type="button" onClick={handleAddId}>Agregar id</button>
+
                 <div class="ids-container">
                     {
-                        ids.map((id) => <button class="button chip bg-third fadeIn" onClick={(e: MouseEvent) => setIds((prevState) => prevState.filter((spanId) => spanId !== id))}>{id}</button>)
+                        ids.map((id) => <button type="button" class="button chip bg-third fadeIn" onClick={() => setIds((prevState) => prevState.filter((spanId) => spanId !== id))}>{id}</button>)
                     }
                 </div>
 
                 {
                     (ids.length > 0) && <p class="fadeIn">Haz click sobre un id para removerlo.</p>
                 }
-
-                <button class="button" type="button" onClick={handleAddId}>Agregar id</button>
 
                 <div data-stretch></div>
 

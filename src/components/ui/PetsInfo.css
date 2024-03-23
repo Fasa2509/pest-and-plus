@@ -121,24 +121,27 @@ button.close-icon-container {
     padding: 0;
 }
 
-.pet-info-first .img-container .img-editing {
+div.img-editing {
     font-size: 7rem;
+    border-radius: 4px;
 }
 
-.pet-info-first .img-container {
+/* .img-container {
+    width: 100%;
+    aspect-ratio: 1;
     max-width: 400px;
     margin: 0 auto;
     border-radius: 4px;
     overflow: hidden;
     position: relative;
-}
+} */
 
-.pet-info-first .img-container img {
+/* .pet-info-first .img-container img {
     display: block;
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
-}
+} */
 
 .pet-info-first p {
     font-size: 1.2rem;

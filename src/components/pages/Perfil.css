@@ -151,7 +151,7 @@ h3 {
 /* PerfilInfo */
 .perfil-info {
     display: grid;
-    grid-template-columns: 33% 1fr;
+    grid-template-columns: min(33%, 180px) 1fr;
     grid-template-rows: 0fr 1fr;
     grid-template-areas:
         "img data"
@@ -166,9 +166,13 @@ h3 {
 } */
 
 .perfil-img {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
     grid-area: img;
+    aspect-ratio: 1;
+    border-radius: 50rem;
+    height: min-content;
+    overflow: hidden;
 }
 
 .perfil-img .img-container {
@@ -186,7 +190,7 @@ h3 {
     object-fit: cover;
 }
 
-.img-editing {
+.img-profile-editing {
     display: flex;
     justify-content: center;
     align-items: center;

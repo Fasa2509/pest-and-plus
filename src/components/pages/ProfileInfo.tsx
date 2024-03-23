@@ -5,6 +5,7 @@ import { $setUpdatedUserInfo, $updateUserInfo, $userInfo } from "@/stores/UserIn
 import { useNotifications } from "@/hooks/useNotifications";
 import { frontGetUserInfo, updateUserInfo } from "@/database/DbUser";
 import { $tasks, $updateTasks } from "@/stores/Loading";
+import { MyImage } from "../layouts/MyImage";
 import "./Perfil.css";
 
 interface Props {
@@ -57,7 +58,21 @@ export const ProfileInfo: FC<Props> = () => {
             <div class="content-container">
                 <section class="perfil-info">
                     <div className="perfil-img">
-                        <div className="img-container">
+                        <MyImage src={(userInfo.image) ? userInfo.image : "/default-image.png"} alt="Perfil" size="sm">
+                            {
+                                isEditing && (
+                                    <div className="img-profile-editing fadeIn" onClick={() => fileRef.current!.click()}>
+                                        <input ref={fileRef} type="file" style={{ display: "none" }} />
+                                        {
+                                            (auxImg)
+                                                ? <img src="" alt="" />
+                                                : '+'
+                                        }
+                                    </div>
+                                )
+                            }
+                        </MyImage>
+                        {/* <div className="img-container">
                             <img src={(userInfo.image) ? userInfo.image : "/default-image.png"} alt="Perfil" />
                             {
                                 isEditing && (
@@ -71,7 +86,7 @@ export const ProfileInfo: FC<Props> = () => {
                                     </div>
                                 )
                             }
-                        </div>
+                        </div> */}
                     </div>
                     <div className="perfil-data">
                         <div className="name">

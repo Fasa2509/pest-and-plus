@@ -1,0 +1,106 @@
+.img_container {
+    display: block;
+    background-color: #ededed;
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+
+    --radius: 4px;
+    --xl-width: 450px;
+    --lg-width: 400px;
+    --sm-width: 180px;
+    --xm-width: 150px;
+}
+
+.img_container.center {
+    margin: 0 auto;
+}
+
+.img_container img {
+    max-width: 100%;
+    height: auto;
+    font-style: italic;
+    display: block;
+    position: relative;
+    opacity: 0;
+    aspect-ratio: 1;
+    object-fit: cover;
+    z-index: 1;
+    border-radius: var(--radius);
+    transition: opacity 450ms ease;
+}
+
+img.show_img {
+    opacity: 1;
+}
+
+.asp_rat_1_1 {
+    aspect-ratio: 1;
+}
+
+.img_container::after {
+    position: absolute;
+    top: 0;
+    left: -5rem;
+    content: "";
+    display: block;
+    width: 5rem;
+    height: 100%;
+    background-image: linear-gradient(to right, transparent, #fafafa88 50%, transparent);
+}
+
+.container_xl.img_container {
+    max-width: var(--xl-width);
+}
+
+.container_lg.img_container {
+    max-width: var(--lg-width);
+}
+
+.container_sm.img_container {
+    max-width: var(--sm-width);
+}
+
+.container_xm.img_container {
+    max-width: var(--xm-width);
+}
+
+.container_xl.img_container::after {
+    animation: slide-flash-xl 1500ms ease 0ms infinite;
+}
+
+.container_lg.img_container::after {
+    animation: slide-flash-lg 1500ms ease 0ms infinite;
+}
+
+.container_sm.img_container::after {
+    animation: slide-flash-sm 1500ms ease 0ms infinite;
+}
+
+.container_xm.img_container::after {
+    animation: slide-flash-xm 1500ms ease 0ms infinite;
+}
+
+@keyframes slide-flash-xl {
+    to {
+        transform: translateX(calc(var(--xl-width) + 5rem));
+    }
+}
+
+@keyframes slide-flash-lg {
+    to {
+        transform: translateX(calc(var(--lg-width) + 5rem));
+    }
+}
+
+@keyframes slide-flash-sm {
+    to {
+        transform: translateX(calc(var(--sm-width) + 5rem));
+    }
+}
+
+@keyframes slide-flash-xm {
+    to {
+        transform: translateX(calc(var(--xm-width) + 5rem));
+    }
+}
