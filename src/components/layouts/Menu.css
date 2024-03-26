@@ -39,7 +39,8 @@
         background-color 500ms ease-out;
 }
 
-.first {
+.first,
+.theme-button {
     cursor: pointer;
 }
 
@@ -52,12 +53,12 @@
 }
 
 .menu a span,
-.menu .first span {
+.menu button span {
     font-size: 18px;
 }
 
 .menu>a:hover,
-.menu>.first:hover,
+.menu>button:hover,
 .menu>a:focus-visible,
 .menu>.first:focus-visible {
     border-top-color: var(--main-color);
@@ -119,6 +120,10 @@
         background-color: rgb(248, 248, 248);
         transform: translateX(-100%);
     }
+
+    .dark-mode .menu .first.hide-btn:hover {
+        background-color: var(--dark-bg-color);
+    }
 }
 
 .menu .first.hide-btn:focus {
@@ -167,6 +172,17 @@
 }
 
 .svg-icon.feed-icon circle {
+    stroke: var(--main-color);
+    stroke-width: 1;
+}
+
+.svg-icon.theme-icon path,
+.svg-icon.theme-icon polygon,
+.svg-icon.theme-icon rect {
+    fill: var(--main-color);
+}
+
+.svg-icon.theme-icon circle {
     stroke: var(--main-color);
     stroke-width: 1;
 }

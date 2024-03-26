@@ -76,18 +76,28 @@ import { DbClient } from "@/database/Db";
 // };
 
 
+const USERS_LOGGED: Record<string, number> = {};
+
+
 export const PATCH: APIRoute = async ({ request }) => {
     try {
         let { email } = await request.json() as { email: string };
 
+        if (!isValidEmail(email)) throw new ValidationError("El correo no es válido", 400);
+
         email = email.trim().toLocaleLowerCase();
 
-        if (!isValidEmail(email)) throw new ValidationError("El correo no es válido", 400);
+        if (USERS_LOGGED[email] && USERS_LOGGED[email] > new Date().getTime() - 3_600_000) {
+            return CustomResponse<ApiResponse>({
+                error: false,
+                message: ["Podrás solicitar otro en una hora", "Ya te enviamos un correo de validación recientemente"],
+            });
+        };
 
         const user = await DbClient.user.findUnique({
             where: {
                 email,
-            }
+            },
         });
 
         if (!user) throw new ValidationError("No existe un usuario con ese correo", 400);
@@ -101,26 +111,38 @@ export const PATCH: APIRoute = async ({ request }) => {
 
         if (!token) throw new ParsingError("Ocurrió un error generando el token", 500);
 
-        console.log({ token })
-        /*
-                const transporter = nodemailer.createTransport({
-                    host: "smtp.gmail.com",
-                    port: 465,
-                    secure: true, // true for 465, false for other ports
-                    auth: {
-                        user: process.env.MAILER__USER,
-                        pass: process.env.MAILER__PASS,
-                    },
-                    tls: {
-                        rejectUnauthorized: false,
-                    },
-                });
-        
-                await transporter.sendMail({
-                    from: 'PetsAndPlus+',
-                    to: email,
-                    subject: "PetsAnd+ - Inicio de Sesión",
-                    html: `
+        if (process.env.NODE_ENV === "development") {
+            console.log({ token })
+        } else if (process.env.NODE_ENV === "production") {
+            const transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 465,
+                secure: true, // true for 465, false for other ports
+                auth: {
+                    user: process.env.MAILER__USER,
+                    pass: process.env.MAILER__PASS,
+                },
+                tls: {
+                    rejectUnauthorized: false,
+                },
+            });
+
+            await transporter.sendMail({
+                from: 'PetsAndPlus+',
+                to: email,
+                subject: "PetsAnd+ - Inicio de Sesión",
+                text: `¡Hola de nuevo, ${user.name.split(' ')[0]}!. Hemos recibido una solicitud para iniciar sesión en PetsAndPlus.
+
+                Haz click en el siguiente enlace en todos los dispositivos donde quieres iniciar sesión para ver tu cuenta desde cualquier parte.
+
+                ${globalThis.process.env.DOMAIN_NAME}/login/${token}`
+            });
+
+            /*await transporter.sendMail({
+                from: 'PetsAndPlus+',
+                to: email,
+                subject: "PetsAnd+ - Inicio de Sesión",
+                html: `
         <head>
             <style>
                 .container {
@@ -204,12 +226,11 @@ export const PATCH: APIRoute = async ({ request }) => {
             </section>
         </body>
                     `
-                });
-        */
-        // return CustomResponse<ApiResponse>({
-        //     error: false,
-        //     message: ["Enviamos un correo eléctronico de inicio de sesión"],
-        // });
+            });*/
+        }
+
+        USERS_LOGGED[email] = new Date().getTime();
+
         return CustomResponse<ApiResponse>({
             error: false,
             message: ["Hemos enviado un correo eléctronico de inicio de sesión"],

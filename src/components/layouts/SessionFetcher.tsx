@@ -19,10 +19,11 @@ export const SessionFetcher: FC<Props> = () => {
         (async () => {
             if (userInfo.id) return;
 
-            const id = new URLSearchParams(document.cookie).get("user-id");
+            const id = new URLSearchParams(document.cookie.split("; ").join("&")).get("user-id");
             if (!id || isNaN(Number(id)) || Number(id) < 1) {
                 // TODO
-                console.error("Otra vez el temita con el id de inicio de sesion");
+                // console.error("Otra vez el temita con el id de inicio de sesion");
+                $updateUserInfo(null);
                 return;
             };
 
@@ -30,7 +31,7 @@ export const SessionFetcher: FC<Props> = () => {
 
             console.log({ res })
 
-            !res.error && $updateUserInfo(res.payload.user);
+            $updateUserInfo((!res.error) ? res.payload.user : null);
             res.error && createNotification({ type: "error", content: res.message[0] });
         })();
     }, []);

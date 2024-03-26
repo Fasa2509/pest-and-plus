@@ -1,7 +1,7 @@
 {
   "name": "work-learning",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -10,23 +10,29 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.5.10",
     "@astrojs/node": "^7.0.4",
     "@astrojs/preact": "^3.1.0",
     "@astrojs/vercel": "^6.1.4",
+    "@aws-sdk/client-s3": "3.540.0",
+    "@aws-sdk/s3-request-presigner": "3.540.0",
     "@nanostores/preact": "0.5.0",
     "@nanostores/query": "0.2.8",
     "@prisma/client": "5.8.0",
     "astro": "^4.1.2",
     "axios": "1.6.5",
+    "cookie": "0.6.0",
     "date-fns": "3.2.0",
     "jsonwebtoken": "^9.0.2",
     "nanostores": "0.9.5",
     "nodemailer": "^6.9.8",
     "preact": "^10.19.3",
+    "typescript": "^5.4.3",
     "zod": "3.21.4"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.1",
+    "@types/cookie": "^0.6.0",
     "@types/jsonwebtoken": "9.0.5",
     "@types/node": "^20.11.2",
     "@types/nodemailer": "6.4.14",

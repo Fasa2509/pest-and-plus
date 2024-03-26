@@ -5,10 +5,9 @@ import { useStore } from "@nanostores/preact";
 import { useNotifications } from "@/hooks/useNotifications";
 import { PostContainer } from "./PostsContainer";
 import { $updateTasks } from "@/stores/Loading";
-import { $dataLoaded, $updateCachedInfo, $updateCounts } from "@/stores/DataLoaded";
-import { getData, getInfo } from "@/database/DbInfo";
+import { $dataLoaded, $updateCachedInfo } from "@/stores/DataLoaded";
+import { getInfo } from "@/database/DbInfo";
 import { AsideInfo } from "../ui/AsideInfo";
-import { AsideData } from "../ui/AsideData";
 import { RecentPosts } from "../pages/RecentPosts";
 import "./Feed.css";
 

@@ -1,4 +1,4 @@
-import { useRef, type FC, useState } from "preact/compat";
+import { useRef, type FC, useState, type TargetedEvent } from "preact/compat";
 import { useStore } from "@nanostores/preact";
 
 import { $updateUserPets } from "@/stores/UserInfo";
@@ -6,8 +6,10 @@ import { $tasks, $updateTasks } from "@/stores/Loading";
 import { SelectOptions } from "./SelectOptions";
 import type { IUser } from "@/types/User";
 import { uploadNewPet } from "@/database/DbPet";
-import { ValidPetBehavior, ValidPetType, petBehaviorTranslations, petTypeTranslations, getRandomImg, type INewPet, EnumPetTypeTranslations, EnumPetBehaviorTranslations, reversePetTypeTranslations, reversePetBehaviorTranslations } from "@/types/Pet";
+import { ValidPetBehavior, ValidPetType, petBehaviorTranslations, petTypeTranslations, type INewPet, EnumPetTypeTranslations, EnumPetBehaviorTranslations, reversePetTypeTranslations, reversePetBehaviorTranslations } from "@/types/Pet";
 import { useNotifications } from "@/hooks/useNotifications";
+import { ValidExtensions } from "@/types/Api";
+import { uploadImageToS3 } from "@/database/DbImages";
 import "./UploadPostForm.css";
 
 interface Props {
@@ -20,6 +22,7 @@ export const UploadPetForm: FC<Props> = ({ userInfo }) => {
 
     const [selectedPetType, setSelectedPetType] = useState<EnumPetTypeTranslations | "">("");
     const [selectedBehaviors, setSelectedBehaviors] = useState<Array<EnumPetBehaviorTranslations>>([]);
+    const [auxImg, setAuxImg] = useState("");
 
     const { createNotification } = useNotifications();
 
@@ -29,6 +32,28 @@ export const UploadPetForm: FC<Props> = ({ userInfo }) => {
 
     if (!userInfo.id) return <></>;
 
+    const handleFile = async (e: TargetedEvent<HTMLInputElement>) => {
+        if (!fileRef.current || !fileRef.current.files || !fileRef.current.files[0]) return;
+
+        $updateTasks("Subiendo imagen");
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(fileRef.current.files[0]);
+        fileReader.addEventListener("load", (e) => {
+            const result = e.target!.result;
+
+            if (!result) return createNotification({ type: "error", content: "Ocurrió un error cargando la imagen" });
+
+            setAuxImg(result as string);
+
+            $updateTasks("Subiendo imagen");
+        });
+
+        fileReader.addEventListener('error', () => {
+            createNotification({ type: "error", content: "Ocurrió un error cargando la imagen" });
+            $updateTasks("Subiendo imagen");
+        });
+    };
+
     const handleSubmit = async (e: SubmitEvent) => {
         e.preventDefault();
 
@@ -36,9 +61,20 @@ export const UploadPetForm: FC<Props> = ({ userInfo }) => {
         if (!selectedPetType) return createNotification({ type: "error", content: "No has seleccionado el tipo de mascota" });
         if (selectedBehaviors.length < 1) return createNotification({ type: "error", content: "No has seleccionado actitudes de tu mascota" });
 
+        let img: string | null = null;
+
+        if (auxImg && fileRef.current && fileRef.current.files && fileRef.current.files[0]) {
+            $updateTasks("Subiendo imagen");
+            const resUpload = await uploadImageToS3(fileRef.current.files[0], "pet");
+            $updateTasks("Subiendo imagen");
+
+            if (resUpload.error) return createNotification({ type: "error", content: "No se pudo subir la imagen" });
+            img = resUpload.payload.imgUrl
+        };
+
         const data: INewPet = {
             name: nameRef.current.value,
-            image: getRandomImg(),
+            image: img,
             petType: reversePetTypeTranslations[selectedPetType],
             bio: bioRef.current.value ? bioRef.current.value : undefined,
             behaviors: selectedBehaviors.map((b) => reversePetBehaviorTranslations[b]),
@@ -102,7 +138,11 @@ export const UploadPetForm: FC<Props> = ({ userInfo }) => {
 
                 {isMobile && <div data-stretch></div>}
 
-                <input ref={fileRef} class="input" type="file" style={{ display: "none" }} />
+                {
+                    (auxImg) && <div class="img-container aux-img-container m-center-element fadeIn"><img class="aux-img" src={auxImg} alt="Nueva imagen de perfil" /></div>
+                }
+
+                <input ref={fileRef} type="file" style={{ display: "none" }} accept={ValidExtensions.join(", ").slice(0, -2)} onChange={handleFile} />
                 <button type="button" id="button-pet-img" className="button" disabled={tasks.includes("Creando mascota")} onClick={() => fileRef.current!.click()}>Subir imagen</button>
 
                 <button type="submit" class="button bg-secondary upload-submit-button" disabled={tasks.includes("Creando mascota")}>Subir mascota</button>

@@ -27,6 +27,8 @@ if (token) {
 
 const user = await backGetUserInfo(userId);
 
+if (user?.name === "USUARIO DESHABILITADO") return Astro.redirect("/");
+
 // const token = Astro.cookies.get("auth-token");
 
 // if (!token) return Astro.redirect("/feed");

@@ -85,10 +85,8 @@ export const PUT: APIRoute = async ({ params, cookies, request }) => {
             },
         });
 
-        console.log({ petInfo })
-
         if (!pet) throw new CustomError("No se encontró mascota por ese id", 404);
-        if (pet.creatorId !== userInfo.id) throw new CustomError("No puedes actualizar esta mascota", 400);
+        if (pet.creatorId !== userInfo.id && userInfo.role !== "ADMIN") throw new CustomError("No puedes actualizar esta mascota", 400);
 
         await DbClient.pet.update({
             where: {

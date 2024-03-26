@@ -11,6 +11,7 @@ import type { IResponseLinkRequest } from "@/types/LinkRequest";
 import { responseLinkRequest } from "@/database/DbLink";
 import { $responseLinkRequest } from "@/stores/UserInfo";
 import "./DisplayLinkRequest.css";
+import { MyImage } from "../layouts/MyImage";
 
 interface Props {
     userInfo: IUser;
@@ -53,9 +54,7 @@ export const DisplayLinkRequests: FC<Props> = ({ userInfo }) => {
                 userInfo.linkRequests.map((req, index) => (
                     <div className={`request-bar ${(!alreadyDisplayed) ? "request-slide-in" : ""} ${disappear === `link-request-${req.id}` ? "fade-out-request" : ""}`} style={{ animationDelay: `${Number(index) * 200}ms` }} id={`link-request-${req.id}`}>
                         {
-                            <div className="bar-img-container">
-                                <img src={req.askedPet.creator.image || "/default-image.png"} alt={`Solicitud de ${req.requestingUser.name}`} />
-                            </div>
+                            <MyImage src={req.askedPet.creator.image || "/default-image.png"} alt={`Solicitud de ${req.requestingUser.name}`} classes="bar-img-container" />
                         }
                         <span class="bar-title">
                             ¡{req.askedPet.creator.name} quiere enlazarte con <ModalButton children={<PetInfo pet={req.askedPet} />} textButton={req.askedPet.name} textTitle={req.askedPet.name} round full />!

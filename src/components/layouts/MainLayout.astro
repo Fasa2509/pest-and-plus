@@ -8,6 +8,8 @@ import { Loader } from "./Loader";
 import { Menu } from "./Menu";
 import { SessionFetcher } from "./SessionFetcher";
 
+const theme = Astro.cookies.get("theme") || { value: "light" };
+
 interface Props {
     title: string;
 }
@@ -25,7 +27,7 @@ const { title } = Astro.props;
 
         <ViewTransitions />
     </head>
-    <body>
+    <body class={theme?.value === "dark" ? "dark-mode" : "light-mode"}>
         <Header />
 
         <slot />
@@ -70,13 +72,18 @@ const { title } = Astro.props;
             :root {
                 --main-color: #54dbdd;
                 --main-color-hover: rgb(78, 201, 203);
-                /* --secondary-color: #e55; */
                 --secondary-color: rgb(244, 91, 91);
-                /* --secondary-color-hover: rgb(227, 73, 73); */
                 --secondary-color-hover: rgb(222, 68, 68);
                 --third-color: rgb(133, 243, 216);
                 --third-color-hover: rgb(102, 218, 189);
                 --header-height: 68px;
+
+                --dark-bg-color: #323232;
+                --dark-bg-color-hover: #474747;
+                --darkest-bg-color: #1b1b1b;
+                --dark-text-color: #f4f4f4;
+                --dark-text-color-hover: #e4e4e4;
+                --darkest-text-color: #dbdbdb;
 
                 --success-color: rgb(0, 201, 0);
                 --error-color: rgb(255, 55, 55);
@@ -101,10 +108,132 @@ const { title } = Astro.props;
                 /* background-color: red; */
                 border-radius: 0.5rem;
                 font-size: 1rem;
-                transition:
-/* transform 500ms ease,
-outline 250ms ease, */ background-color
-                    250ms ease;
+                transition: background-color 250ms ease;
+            }
+
+            .skeleton {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                background-color: #e7e7e7 !important;
+                overflow: hidden;
+            }
+
+            .dark-mode .skeleton {
+                background-color: #656565 !important;
+            }
+
+            .skeleton .long.flash {
+                background-image: linear-gradient(
+                    to right,
+                    transparent 5%,
+                    #fafafa88 15% 15%,
+                    transparent 25%
+                );
+            }
+
+            .flash {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: -30%;
+                width: 100%;
+                height: 100%;
+                background-image: linear-gradient(
+                    to right,
+                    transparent,
+                    #fafafa88 15% 15%,
+                    transparent 30%
+                );
+                animation: slide-flash 1200ms ease infinite;
+            }
+
+            @keyframes slide-flash {
+                to {
+                    transform: translateX(130%);
+                }
+            }
+
+            .dark-mode .loader {
+                background-color: #656565;
+            }
+
+            .dark-mode {
+                background-color: var(--darkest-bg-color);
+                color: var(--darkest-text-color);
+            }
+
+            .dark-mode footer {
+                color: #343434;
+            }
+
+            :root .dark-mode {
+                --main-color: #4bd1d3;
+                --main-color-hover: rgb(72, 192, 194);
+                --secondary-color: rgb(233, 81, 81);
+                --secondary-color-hover: rgb(222, 68, 68);
+                --third-color: rgb(124, 237, 209);
+                --third-color-hover: rgb(102, 218, 189);
+            }
+
+            .dark-mode .sub-container .content-container,
+            .dark-mode .modal-full,
+            .dark-mode .menu > .first:focus,
+            .dark-mode .menu a,
+            .dark-mode .menu button,
+            .dark-mode .menu .first,
+            .dark-mode .select-container,
+            .dark-mode .options-container span,
+            .dark-mode .asides-container aside,
+            .dark-mode .post-article,
+            .dark-mode .post-article a,
+            .dark-mode .modal-bar,
+            .dark-mode .button-img-container,
+            .dark-mode input,
+            .dark-mode textarea {
+                background-color: var(--dark-bg-color);
+                color: var(--dark-text-color);
+            }
+
+            .dark-mode .menu > * {
+                box-shadow: 0 0 10px -4px var(--dark-text-color-hover);
+            }
+
+            .dark-mode .text-container {
+                box-shadow: 0 0 6px -4px var(--dark-text-color-hover);
+            }
+
+            .dark-mode .modal-bar {
+                box-shadow: 0 0 10px -6px var(--dark-text-color-hover);
+            }
+
+            .dark-mode .modal-bar:hover {
+                background-color: var(--dark-bg-color-hover);
+            }
+
+            .dark-mode .button-card,
+            .dark-mode .link-container {
+                box-shadow: 0 2px 10px -6px var(--dark-text-color-hover);
+            }
+
+            .dark-mode .select-container {
+                box-shadow: 0 2px 10px -8px var(--dark-text-color-hover);
+            }
+
+            .dark-mode .options-container .active,
+            .dark-mode .options-container span:hover,
+            .dark-mode .options-container span:focus-visible {
+                background-color: var(--dark-bg-color-hover);
+            }
+
+            .dark-mode input,
+            .dark-mode textarea {
+                box-shadow: 0 0.1rem 0.8rem -0.6rem var(--darkest-text-color);
+            }
+
+            .dark-mode input::placeholder,
+            .dark-mode textarea::placeholder {
+                color: grey;
             }
 
             .full-width {
@@ -125,20 +254,34 @@ outline 250ms ease, */ background-color
                 margin-right: auto;
             }
 
+            .aux-img-container {
+                width: 100%;
+                max-width: 450px;
+                height: auto;
+                display: block;
+                background-color: #ededed;
+                border-radius: 4px;
+                box-shadow: 0 2px 12px -8px #2e2e2e;
+            }
+
+            .dark-mode .aux-img-container {
+                box-shadow: 0 2px 12px -8px var(--dark-text-color-hover);
+            }
+
+            .aux-img-container img {
+                border-radius: 4px;
+                width: 100%;
+                height: 100%;
+                font-style: italic;
+                display: block;
+            }
+
             /* .img-container {
                 max-width: 100%;
                 height: auto;
                 display: block;
                 background-color: #ededed;
             } */
-
-            /*img {
-                max-width: 100%;
-                height: auto;
-                vertical-align: middle;
-                font-style: italic;
-                display: block;
-            }*/
 
             .bg-secondary {
                 background-color: var(--secondary-color);
@@ -208,6 +351,12 @@ outline 250ms ease, */ background-color
                 select:focus-visible {
                     outline: thin solid var(--secondary-color);
                 }
+            }
+
+            .dark-mode .shadow-island {
+                background-color: var(--dark-bg-color);
+                color: var(--dark-text-color);
+                box-shadow: 0 0 1rem -0.8rem var(--dark-text-color-hover);
             }
 
             .shadow-island {

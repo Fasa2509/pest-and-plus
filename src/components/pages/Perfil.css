@@ -160,14 +160,7 @@ h3 {
     gap: .8rem;
 }
 
-/* .img-container {
-    max-width: 100%;
-    height: auto;
-} */
-
 .perfil-img {
-    /* display: flex;
-    justify-content: center; */
     grid-area: img;
     aspect-ratio: 1;
     border-radius: 50rem;
@@ -180,7 +173,7 @@ h3 {
     overflow: hidden;
     align-self: flex-start;
     border-radius: 100rem;
-    width: 75%;
+    /* width: 75%; */
     position: relative;
 }
 

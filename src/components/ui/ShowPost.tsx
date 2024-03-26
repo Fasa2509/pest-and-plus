@@ -5,6 +5,7 @@ import { PetInfo } from "./PetInfo";
 import { ModalButton } from "../hoc/ModalButton";
 import type { IPost } from "@/types/Post";
 import { getTimeToNow } from "@/utils/StringFormatters";
+import { MyImage } from "../layouts/MyImage";
 import "./PostsStyles.css";
 
 interface Props {
@@ -20,9 +21,7 @@ export const ShowPost: FC<Props> = ({ post, authorActions = true }) => {
             {
                 authorActions && (
                     <a class="author-info" href={`/profile/${post.author.id}`}>
-                        <div className="img-container img-author-container">
-                            <img src={post.author.image || "/default-image.png"} alt={post.author.name} />
-                        </div>
+                        <MyImage src={post.author.image || "/default-image.png"} alt={post.author.name} classes="img-author-container" />
                         <span>{post.author.name}</span>
                     </a>
                 )
@@ -32,13 +31,14 @@ export const ShowPost: FC<Props> = ({ post, authorActions = true }) => {
                     ? <></>
                     : (post.images.length === 1)
                         ? (
-                            <div className="img-container post-img-container">
-                                <img src={post.images[0] || "/default-image.png"} alt="Imagen del post" />
-                            </div>
+                            <MyImage src={post.images[0] || "/default-image.png"} alt="Imagen del post" center classes="post-img-container" />
                         )
-                        : <div class="post-slider-container"><Slider identifier={"id-" + post.id} autorun={false} children={post.images.map((img) => <div className="img-container post-img-container">
-                            <img src={img || "/default-image.png"} alt="Imagen del post" />
-                        </div>)} /></div>
+                        : <div class="post-slider-container"><Slider identifier={"id-" + post.id} autorun={false} duration={10000000}
+                            children={post.images.map((img) =>
+                                <div class="slider-element">
+                                    <MyImage src={img || "/default-image.png"} alt="Imagen" />
+                                </div>
+                            )} /></div>
             }
             <p>{post.description}</p>
             <div className="post-info">

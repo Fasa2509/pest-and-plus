@@ -49,20 +49,20 @@ export const GET: APIRoute = async ({ url, cookies }) => {
         let [petsInfo, usersInfo] = await DbClient.$transaction([petsQuery, usersQuery]);
 
         // TODO: REMOVER ESTO
-        if (usersInfo.length < 9) usersInfo = [...usersInfo, ...Array(9 - usersInfo.length).fill({
-            id: 5,
-            name: "Jean Fasanella",
-            image: "/src/assets/rabbit-1.jpg",
-        })]
+        // if (usersInfo.length < 9) usersInfo = [...usersInfo, ...Array(9 - usersInfo.length).fill({
+        //     id: 5,
+        //     name: "Jean Fasanella",
+        //     image: "/src/assets/rabbit-1.jpg",
+        // })]
 
-        if (petsInfo.length < 9) petsInfo = [...petsInfo, ...Array(9 - petsInfo.length).fill({
-            behaviors: ['funny', 'happy'],
-            createdAt: "2024-01-25T22:58:40.172Z",
-            id: 4,
-            image: "/src/assets/dog-2.jpg",
-            name: "Mancha",
-            petType: "dog"
-        })]
+        // if (petsInfo.length < 9) petsInfo = [...petsInfo, ...Array(9 - petsInfo.length).fill({
+        //     behaviors: ['funny', 'happy'],
+        //     createdAt: "2024-01-25T22:58:40.172Z",
+        //     id: 4,
+        //     image: "/src/assets/dog-2.jpg",
+        //     name: "Mancha",
+        //     petType: "dog"
+        // })]
 
         return CustomResponse<ApiResponsePayload<{ petsInfo: IPetInfo[], usersInfo: IUserInfo[] }>>({
             error: false,

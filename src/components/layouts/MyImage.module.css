@@ -4,20 +4,30 @@
     position: relative;
     border-radius: var(--radius);
     overflow: hidden;
+    width: 100%;
 
     --radius: 4px;
     --xl-width: 450px;
     --lg-width: 400px;
+    --md-width: 320px;
     --sm-width: 180px;
     --xm-width: 150px;
 }
 
-.img_container.center {
-    margin: 0 auto;
+.no_border {
+    border-radius: 0;
 }
 
-.img_container img {
-    max-width: 100%;
+@media screen and (min-width: 480px) {
+    .no_border {
+        border-radius: var(--radius);
+    }
+}
+
+.img_container>img {
+    width: 100%;
+    max-width: 450px;
+    /* max-width: 100%; */
     height: auto;
     font-style: italic;
     display: block;
@@ -26,7 +36,7 @@
     aspect-ratio: 1;
     object-fit: cover;
     z-index: 1;
-    border-radius: var(--radius);
+    /* border-radius: var(--radius); */
     transition: opacity 450ms ease;
 }
 
@@ -38,15 +48,21 @@ img.show_img {
     aspect-ratio: 1;
 }
 
-.img_container::after {
+.flash {
+    display: block;
     position: absolute;
     top: 0;
-    left: -5rem;
-    content: "";
-    display: block;
-    width: 5rem;
+    left: -30%;
+    width: 100%;
     height: 100%;
-    background-image: linear-gradient(to right, transparent, #fafafa88 50%, transparent);
+    background-image: linear-gradient(to right, transparent, #fafafa88 15% 15%, transparent 30%);
+    animation: slide-flash 1200ms ease infinite;
+}
+
+@keyframes slide-flash {
+    to {
+        transform: translateX(130%);
+    }
 }
 
 .container_xl.img_container {
@@ -57,50 +73,14 @@ img.show_img {
     max-width: var(--lg-width);
 }
 
+.container_md.img_container {
+    max-width: var(--md-width);
+}
+
 .container_sm.img_container {
     max-width: var(--sm-width);
 }
 
 .container_xm.img_container {
     max-width: var(--xm-width);
-}
-
-.container_xl.img_container::after {
-    animation: slide-flash-xl 1500ms ease 0ms infinite;
-}
-
-.container_lg.img_container::after {
-    animation: slide-flash-lg 1500ms ease 0ms infinite;
-}
-
-.container_sm.img_container::after {
-    animation: slide-flash-sm 1500ms ease 0ms infinite;
-}
-
-.container_xm.img_container::after {
-    animation: slide-flash-xm 1500ms ease 0ms infinite;
-}
-
-@keyframes slide-flash-xl {
-    to {
-        transform: translateX(calc(var(--xl-width) + 5rem));
-    }
-}
-
-@keyframes slide-flash-lg {
-    to {
-        transform: translateX(calc(var(--lg-width) + 5rem));
-    }
-}
-
-@keyframes slide-flash-sm {
-    to {
-        transform: translateX(calc(var(--sm-width) + 5rem));
-    }
-}
-
-@keyframes slide-flash-xm {
-    to {
-        transform: translateX(calc(var(--xm-width) + 5rem));
-    }
 }

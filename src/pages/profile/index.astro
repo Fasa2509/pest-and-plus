@@ -10,14 +10,15 @@ import { AsideData } from "@/components/ui/AsideData";
 
 const token = Astro.cookies.get("auth-token");
 
-console.log({ token });
+// console.log({ token });
 
-if (!token) return Astro.redirect("/feed");
+if (!token) return Astro.redirect("/");
 
 let userInfo = await decodeToken(token.value);
-console.log({ userInfo });
 
-if (!userInfo) return Astro.redirect("/feed");
+// console.log({ userInfo });
+
+if (!userInfo) return Astro.redirect("/");
 
 const newToken = signToken(userInfo, true);
 

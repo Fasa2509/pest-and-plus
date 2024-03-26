@@ -7,6 +7,7 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { PAGINATION_POST, frontGetMorePosts } from "@/database/DbPost";
 import { ShowPost } from "../ui/ShowPost";
 import "../ui/PostsStyles.css";
+import { Skeleton } from "../layouts/Skeleton";
 
 interface Props {
 
@@ -35,7 +36,7 @@ export const PostContainer: FC<Props> = ({ }) => {
         })();
     }, []);
 
-    const handleSearchPosts = async (e: MouseEvent) => {
+    const handleSearchPosts = async () => {
         const max = Math.min(...posts.map((p) => new Date(p.createdAt).getTime()));
         $updateTasks("Buscando publicaciones");
         const res = await frontGetMorePosts({ limit: PAGINATION_POST, offset: 0, max });
@@ -51,7 +52,9 @@ export const PostContainer: FC<Props> = ({ }) => {
     return (
         <main>
             {
-                posts.map((post) => <ShowPost post={post} />)
+                (posts.length === 0)
+                    ? Array(3).fill(0).map(() => <Skeleton classes="post-article" heightClamp="450px" />)
+                    : posts.map((post) => <ShowPost post={post} />)
             }
             <button className="button more-posts-btn" onClick={handleSearchPosts} disabled={tasks.includes("Buscando publicaciones")}>Ver más publicaciones</button>
         </main>

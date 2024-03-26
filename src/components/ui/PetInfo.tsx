@@ -133,7 +133,7 @@ export const PetInfo: FC<Props> = ({ pet }) => {
                                     </span>
                                 </button>
                             )
-                            : (petInfo.creator.id === userInfo.id)
+                            : (petInfo.creator.id === userInfo.id || userInfo.role === "ADMIN")
                                 ? <button class={`button fadeIn ${isEditing ? "bg-secondary" : ""}`} disabled={tasks.includes("Actualizando informaición...")} onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Cancelar" : "Actualizar"}</button>
                                 : (petInfo.owners.some(({ id }) => userInfo.id === id))
                                     ? <></>
@@ -175,8 +175,8 @@ export const PetInfo: FC<Props> = ({ pet }) => {
                 <div className="behaviors-container">
                     {
                         (!isEditing)
-                            ? petInfo.behaviors.map((b) => <span class="button bg-third">{petBehaviorTranslations[b]}</span>)
-                            : selectedBehaviors.map((b) => <span class={`button bg-third ${!petInfo.behaviors.includes(b) ? "fadeIn" : ""}`}>{petBehaviorTranslations[b]}</span>)
+                            ? petInfo.behaviors.map((b) => <span class="chip">{petBehaviorTranslations[b]}</span>)
+                            : selectedBehaviors.map((b) => <span class={`chip ${!petInfo.behaviors.includes(b) ? "fadeIn" : ""}`}>{petBehaviorTranslations[b]}</span>)
                     }
                 </div>
                 <div style={{ padding: "0 3px" }}>

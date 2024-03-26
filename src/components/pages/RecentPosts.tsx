@@ -9,6 +9,7 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { ModalBar } from "../hoc/ModalBar";
 import { ShowPost } from "../ui/ShowPost";
 import type { IPost } from "@/types/Post";
+import { Skeleton } from "../layouts/Skeleton";
 
 interface Props {
 
@@ -49,7 +50,10 @@ export const RecentPosts: FC<Props> = () => {
         <aside class="recent-posts pad">
             <h3 class="h3">Publicaciones de mis seguidos</h3>
             {
-                (!userInfo.id) &&
+                (userInfo.id === undefined || (userInfo.id && postsToMap.length === 0)) && Array(3).fill(0).map(() => <Skeleton classes="button modal-bar" />)
+            }
+            {
+                (userInfo.id === null) &&
                 <p><a href="/">Inicia sesión</a> para ver las últimas publicaciones de las mascotas que sigues.</p>
             }
             {
@@ -60,7 +64,7 @@ export const RecentPosts: FC<Props> = () => {
                 !(userInfo.id && userInfo.following.length > 0)
                     ? <></>
                     : (postsToMap.length === 0)
-                        ? <span>Loading...</span>
+                        ? <></>
                         : postsToMap.map((posts, i) => <ModalBar children={
                             <section class="followed-posts-container">
                                 {
@@ -72,14 +76,3 @@ export const RecentPosts: FC<Props> = () => {
         </aside>
     );
 };
-
-/*
-: cachedPosts.map((post, i) => <ModalBar children={
-    <section class="followed-posts-container">
-        <ShowPost post={selectedPosts} />
-    </section>
-} selectChild={selectChild} imgSrc={post.images[0]} count={3} textButton={post.pet!.name} index={i} />)
-
-
-} selectChild={selectChild} imgSrc={posts.find((p) => p.images.length > 0) ? posts.find((p) => p.images.length > 0)!.images.at(0) as string : null} count={cachedPosts.reduce((acc, curr) => acc + Number(curr.pet?.id === post.pet?.id), 0)} textButton={post.pet!.name} index={i} />)
-*/

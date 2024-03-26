@@ -1,7 +1,7 @@
-import { useEffect, type FC } from "preact/compat";
+import { type FC } from "preact/compat";
 
-import { useNotifications } from "@/hooks/useNotifications";
 import type { IUser } from "@/types/User";
+import { MyImage } from "../layouts/MyImage";
 import "./Perfil.css";
 
 interface Props {
@@ -10,20 +10,12 @@ interface Props {
 
 export const OtherProfileInfo: FC<Props> = ({ user }) => {
 
-    const { createNotification } = useNotifications();
-
-    useEffect(() => {
-
-    }, []);
-
     return (
         <article class="sub-container first-element">
             <div class="content-container">
                 <section class="perfil-info">
                     <div className="perfil-img">
-                        <div className="img-container">
-                            <img src={(user.image) ? user.image : "/default-image.png"} alt="Perfil" />
-                        </div>
+                        <MyImage src={(user.image) ? user.image : "/default-image.png"} alt={`Perfil de ${user.name}`} />
                     </div>
                     <div className="perfil-data">
                         <div className="name">

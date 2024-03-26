@@ -2,11 +2,13 @@ import type { IUpdatePet } from "@/types/Pet";
 import type { IEditUser, IPetInfo, IPostInfo, IUser } from "@/types/User";
 import { action, deepMap } from "nanostores";
 
-export const $userInfo = deepMap<IUser | { id: undefined }>({ id: undefined });
+export const $userInfo = deepMap<IUser | { id: undefined } | { id: null }>({ id: undefined });
 
 
-export const $updateUserInfo = action($userInfo, 'updateUserInfo', (store, info: IUser) => {
-    store.set(info);
+export const $updateUserInfo = action($userInfo, 'updateUserInfo', (store, info: IUser | null) => {
+    (info === null)
+        ? store.set({ id: null })
+        : store.set(info);
     return store.get();
 });
 

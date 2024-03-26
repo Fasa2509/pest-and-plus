@@ -4,11 +4,7 @@ import { useStore } from "@nanostores/preact";
 import { NotificationInfo } from "./NotificationInfo.tsx";
 import {
     $notifications,
-    $removeNotification,
     marginY,
-    type Notification,
-    type NotificationStatus,
-    type NotificationType,
 } from "@/stores/Notifications";
 import "./Notifications.css";
 
@@ -17,7 +13,7 @@ interface Props {
     lifeDuration?: number;
 }
 
-export const NotificationsProvider: FC<Props> = ({ hidingDuration, lifeDuration }) => {
+export const NotificationsProvider: FC<Props> = ({ }) => {
 
     const notifications = useStore($notifications);
 

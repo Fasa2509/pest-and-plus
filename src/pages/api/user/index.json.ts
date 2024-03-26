@@ -124,7 +124,19 @@ export const POST: APIRoute = async ({ request }) => {
         });
 
         await transporter.sendMail({
-            from: 'PetsAndPlus+',
+            from: "PetsAndPlus",
+            to: data.email,
+            subject: "PetsAnd+ - Creación de Usuario",
+            text: `¡Hola ${data.name.split(' ')[0]}! Bienvenido a PetsAnd+. Hemos recibido una solicitud para crear una cuenta.
+            
+            Haz click en el siguiente enlace en todos los dispositivos donde quieres iniciar sesión para ver tu cuenta desde cualquier parte.
+            
+            ${globalThis.process.env.DOMAIN_NAME}/login/${token}`
+        });
+
+        /*
+        await transporter.sendMail({
+            from: 'PetsAndPlus',
             to: data.email,
             subject: "PetsAnd+ - Creación de Usuario",
             html: `
@@ -212,6 +224,7 @@ export const POST: APIRoute = async ({ request }) => {
 </body>
             `
         });
+        */
 
         return CustomResponse<ApiResponse>({
             error: false,

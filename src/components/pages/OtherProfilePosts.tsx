@@ -3,8 +3,8 @@ import { useStore } from "@nanostores/preact";
 
 import { MyPost } from "@/components/ui/MyPost";
 import { MyTexts } from "@components/ui/MyTexts";
-// import { ModalButton } from "@components/hoc/ModalButton";
 import type { IUser } from "@/types/User";
+import { $userInfo } from "@/stores/UserInfo";
 import "./Perfil.css";
 
 interface Props {
@@ -13,11 +13,9 @@ interface Props {
 
 export const OtherProfilePosts: FC<Props> = ({ user }) => {
 
-    // const userInfo = useStore($userInfo);
+    const userInfo = useStore($userInfo);
 
     const [displayPosts, setDisplayPosts] = useState(false);
-
-    // if (!userInfo.id) return <></>;
 
     const textPosts = useMemo(() => user.posts.filter((post) => post.images.length === 0), [user.posts]);
 
@@ -33,10 +31,10 @@ export const OtherProfilePosts: FC<Props> = ({ user }) => {
                             (textPosts.length === 0)
                                 ? <p style={{ alignSelf: "flex-start", paddingLeft: "1rem" }}>¡Vaya! Este usuario aún no ha subido ninguna publicación.</p>
                                 : (textPosts.length <= 5)
-                                    ? textPosts.map((p) => <MyTexts post={p} userInfo={user} />)
+                                    ? textPosts.map((p) => <MyTexts post={p} userInfo={user} mine={!!(userInfo.id) && userInfo.role === "ADMIN"} />)
                                     : (displayPosts)
-                                        ? textPosts.map((p) => <MyTexts post={p} userInfo={user} />)
-                                        : textPosts.slice(0, 5).map((p) => <MyTexts post={p} userInfo={user} />)
+                                        ? textPosts.map((p) => <MyTexts post={p} userInfo={user} mine={!!(userInfo.id) && userInfo.role === "ADMIN"} />)
+                                        : textPosts.slice(0, 5).map((p) => <MyTexts post={p} userInfo={user} mine={!!(userInfo.id) && userInfo.role === "ADMIN"} />)
                         }
                         {
                             (textPosts.length > 5) && <button className="button bg-secondary fadeIn" id="show" onClick={() => setDisplayPosts(!displayPosts)}>Mostrar {displayPosts ? 'menos' : 'más'}</button>
@@ -55,7 +53,7 @@ export const OtherProfilePosts: FC<Props> = ({ user }) => {
                             ) : (
                                 <div className="posts-container">
                                     {
-                                        user.posts.filter((post) => post.images.length > 0).map((post) => <MyPost key={post.id} post={post} userInfo={user} />)
+                                        user.posts.filter((post) => post.images.length > 0).map((post) => <MyPost key={post.id} post={post} userInfo={user} mine={!!userInfo.id && userInfo.role === "ADMIN"} />)
                                     }
                                 </div>
                             )

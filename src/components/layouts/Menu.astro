@@ -65,7 +65,7 @@
 
     $menu.listen((value) => {
         if (value) {
-            $buttons.forEach((el, i) => {
+            $buttons.forEach((el) => {
                 el.classList.remove("active");
             });
         } else {
@@ -113,7 +113,7 @@
     $buttons.forEach(
         (el, i) =>
             i !== 0 &&
-            el.addEventListener("click", (e) => {
+            el.addEventListener("click", () => {
                 $toggleMenu(false);
             }),
     );

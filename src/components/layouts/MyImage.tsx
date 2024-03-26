@@ -2,7 +2,7 @@ import { useState, type CSSProperties, type FC, type TargetedEvent } from "preac
 
 import style from "./MyImage.module.css";
 
-type sizes = "xm" | "sm" | "lg" | "xl";
+type sizes = "xm" | "sm" | "md" | "lg" | "xl";
 
 interface Props {
     src: string;
@@ -11,16 +11,18 @@ interface Props {
     classes?: string;
     styles?: CSSProperties;
     size?: sizes;
-}
+    noBorder?: boolean;
+};
 
 const SIZES_DICT: Record<sizes, string> = {
-    xm: style.container_xm,
-    sm: style.container_sm,
-    lg: style.container_lg,
-    xl: style.container_xl,
-}
+    xm: style.container_xm, // 150px
+    sm: style.container_sm, // 180px
+    md: style.container_md, // 320px
+    lg: style.container_lg, // 400px
+    xl: style.container_xl, // 450px
+};
 
-export const MyImage: FC<Props> = ({ src, alt, center = false, styles = {}, size = "xl", classes = "", children }) => {
+export const MyImage: FC<Props> = ({ src, alt, center = false, styles = {}, size = "xl", classes = "", noBorder = false, children }) => {
 
     const [loaded, setLoaded] = useState(false);
 
@@ -30,8 +32,9 @@ export const MyImage: FC<Props> = ({ src, alt, center = false, styles = {}, size
     };
 
     return (
-        <div className={`${style.img_container} ${style.asp_rat_1_1} ${SIZES_DICT[size]} ${center ? "m-center-element" : ""}`}>
-            <img src={src} alt={alt} style={{ ...styles }} class={`${loaded ? style.show_img : ""} ${classes}`} onLoad={() => setLoaded(true)} onError={handleError} />
+        <div className={`${style.img_container} ${style.asp_rat_1_1} ${SIZES_DICT[size]} ${noBorder ? style.no_border : ""} ${center ? "m-center-element" : ""} ${classes}`}>
+            {loaded || <span className={style.flash}></span>}
+            <img src={src} alt={alt} style={styles} class={`${loaded ? style.show_img : ""}`} onLoad={() => setLoaded(true)} onError={handleError} />
             {children}
         </div>
     );

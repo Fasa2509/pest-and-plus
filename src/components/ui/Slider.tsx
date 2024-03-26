@@ -30,7 +30,7 @@ export const Slider: FC<Props> = ({ children, identifier, duration = 7500, autor
     }, []);
 
     useEffect(() => {
-        const els = document.querySelectorAll(`#${identifier} > div`);
+        const els = document.querySelectorAll(`#${identifier} > .slider-element`);
         // @ts-ignore
         setElements(Array.from(els));
         els[0] && els[0].classList.add("active");
@@ -63,10 +63,11 @@ export const Slider: FC<Props> = ({ children, identifier, duration = 7500, autor
             ? 0
             : prevState += 1
         ), duration);
-    }
+    };
 
     return (
         <section id={identifier} className="slider-container">
+            {/* LOS HIJOS DE ESTE COMPONENTE DEBEN VENIR ENVUELTOS EN UN ELEMENTO CON LA CLASE .slider-element */}
             {children}
             <section className="buttons__container">
                 <button className="pass__button left" disabled={buttonsDisabled} onClick={() => passElement(-1)}>

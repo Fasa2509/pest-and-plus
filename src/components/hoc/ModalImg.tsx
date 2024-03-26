@@ -1,19 +1,18 @@
 import type { FC, JSX } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 
-import { ModalWindow } from "./ModalWindow";
 import { ModalFull } from "./ModalFull";
+import { MyImage } from "../layouts/MyImage";
 import "./Modal.css";
 
 interface Props {
-    children: JSX.Element;
+    children: JSX.Element | JSX.Element[];
     imgSrc: string;
     initialState?: boolean;
     textTitle?: string;
-    full?: boolean;
 }
 
-export const ModalImg: FC<Props> = ({ children, imgSrc, textTitle, initialState = false, full = false }) => {
+export const ModalImg: FC<Props> = ({ children, imgSrc, textTitle, initialState = false }) => {
 
     const [isOpen, setIsOpen] = useState(initialState);
     const [closing, setClosing] = useState(false);
@@ -25,6 +24,7 @@ export const ModalImg: FC<Props> = ({ children, imgSrc, textTitle, initialState 
     }, [isOpen]);
 
     const openModal = () => setIsOpen(true);
+
     const closeModal = () => {
         setClosing(true);
         setIsOpen(false);
@@ -35,7 +35,7 @@ export const ModalImg: FC<Props> = ({ children, imgSrc, textTitle, initialState 
         <>
             <button class="button-img-container" onClick={openModal}>
                 {
-                    <img src={imgSrc} alt="Button image" />
+                    <MyImage src={imgSrc} alt={"Button image"} size="md" noBorder />
                 }
             </button>
             {

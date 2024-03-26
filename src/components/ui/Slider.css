@@ -4,25 +4,27 @@
     width: 100%;
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
-.slider-container>* {
+.slider-container>.slider-element {
     position: absolute;
     width: 100%;
-    height: 100%;
     z-index: 1;
     opacity: 0;
     transition: opacity 500ms ease-in-out;
 }
 
-.active {
+.slider-element.active {
     opacity: 1;
     z-index: 2;
 }
 
 .buttons__container {
+    position: absolute;
     z-index: 10;
     height: 2.8rem;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -45,90 +47,15 @@
     transition: background-color 250ms ease;
 }
 
-/* .left::before,
-.left::after,
-.right::before,
-.right::after {
-    content: '';
-    display: block;
-    position: absolute;
-    //border-radius: 1rem;
-    top: 35%;
-    left: .9rem;
-    height: 4px;
-    width: 16px;
-    background-color: #f8f4f4da;
-    cursor: pointer;
-    transform: rotate(40deg);
-    transition: transform 250ms ease, background-color 250ms ease;
-} */
-
-/* .right::after {
-    top: 54%;
-    transform: rotate(-40deg);
-}
-
-.left::after {
-    top: 54%;
-    left: .7rem;
-}
-
-.left::before {
-    left: .7rem;
-    transform: rotate(-40deg);
-} */
-
 @media (hover: hover) {
     .pass__button:hover {
         background-color: rgba(0, 0, 0, 0.5);
     }
-
-    /* .left:hover::before,
-    .left:hover::after,
-    .right:hover::before,
-    .right:hover::after {
-        background-color: #FFF;
-    } */
 }
 
-@media screen and (min-width: 772px) {
+@media screen and (min-width: 772px) {}
 
-    /* .left::before,
-    .left::after,
-    .right::before,
-    .right::after {
-        width: 18px;
-    }
-
-    .right::before,
-    .left::before {
-        top: 38%;
-    }
-
-    .left::after {
-        left: .8rem;
-        top: 60%;
-    }
-
-    .right::after {
-        top: 60%;
-    }
-
-    .left::before {
-        left: .8rem;
-    } */
-}
-
-@media screen and (min-width: 992px) {
-    /* .left::after {
-        left: .8rem;
-        top: 57%;
-    }
-
-    .right::after {
-        top: 57%;
-    } */
-}
+@media screen and (min-width: 992px) {}
 
 
 .svg-icon.slider-icon {

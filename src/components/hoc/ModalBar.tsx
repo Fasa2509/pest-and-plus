@@ -2,6 +2,7 @@ import type { FC, JSX } from "preact/compat";
 import { useEffect, useState } from "preact/hooks"
 
 import { ModalWindow } from "./ModalWindow";
+import { MyImage } from "../layouts/MyImage";
 
 interface Props {
     children: JSX.Element;
@@ -27,6 +28,7 @@ export const ModalBar: FC<Props> = ({ children, textButton, imgSrc, selectChild,
     }, [isOpen]);
 
     const openModal = () => setIsOpen(true);
+
     const closeModal = () => {
         setClosing(true);
         setIsOpen(false);
@@ -40,9 +42,7 @@ export const ModalBar: FC<Props> = ({ children, textButton, imgSrc, selectChild,
                 selectChild(index);
                 openModal();
             }}>
-                <div className="bar-img-container">
-                    <img src={imgSrc || "/default-image.png"} alt={textButton} />
-                </div>
+                <MyImage src={imgSrc || "/default-image.png"} alt={textButton} classes="bar-img-container" />
                 <span class="bar-title">
                     {textButton}
                 </span>
