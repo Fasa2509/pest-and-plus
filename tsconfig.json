@@ -2,39 +2,24 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "noImplicitAny": false,
     // "baseUrl": "C:/Users/Miguel/Desktop/Proyectos/work-learning/src",
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
       ],
       "@components/*": [
-        "./components/*"
+        "./src/components/*"
       ],
       "@customTypes/*": [
-        "./types/*"
+        "./src/types/*"
       ],
       "@errors/*": [
-        "./errors/*"
+        "./src/errors/*"
       ],
       "@database/*": [
-        "./database/*"
+        "./src/database/*"
       ]
     },
     "jsx": "react-jsx",
