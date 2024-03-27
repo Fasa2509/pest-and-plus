@@ -14,6 +14,7 @@ model User {
   email        String        @unique
   name         String
   bio          String?
+  isAble       Boolean       @default(true)
   role         Role          @default(USER)
   pets         Pet[]         @relation("Pets")
   following    Pet[]         @relation("Following")
@@ -31,6 +32,7 @@ model Pet {
   published    Boolean       @default(true)
   createdAt    DateTime      @default(now())
   creatorId    Int           @default(1)
+  isAble       Boolean       @default(true)
   creator      User          @relation("OwnPets", fields: [creatorId], references: [id])
   behaviors    Behavior[]
   owners       User[]        @relation("Pets")

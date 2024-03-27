@@ -92,12 +92,22 @@ export const updateUserInfo = async (userId: number, body: IEditUser): Promise<A
     };
 };
 
-export const frontGetUsers = async (userId: number): Promise<ApiResponsePayload<{ user: IUserInfo }>> => {
+export const frontGetUsers = async (): Promise<ApiResponsePayload<{ user: IUserInfo }>> => {
     try {
         const { data } = await AxiosApi.get<ApiResponsePayload<{ user: IUserInfo }>>(`/user.json`);
 
         return data;
     } catch (error: unknown) {
         return ApiErrorHandler({ error, defaultErrorMessage: 'Error solicitando login', noPrintError: true });
+    };
+};
+
+export const toggleDisableUser = async (userId: number): Promise<ApiResponse> => {
+    try {
+        const { data } = await AxiosApi.delete<ApiResponse>(`/user.json?id=${userId}`);
+
+        return data;
+    } catch (error: unknown) {
+        return ApiErrorHandler({ error, defaultErrorMessage: "Error deshabilitando el usuario" });
     };
 };

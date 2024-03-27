@@ -11,6 +11,22 @@ import { NotificationsProvider } from "../hoc/NotificationsProvider";
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content={Astro.generator} />
         <title>PetsAnd+</title>
+
+        <meta
+            name="description"
+            content="PetsAndPlus es una pequeña red social donde podrás compartir una parte de esa felicidad que tus compañeros peludos te brindan. ¡Comparte la alegría!"
+        />
+        <meta property="og:title" content="PetsAndPlus" />
+        <meta property="og:site_name" content="PetsAndPlus" />
+        <meta
+            property="og:description"
+            content="PetsAndPlus es una pequeña red social donde podrás compartir una parte de esa felicidad que tus compañeros peludos te brindan. ¡Comparte la alegría!"
+        />
+        <meta
+            property="og:image"
+            content={`${process.env.DOMAIN_NAME}/logo.png`}
+        />
+        <meta property="og:url" content={process.env.DOMAIN_NAME} />
     </head>
     <body>
         <Header />
@@ -32,7 +48,7 @@ import { NotificationsProvider } from "../hoc/NotificationsProvider";
         --main-color-hover: rgb(60, 181, 183);
         --secondary-color: #e55;
         --secondary-color-hover: rgb(227, 73, 73);
-        --header-height: 68px;
+        --header-height: 76px;
 
         --success-color: rgb(0, 201, 0);
         --error-color: rgb(255, 55, 55);

@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import nodemailer from "nodemailer";
 
-import { DbError, EndpointErrorHandler, ParsingError, ValidationError } from "@errors/index";
+import { AuthError, DbError, EndpointErrorHandler, ParsingError, ValidationError } from "@errors/index";
 import { CustomResponse, type ApiResponse, type ApiResponsePayload, ZApiPagination } from "@customTypes/Api";
 import { ZNewUser, type IUser } from "@customTypes/User";
 import { DbClient } from "@/database/Db";
@@ -232,6 +232,46 @@ export const POST: APIRoute = async ({ request }) => {
         });
     } catch (error: unknown) {
         return EndpointErrorHandler({ error, defaultErrorMessage: "Ocurrió un error creando el usuario" });
+    };
+};
+
+
+export const DELETE: APIRoute = async ({ cookies, url }) => {
+    try {
+        const userInfo = await checkUserValidSession({ cookies });
+
+        const userId = Number(Object.fromEntries(url.searchParams.entries()).id);
+
+        if (!userId) throw new ValidationError("La información no es válida", 400);
+
+        if (userInfo.role !== "ADMIN") throw new AuthError("No tiene permisos para realizar esta acción", 400);
+
+        const userToToggle = await DbClient.user.findUnique({
+            where: {
+                id: userId,
+            },
+            select: {
+                isAble: true,
+            },
+        });
+
+        if (!userToToggle) throw new ValidationError("No se encontró el usuario", 400);
+
+        await DbClient.user.update({
+            where: {
+                id: userId,
+            },
+            data: {
+                isAble: !userToToggle.isAble
+            },
+        });
+
+        return CustomResponse<ApiResponse>({
+            error: false,
+            message: [`El usuario fue ${(userToToggle.isAble) ? "inhabilitado" : "habilitado"}`],
+        });
+    } catch (error: unknown) {
+        return EndpointErrorHandler({ error, defaultErrorMessage: "Ocurrió un error deshabilitando el usuario" });
     };
 };
 

@@ -25,6 +25,22 @@ const { title } = Astro.props;
         <meta name="generator" content={Astro.generator} />
         <title>{title} | PetsAnd+</title>
 
+        <meta
+            name="description"
+            content="PetsAndPlus es una pequeña red social donde podrás compartir una parte de esa felicidad que tus compañeros peludos te brindan. ¡Comparte la alegría!"
+        />
+        <meta property="og:title" content="PetsAndPlus" />
+        <meta property="og:site_name" content="PetsAndPlus" />
+        <meta
+            property="og:description"
+            content="PetsAndPlus es una pequeña red social donde podrás compartir una parte de esa felicidad que tus compañeros peludos te brindan. ¡Comparte la alegría!"
+        />
+        <meta
+            property="og:image"
+            content={`${process.env.DOMAIN_NAME}/logo.png`}
+        />
+        <meta property="og:url" content={process.env.DOMAIN_NAME} />
+
         <ViewTransitions />
     </head>
     <body class={theme?.value === "dark" ? "dark-mode" : "light-mode"}>
@@ -76,7 +92,7 @@ const { title } = Astro.props;
                 --secondary-color-hover: rgb(222, 68, 68);
                 --third-color: rgb(133, 243, 216);
                 --third-color-hover: rgb(102, 218, 189);
-                --header-height: 68px;
+                --header-height: 76px;
 
                 --dark-bg-color: #323232;
                 --dark-bg-color-hover: #474747;

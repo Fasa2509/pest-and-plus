@@ -51,7 +51,7 @@ export const GET: APIRoute = async ({ params }) => {
             },
         });
 
-        if (!pet) throw new CustomError("No se encontró mascota por ese id", 404);
+        if (!pet || !pet.isAble) throw new CustomError("No se encontró la mascota", 404);
 
         return CustomResponse<ApiResponsePayload<{ pet: IPet }>>({
             error: false,

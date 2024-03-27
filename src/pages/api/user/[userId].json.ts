@@ -199,7 +199,10 @@ export const PATCH: APIRoute = async ({ params, cookies }) => {
             },
         });
 
-        if (!user) throw new CustomError("No se encontró usuario por ese id", 404);
+        if (!user || !user.isAble) {
+            cookies.delete("auth-token");
+            throw new CustomError("No se encontró el usuario", 404);
+        }
 
         return CustomResponse<ApiResponsePayload<{ user: IUser }>>({
             error: false,

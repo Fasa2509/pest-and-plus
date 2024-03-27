@@ -16,31 +16,31 @@ export type TPetBehavior = z.infer<typeof PetBehaviorEnum>;
 
 export enum EnumPetBehaviorTranslations {
     "divertid@" = "divertid@",
-    "feliz" = "feliz",
-    "enojón" = "enojón",
-    "comelón" = "comelón",
+    "feliz"     = "feliz",
+    "enojón"    = "enojón",
+    "comelón"   = "comelón",
     "dramátic@" = "dramátic@",
-    "ansios@" = "ansios@",
+    "ansios@"   = "ansios@",
 };
 
 export const petBehaviorTranslations: Record<TPetBehavior, EnumPetBehaviorTranslations> = {
-    funny: EnumPetBehaviorTranslations['divertid@'],
-    happy: EnumPetBehaviorTranslations.feliz,
-    angry: EnumPetBehaviorTranslations.enojón,
-    eater: EnumPetBehaviorTranslations.comelón,
+    funny   : EnumPetBehaviorTranslations['divertid@'],
+    happy   : EnumPetBehaviorTranslations.feliz,
+    angry   : EnumPetBehaviorTranslations.enojón,
+    eater   : EnumPetBehaviorTranslations.comelón,
     dramatic: EnumPetBehaviorTranslations['dramátic@'],
-    eager: EnumPetBehaviorTranslations['ansios@'],
+    eager   : EnumPetBehaviorTranslations['ansios@'],
 } as const;
 
 type ReverseTPetBehavior = typeof petBehaviorTranslations[keyof typeof petBehaviorTranslations];
 
 export const reversePetBehaviorTranslations: Record<ReverseTPetBehavior, TPetBehavior> = {
     'divertid@': "funny",
-    'feliz': "happy",
-    'enojón': "angry",
-    'comelón': "eater",
+    'feliz'    : "happy",
+    'enojón'   : "angry",
+    'comelón'  : "eater",
     'dramátic@': "dramatic",
-    'ansios@': "eager",
+    'ansios@'  : "eager",
 } as const;
 
 const PetTypeEnum = z.enum([
@@ -62,18 +62,18 @@ const PetTypeEnum = z.enum([
 
 
 export enum EnumPetTypeTranslations {
-    Perro = "Perro",
-    Gato = "Gato",
+    Perro   = "Perro",
+    Gato    = "Gato",
     Caballo = "Caballo",
-    Conejo = "Conejo",
-    Mono = "Mono",
+    Conejo  = "Conejo",
+    Mono    = "Mono",
     Tortuga = "Tortuga",
-    Cabra = "Cabra",
-    Ave = "Ave",
-    Cerdo = "Cerdo",
-    Pez = "Pez",
-    Erizo = "Erizo",
-    Otro = "Otro",
+    Cabra   = "Cabra",
+    Ave     = "Ave",
+    Cerdo   = "Cerdo",
+    Pez     = "Pez",
+    Erizo   = "Erizo",
+    Otro    = "Otro",
 };
 
 export const petTypeTranslations: Record<TPetType, EnumPetTypeTranslations> = {
@@ -112,54 +112,55 @@ export const ValidPetType = PetTypeEnum.options;
 export type TPetType = z.infer<typeof PetTypeEnum>;
 
 export const ZUserInfo = z.object({
-    id: z.number({ required_error: 'El id de usuario es requerido' }),
+    id   : z.number({ required_error: 'El id de usuario es requerido' }),
     image: z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
-    name: z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(2, 'El nombre es muy corto'),
+    name : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(2, 'El nombre es muy corto'),
 });
 
 export type IUserInfo = z.infer<typeof ZUserInfo>;
 
 const ZPostInfo = z.object({
-    id: z.number({ required_error: 'El id de la publicación es requerido' }),
-    createdAt: z.date(),
+    id         : z.number({ required_error: 'El id de la publicación es requerido' }),
+    createdAt  : z.date(),
     description: z.string({ required_error: 'La descripción es requerida', invalid_type_error: 'La descripción debe ser un texto' }).trim().max(999, 'La descripción es demasiado larga'),
-    images: z.array(z.string({ invalid_type_error: 'La imagen debe ser un texto' })).default([]),
-    authorId: z.number({ required_error: 'El id del autor es requerido' }),
+    images     : z.array(z.string({ invalid_type_error: 'La imagen debe ser un texto' })).default([]),
+    authorId   : z.number({ required_error: 'El id del autor es requerido' }),
 });
 
 export const ZPet = z.object({
-    id: z.number({ required_error: 'El id de la mascota es requerido' }),
-    name: z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(3).max(20),
-    image: z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
-    petType: PetTypeEnum,
-    bio: z.union([z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta'), z.null()]),
+    id       : z.number({ required_error: 'El id de la mascota es requerido' }),
+    name     : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(3).max(20),
+    image    : z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
+    petType  : PetTypeEnum,
+    bio      : z.union([z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta'), z.null()]),
     behaviors: z.array(PetBehaviorEnum).min(1, 'Tu mascota debe tener al menos un atributo'),
     createdAt: z.date(),
-    owners: z.array(ZUserInfo),
+    isAble: z.boolean({ invalid_type_error: "El estado debe ser un booleano" }).optional().default(true),
+    owners   : z.array(ZUserInfo),
     followers: z.array(ZUserInfo),
-    posts: z.array(ZPostInfo),
-    creator: ZUserInfo,
+    posts    : z.array(ZPostInfo),
+    creator  : ZUserInfo,
 });
 
 export type IPet = z.infer<typeof ZPet>;
 
 export const ZNewPet = z.object({
-    name: z.string({ invalid_type_error: "El nombre de la mascota debe ser texto", required_error: 'El nombre de la mascota es requerido' }).trim().min(2, 'El nombre de tu mascota es muy corto').max(20, 'El nombre es muy largo').regex(/[^a-zA-ZáéíóúÁÉÍÓÚ ]/, 'El nombre tiene caracteres inválidos'),
-    image: z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
-    bio: z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta').max(999, 'La bio es muy larga').optional(),
-    petType: PetTypeEnum,
+    name     : z.string({ invalid_type_error: "El nombre de la mascota debe ser texto", required_error: 'El nombre de la mascota es requerido' }).trim().min(2, 'El nombre de tu mascota es muy corto').max(20, 'El nombre es muy largo').regex(/[^a-zA-ZáéíóúÁÉÍÓÚ ]/, 'El nombre tiene caracteres inválidos'),
+    image    : z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
+    bio      : z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta').max(999, 'La bio es muy larga').optional(),
+    petType  : PetTypeEnum,
     published: z.boolean({ invalid_type_error: 'El estado de la mascota debe ser un booleano' }).default(false).optional(),
     behaviors: z.array(PetBehaviorEnum).min(1, 'Tu mascota debe tener al menos un atributo'),
-    owners: z.array(z.number()).min(1, 'La mascota debe tener al menos un dueño'),
+    owners   : z.array(z.number()).min(1, 'La mascota debe tener al menos un dueño'),
     creatorId: z.number({ invalid_type_error: 'El id de usuario no es válido', required_error: 'El id del usuario es requerido' }),
 });
 
 export type INewPet = z.infer<typeof ZNewPet>;
 
 export const ZUpdatePet = z.object({
-    name: z.string({ invalid_type_error: "El nombre de la mascota debe ser texto", required_error: 'El nombre de la mascota es requerido' }).trim().min(2, 'El nombre de tu mascota es muy corto').max(20, 'El nombre es muy largo').regex(/[^a-zA-ZáéíóúÁÉÍÓÚ ]/, 'El nombre tiene caracteres inválidos'),
-    image: z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
-    bio: z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta').max(999, 'La bio es muy larga'),
+    name     : z.string({ invalid_type_error: "El nombre de la mascota debe ser texto", required_error: 'El nombre de la mascota es requerido' }).trim().min(2, 'El nombre de tu mascota es muy corto').max(20, 'El nombre es muy largo').regex(/[^a-zA-ZáéíóúÁÉÍÓÚ ]/, 'El nombre tiene caracteres inválidos'),
+    image    : z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
+    bio      : z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta').max(999, 'La bio es muy larga'),
     behaviors: z.array(PetBehaviorEnum).min(1, 'Tu mascota debe tener al menos un atributo'),
 });
 

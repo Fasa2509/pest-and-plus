@@ -79,7 +79,7 @@ import { DbClient } from "@/database/Db";
 const USERS_LOGGED: Record<string, number> = {};
 
 
-export const PATCH: APIRoute = async ({ request }) => {
+export const PATCH: APIRoute = async ({ request, cookies }) => {
     try {
         let { email } = await request.json() as { email: string };
 
@@ -100,7 +100,10 @@ export const PATCH: APIRoute = async ({ request }) => {
             },
         });
 
-        if (!user) throw new ValidationError("No existe un usuario con ese correo", 400);
+        if (!user || !user.isAble) {
+            cookies.delete("auth-token");
+            throw new ValidationError("No existe un usuario con ese correo", 400);
+        }
 
         const token = signToken({
             id: user.id,
