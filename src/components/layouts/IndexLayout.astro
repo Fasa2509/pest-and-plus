@@ -7,11 +7,7 @@ import { NotificationsProvider } from "../hoc/NotificationsProvider";
 <html lang="es">
     <head>
         <meta charset="utf-8" />
-        <link
-            rel="shortcut icon"
-            href="/favicon.ico"
-            type="image/x-icon"
-        />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content={Astro.generator} />
         <title>PetsAnd+</title>
@@ -70,9 +66,23 @@ import { NotificationsProvider } from "../hoc/NotificationsProvider";
         /* background-size: 25%; */
     }
 
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+        box-shadow: 0 -100vh 0 100vh var(--main-color);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--main-color);
+        border-radius: 1rem;
+    }
+
     .continue-link {
         background-color: var(--info-color);
-        position: absolute;
+        position: fixed;
         bottom: 1rem;
         left: 1rem;
         color: #fafafa;

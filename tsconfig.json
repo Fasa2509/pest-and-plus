@@ -2,7 +2,7 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "target": "es5",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "noImplicitAny": false,
     // "baseUrl": "C:/Users/Miguel/Desktop/Proyectos/work-learning/src",
     "paths": {

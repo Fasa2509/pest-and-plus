@@ -49,7 +49,7 @@ export const LoginForm: FC = () => {
                     isNew ? (
                         <>
                             <label for="new">¿Eres nuev@? Inscríbete aquí</label>
-                            <input required ref={newRef} id="new" type="email" placeholder="Correo" />
+                            <input required ref={newRef} id="new" type="email" placeholder="Correo electrónico" />
                             <label for="name">Pon tu nombre aquí</label>
                             <input ref={nameRef} id="name" type="text" placeholder="Nombre público" />
                         </>
@@ -65,5 +65,5 @@ export const LoginForm: FC = () => {
 
             <button disabled={tasks.includes('iniciando')} onClick={() => setIsNew(!isNew)}>{isNew ? 'Ya tengo una cuenta' : 'Crear una cuenta'}</button>
         </>
-    )
-}
+    );
+};
