@@ -88,7 +88,7 @@ export const ZUser = z.object({
     image       : z.union([z.string({ invalid_type_error: 'La imagen debe ser un texto' }), z.null()]),
     createdAt   : z.date({ required_error: 'La fecha de creación del usuario es requerida', invalid_type_error: 'La fecha de creación del usuario no es válida' }),
     email       : z.string({ required_error: 'El correo es requerido', invalid_type_error: 'El correo debe ser texto' }).trim().toLowerCase().email('El correo no es válido'),
-    name        : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(2, 'El nombre es muy corto').max(64, 'El nombre es muy largo').regex(/[^a-zA-ZáéíóúÁÉÍÓÚ ]/, 'El nombre tiene caracteres inválidos'),
+    name        : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(2, 'El nombre es muy corto').max(64, 'El nombre es muy largo').regex(/[a-zA-ZáéíóúÁÉÍÓÚ ]/, 'El nombre tiene caracteres inválidos'),
     bio         : z.union([z.string({ invalid_type_error: 'La bio debe ser texto' }).trim().min(10, 'La bio es muy corta').max(999, 'La bio es muy larga'), z.null()]),
     role        : UserRoleEnum,
     isAble      : z.boolean({ invalid_type_error: "El estado debe ser un booleano" }).optional().default(true),
@@ -109,7 +109,7 @@ export type IEditUser = z.infer<typeof ZEditUser>;
 
 export const ZNewUser = z.object({
     email: z.string({ required_error: 'El correo es requerido', invalid_type_error: 'El correo debe ser texto' }).trim().toLowerCase().email('El correo no es válido'),
-    name : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(2, 'El nombre es muy corto').max(64, 'El nombre es muy largo').regex(/[^a-zA-ZáéíóúÁÉÍÓÚ ]/, 'El nombre tiene caracteres inválidos'),
+    name : z.string({ required_error: 'El nombre es requerido', invalid_type_error: 'El nombre debe ser texto' }).trim().min(2, 'El nombre es muy corto').max(64, 'El nombre es muy largo').regex(/[a-zA-ZáéíóúÁÉÍÓÚ ]/, 'El nombre tiene caracteres inválidos'),
     image: z.string({ invalid_type_error: 'La imagen debe ser un texto' }).optional(),
     role : UserRoleEnum.optional().default("USER"),
 });

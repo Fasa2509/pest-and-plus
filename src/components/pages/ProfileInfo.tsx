@@ -8,7 +8,7 @@ import { $tasks, $updateTasks } from "@/stores/Loading";
 import { MyImage } from "../layouts/MyImage";
 import { Skeleton } from "../layouts/Skeleton";
 import { ValidExtensions } from "@/types/Api";
-import { uploadImageToS3 } from "@/database/DbImages";
+import { deleteImageFromS3, uploadImageToS3 } from "@/database/DbImages";
 import "./Perfil.css";
 
 interface Props {
@@ -39,6 +39,15 @@ export const ProfileInfo: FC<Props> = () => {
 
             if (auxImg && fileRef.current && fileRef.current.files && fileRef.current.files[0]) {
                 $updateTasks("Subiendo imagen");
+                if (userInfo.image) {
+                    const resDelete = await deleteImageFromS3(userInfo.image);
+
+                    if (resDelete.error) {
+                        $updateTasks("Subiendo imagen");
+                        return createNotification({ type: "error", content: "No se pudo eliminar la imagen anterior" });
+                    };
+                };
+
                 const resUpload = await uploadImageToS3(fileRef.current.files[0], "profile");
                 $updateTasks("Subiendo imagen");
 

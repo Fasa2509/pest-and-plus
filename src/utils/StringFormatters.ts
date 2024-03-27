@@ -7,6 +7,10 @@ export const getTimeToNow = (date: Date) => {
     return `hace ${fromNow}`;
 };
 
+export const getImageKeyFromUrl = (key: string) => {
+    return key.split("amazonaws.com/").at(-1);
+};
+
 // export const getSinceTime = (date: Date): string => {
 
 //     date = new Date(date);

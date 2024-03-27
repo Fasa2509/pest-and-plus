@@ -19,6 +19,9 @@ export const requestLogin = async (method: 'POST' | 'PATCH', { email, name }: { 
             response = data;
         };
 
+        // TODO
+        console.log(response)
+
         return response;
     } catch (error: unknown) {
         return ApiErrorHandler({ error, defaultErrorMessage: 'Error solicitando login', noPrintError: true });

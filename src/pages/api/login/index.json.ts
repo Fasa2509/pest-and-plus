@@ -116,7 +116,7 @@ export const PATCH: APIRoute = async ({ request, cookies }) => {
 
         if (process.env.NODE_ENV === "development") {
             console.log({ token })
-        } else if (process.env.NODE_ENV === "production") {
+        } else {
             const transporter = nodemailer.createTransport({
                 host: "smtp.gmail.com",
                 port: 465,
@@ -126,7 +126,7 @@ export const PATCH: APIRoute = async ({ request, cookies }) => {
                     pass: process.env.MAILER__PASS,
                 },
                 tls: {
-                    rejectUnauthorized: false,
+                    rejectUnauthorized: true,
                 },
             });
 
@@ -230,13 +230,16 @@ export const PATCH: APIRoute = async ({ request, cookies }) => {
         </body>
                     `
             });*/
-        }
+        };
 
         USERS_LOGGED[email] = new Date().getTime();
 
-        return CustomResponse<ApiResponse>({
+        return CustomResponse<ApiResponsePayload<{ production: boolean }>>({
             error: false,
             message: ["Hemos enviado un correo eléctronico de inicio de sesión"],
+            payload: {
+                production: process.env.NODE_ENV === "production",
+            },
         });
     } catch (error: unknown) {
         return EndpointErrorHandler({ error, defaultErrorMessage: 'Ocurrió un error iniciando sesión' });

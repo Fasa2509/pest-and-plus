@@ -52,7 +52,12 @@ if (user && !user.isAble && userInfo && userInfo.role === "USER")
     <section class="container">
         {
             !user ? (
-                <span>No se encontró el usuario</span>
+                <div
+                    class="shadow-island"
+                    style={{ margin: "2rem", padding: "1rem" }}
+                >
+                    <span>No se encontró el usuario</span>
+                </div>
             ) : (
                 <>
                     <OtherProfileInfo client:load user={user} />

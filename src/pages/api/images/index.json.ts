@@ -2,7 +2,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 import { EndpointErrorHandler, ValidationError } from "@/errors";
-import { CustomResponse, type ApiResponsePayload, ValidExtensions, type ImageType, ValidImageType } from "@/types/Api";
+import { CustomResponse, type ApiResponsePayload, ValidExtensions, type ImageType, ValidImageType, type ApiResponse } from "@/types/Api";
 import { checkUserValidSession } from "@/utils/JWT";
 import type { APIRoute } from "astro";
 
@@ -66,17 +66,16 @@ export const POST: APIRoute = async ({ cookies, request }) => {
     };
 };
 
-/*
-const DELETE: APIRoute = async () => {
 
-    const { Key = '' } = req.body;
-
-    if (!Key || typeof Key !== 'string') return res.status(400).json({ error: true, message: 'Falta Key del objeto' });
-
-    if (!/\.jpeg/i.test(Key) && !/\.jpg/i.test(Key) && !/\.webp/i.test(Key) && !/\.png/i.test(Key) && !/\.gif/i.test(Key))
-        return res.status(400).json({ error: true, message: 'El formato de la imagen no es válido' });
+export const DELETE: APIRoute = async ({ url }) => {
 
     try {
+        const Key = Object.fromEntries(url.searchParams.entries()).Key;
+
+        const imageType = Key.split("/").at(0) as ImageType;
+
+        if (!Key || !ValidImageType.includes(imageType)) throw new ValidationError("La llave de la imagen no es válida", 400);
+
         const client = new S3Client({
             credentials: {
                 accessKeyId,
@@ -92,12 +91,12 @@ const DELETE: APIRoute = async () => {
 
         await client.send(command, { requestTimeout: 60 });
 
-        return res.status(200).json({ error: false, message: 'La imagen fue eliminada' });
+        return CustomResponse<ApiResponse>({
+            error: false,
+            message: ["La imagen fue eliminada"],
+        });
     } catch (error: unknown) {
-        console.log(error);
-
-        return res.status(400).json({ error: true, message: 'Ocurrió un error eliminando la imagen' });
+        return EndpointErrorHandler({ error, defaultErrorMessage: "Ocurrió un problema eliminando la imagen anterior" });
     }
 
 };
-*/

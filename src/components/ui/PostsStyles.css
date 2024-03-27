@@ -32,13 +32,13 @@ main {
     text-decoration: none;
 }
 
-.post-article .img-author-container {
+article.post-article .img-author-container {
     border-radius: 10rem;
     max-width: 55px;
 }
 
 @media screen and (min-width: 776px) {
-    .post-article .img-author-container {
+    article.post-article .img-author-container {
         max-width: 70px;
     }
 }

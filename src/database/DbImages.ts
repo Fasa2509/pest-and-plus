@@ -1,8 +1,9 @@
 import axios from "axios";
 
 import { AxiosApi } from "@/utils/AxiosApi";
-import { ValidExtensions, type ApiResponse, type ApiResponsePayload, type ImageType } from "@/types/Api";
+import { type ApiResponse, type ApiResponsePayload, type ImageType } from "@/types/Api";
 import { ApiErrorHandler, ValidationError } from "@/errors";
+import { getImageKeyFromUrl } from "@/utils/StringFormatters";
 
 
 export const uploadImageToS3 = async (file: File | Blob, imageType: ImageType): Promise<ApiResponsePayload<{ imgUrl: string; }>> => {
@@ -41,14 +42,14 @@ export const uploadImageToS3 = async (file: File | Blob, imageType: ImageType): 
 };
 
 
-export const deleteImageFromS3 = async (Key: string): Promise<ApiResponse> => {
+export const deleteImageFromS3 = async (imgUrl: string): Promise<ApiResponse> => {
     try {
-        const { data } = await AxiosApi.put("/images.json", {
-            Key
-        });
+        let Key = getImageKeyFromUrl(imgUrl);
+
+        const { data } = await AxiosApi.delete(`/images.json?Key=${Key}`);
 
         return data;
     } catch (error) {
-        return ApiErrorHandler({ error, defaultErrorMessage: "Ocurrió un error eliminando la imagen" });
+        return ApiErrorHandler({ error, defaultErrorMessage: "Ocurrió un error eliminando la imagen", noPrintError: true });
     };
 };
