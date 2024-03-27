@@ -6,8 +6,8 @@ import { $tasks, $updateTasks } from "@/stores/Loading";
 import { useNotifications } from "@/hooks/useNotifications";
 import { PAGINATION_POST, frontGetMorePosts } from "@/database/DbPost";
 import { ShowPost } from "../ui/ShowPost";
-import "../ui/PostsStyles.css";
 import { Skeleton } from "../layouts/Skeleton";
+import "../ui/PostsStyles.css";
 
 interface Props {
 

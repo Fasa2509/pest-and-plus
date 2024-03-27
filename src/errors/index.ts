@@ -1,7 +1,8 @@
 import { ZodError } from "zod";
-import { AxiosErrorFormatter, CustomErrorFormatter, ZodErrorFormatter } from "./formatters";
 import { isAxiosError } from "axios";
-import { DbClient } from "../database/Db";
+
+import { AxiosErrorFormatter, CustomErrorFormatter, ZodErrorFormatter } from "./formatters";
+// import { DbClient } from "../database/Db";
 import type { ApiResponseError } from "@/types/Api";
 
 export const ERROR_NAMES = {
@@ -85,7 +86,7 @@ type EndpointErrorHandlerParams = {
 export const EndpointErrorHandler = async (params: EndpointErrorHandlerParams): Promise<Response> => {
     params.noPrintError || console.log(params.error);
 
-    params.disconnectDb ?? await DbClient.$disconnect();
+    // params.disconnectDb ?? await DbClient.$disconnect();
 
     if (params.error instanceof ZodError) return new Response(JSON.stringify(ZodErrorFormatter(params.error)), {
         headers: {

@@ -1,48 +1,11 @@
 
 import { AxiosApi } from "@/utils/AxiosApi";
 import { ApiErrorHandler, ParsingError, ValidationError } from "@/errors";
-import { DbClient } from "./Db";
 import { ZApiPagination, type ApiResponse, type ApiResponsePayload, type ApiPagination } from "@/types/Api";
 import type { INewPost, IPost } from "@/types/Post";
 import type { IPostInfo } from "@/types/User";
 
 export const PAGINATION_POST = 9;
-
-
-export const backGetInitialPosts = async (userId: number): Promise<IPost[] | undefined> => {
-    const posts = await DbClient.post.findMany({
-        where: {
-            authorId: {
-                not: userId,
-            },
-        },
-        include: {
-            author: {
-                select: {
-                    id: true,
-                    name: true,
-                    image: true,
-                }
-            },
-            pet: {
-                select: {
-                    id: true,
-                    name: true,
-                    createdAt: true,
-                    image: true,
-                    petType: true,
-                    behaviors: true,
-                }
-            }
-        },
-        orderBy: {
-            createdAt: 'desc',
-        },
-        take: PAGINATION_POST,
-    });
-
-    return posts;
-};
 
 
 export const frontGetMorePosts = async (pagination: ApiPagination & { max: number }): Promise<ApiResponsePayload<{ posts: IPost[] }>> => {
