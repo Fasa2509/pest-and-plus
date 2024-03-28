@@ -10,7 +10,8 @@ export const PAGINATION_POST = 9;
 
 export const frontGetMorePosts = async (pagination: ApiPagination & { max: number }): Promise<ApiResponsePayload<{ posts: IPost[] }>> => {
     try {
-        if (pagination.limit > PAGINATION_POST || pagination.max > new Date().getTime()) throw new ParsingError("Paginación no válida", 400);
+        // if (pagination.limit > PAGINATION_POST || pagination.max > new Date().getTime()) throw new ParsingError("Paginación no válida", 400);
+        if (pagination.limit > PAGINATION_POST) throw new ParsingError("Paginación no válida", 400);
 
         const { limit, offset } = ZApiPagination.parse({ limit: String(pagination.limit), offset: String(pagination.offset) });
 
@@ -25,7 +26,8 @@ export const frontGetMorePosts = async (pagination: ApiPagination & { max: numbe
 
 export const getFollowedPetPosts = async (pagination: ApiPagination & { max: number }): Promise<ApiResponsePayload<{ posts: IPost[] }>> => {
     try {
-        if (pagination.limit > PAGINATION_POST || pagination.max > new Date().getTime()) throw new ParsingError("Paginación no válida", 400);
+        // if (pagination.limit > PAGINATION_POST || pagination.max > new Date().getTime()) throw new ParsingError("Paginación no válida", 400);
+        if (pagination.limit > PAGINATION_POST) throw new ParsingError("Paginación no válida", 400);
 
         const { limit, offset } = ZApiPagination.parse({ limit: String(pagination.limit), offset: String(pagination.offset) });
 

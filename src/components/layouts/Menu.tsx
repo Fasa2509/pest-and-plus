@@ -95,7 +95,7 @@ export const Menu = () => {
         if (!accepted) return;
 
         // TODO: corregir direccion
-        window.location.replace("https://petsandplus.vercel.app/logout");
+        window.location.replace("https://pets-and-plus.vercel.app/logout");
     };
 
     return (

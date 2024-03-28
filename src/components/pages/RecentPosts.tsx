@@ -50,7 +50,7 @@ export const RecentPosts: FC<Props> = () => {
         <aside class="recent-posts pad">
             <h3 class="h3">Publicaciones de mis seguidos</h3>
             {
-                (userInfo.id === undefined || (userInfo.id && postsToMap.length === 0)) && Array(3).fill(0).map(() => <Skeleton classes="button modal-bar" />)
+                (userInfo.id === undefined) && Array(3).fill(0).map(() => <Skeleton classes="button modal-bar" />)
             }
             {
                 (userInfo.id === null) &&

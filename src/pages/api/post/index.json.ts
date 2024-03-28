@@ -12,7 +12,8 @@ export const GET: APIRoute = async ({ url, cookies }) => {
     try {
         const paginationParams = Object.fromEntries(url.searchParams.entries());
 
-        if (!Number(paginationParams.max) || Number(paginationParams.max) > new Date().getTime()) throw new ParsingError("Paginación no válida", 400);
+        // if (!Number(paginationParams.max) || Number(paginationParams.max) > new Date().getTime()) throw new ParsingError("Paginación no válida", 400);
+        if (!Number(paginationParams.max)) throw new ParsingError("Paginación no válida", 400);
 
         const pagination = ZApiPagination.parse({ limit: paginationParams.limit, offset: paginationParams.offset });
 
@@ -97,7 +98,8 @@ export const PATCH: APIRoute = async ({ cookies, url }) => {
     try {
         const paginationParams = Object.fromEntries(url.searchParams.entries());
 
-        if (isNaN(Number(paginationParams.max)) || Number(paginationParams.max) > new Date().getTime()) throw new ParsingError("Paginación no válida", 400);
+        // if (isNaN(Number(paginationParams.max)) || Number(paginationParams.max) > new Date().getTime()) throw new ParsingError("Paginación no válida", 400);
+        if (isNaN(Number(paginationParams.max))) throw new ParsingError("Paginación no válida", 400);
 
         const pagination = ZApiPagination.parse({ limit: paginationParams.limit, offset: paginationParams.offset });
 

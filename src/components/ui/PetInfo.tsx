@@ -118,7 +118,7 @@ export const PetInfo: FC<Props> = ({ pet }) => {
         <section class="pet-info-section">
             <div style={{ display: "flex", marginBottom: ".5rem" }}>
                 <span class="pet-type" style={{ flexGrow: "1" }}>{petTypeTranslations[petInfo.petType]}</span>
-                <div style={{ marginRight: "1rem" }}>
+                <div style={{ marginRight: "1rem", display: "flex", columnGap: "1rem", alignItems: "center" }}>
                     {
                         (!userInfo.id)
                             ? (
@@ -133,25 +133,28 @@ export const PetInfo: FC<Props> = ({ pet }) => {
                                     </span>
                                 </button>
                             )
-                            : (petInfo.creator.id === userInfo.id || userInfo.role === "ADMIN")
-                                ? <button class={`button fadeIn ${isEditing ? "bg-secondary" : ""}`} disabled={tasks.includes("Actualizando informaición...")} onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Cancelar" : "Actualizar"}</button>
-                                : (petInfo.owners.some(({ id }) => userInfo.id === id))
-                                    ? <></>
-                                    : (
-                                        <button class={`button follow-pet-button fadeIn ${userInfo.following.some((p) => p.id === pet.id) ? "pet-followed" : ""}`} disabled={tasks.includes("Siguiendo mascota...")} onClick={toggleFollowPet}>
-                                            <div class="follow-pet-icon-container">
-                                                <svg class="svg-icon icon-follow-pet" viewBox="0 0 20 20">
-                                                    <path fill="none" d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z"></path>
-                                                </svg>
-                                            </div>
-                                            <span>
-                                                {(userInfo.following.some((p) => p.id === pet.id))
-                                                    ? "Siguiendo"
-                                                    : "Seguir"
-                                                }
-                                            </span>
-                                        </button>
-                                    )
+                            : (petInfo.creator.id === userInfo.id || userInfo.role === "ADMIN") && <button class={`button fadeIn ${isEditing ? "bg-secondary" : ""}`} disabled={tasks.includes("Actualizando informaición...")} onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Cancelar" : "Actualizar"}</button>
+                    }
+                    {
+                        !(userInfo.id)
+                            ? <></>
+                            : (petInfo.owners.some(({ id }) => userInfo.id === id))
+                                ? <></>
+                                : (
+                                    <button class={`button follow-pet-button fadeIn ${userInfo.following.some((p) => p.id === pet.id) ? "pet-followed" : ""}`} disabled={tasks.includes("Siguiendo mascota...")} onClick={toggleFollowPet}>
+                                        <div class="follow-pet-icon-container">
+                                            <svg class="svg-icon icon-follow-pet" viewBox="0 0 20 20">
+                                                <path fill="none" d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z"></path>
+                                            </svg>
+                                        </div>
+                                        <span>
+                                            {(userInfo.following.some((p) => p.id === pet.id))
+                                                ? "Siguiendo"
+                                                : "Seguir"
+                                            }
+                                        </span>
+                                    </button>
+                                )
                     }
                 </div>
             </div>
