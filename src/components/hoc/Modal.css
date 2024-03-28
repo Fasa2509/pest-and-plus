@@ -289,7 +289,7 @@
     }
 }
 
-.bar-img-container {
+div.bar-img-container.bar-img {
     width: 70px;
     border-radius: 50%;
 }

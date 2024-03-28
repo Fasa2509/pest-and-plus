@@ -234,12 +234,9 @@ export const PATCH: APIRoute = async ({ request, cookies }) => {
 
         USERS_LOGGED[email] = new Date().getTime();
 
-        return CustomResponse<ApiResponsePayload<{ production: boolean }>>({
+        return CustomResponse<ApiResponse>({
             error: false,
             message: ["Hemos enviado un correo eléctronico de inicio de sesión"],
-            payload: {
-                production: process.env.NODE_ENV === "production",
-            },
         });
     } catch (error: unknown) {
         return EndpointErrorHandler({ error, defaultErrorMessage: 'Ocurrió un error iniciando sesión' });

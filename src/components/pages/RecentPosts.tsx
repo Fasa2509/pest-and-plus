@@ -37,6 +37,8 @@ export const RecentPosts: FC<Props> = () => {
             const res = await getFollowedPetPosts({ limit: 9, offset: 0, max: new Date().getTime() });
             $updateTasks("Buscando publicaciones de seguidos...");
 
+            console.log(res)
+
             res.error && createNotification({ type: "error", content: res.message[0] });
             !res.error && $updateFollowedPosts(res.payload.posts);
         })();

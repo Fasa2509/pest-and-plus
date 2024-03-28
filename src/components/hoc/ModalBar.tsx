@@ -42,7 +42,7 @@ export const ModalBar: FC<Props> = ({ children, textButton, imgSrc, selectChild,
                 selectChild(index);
                 openModal();
             }}>
-                <MyImage src={imgSrc || "/default-image.png"} alt={textButton} classes="bar-img-container" />
+                <MyImage src={imgSrc || "/default-image.png"} alt={textButton} classes="bar-img-container bar-img" />
                 <span class="bar-title">
                     {textButton}
                 </span>

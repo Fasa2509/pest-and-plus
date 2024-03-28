@@ -105,8 +105,6 @@ export const PATCH: APIRoute = async ({ cookies, url }) => {
 
         const userInfo = await checkUserValidSession({ cookies });
 
-        console.log({ userInfo })
-
         const user = await DbClient.user.findUnique({
             where: {
                 id: userInfo.id,
@@ -118,7 +116,7 @@ export const PATCH: APIRoute = async ({ cookies, url }) => {
                 following: {
                     select: {
                         id: true,
-                    }
+                    },
                 },
             }
         });
@@ -163,7 +161,7 @@ export const PATCH: APIRoute = async ({ cookies, url }) => {
             message: ["Publicaciones de seguidos obtenidas"],
             payload: {
                 posts,
-            }
+            },
         });
     } catch (error: unknown) {
         return EndpointErrorHandler({ error, defaultErrorMessage: 'Ocurrió un error obteniendo las publicaciones de seguidos' });
