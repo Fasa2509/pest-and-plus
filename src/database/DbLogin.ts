@@ -20,7 +20,7 @@ export const requestLogin = async (method: 'POST' | 'PATCH', { email, name }: { 
         };
 
         // TODO
-        console.log(response)
+        // console.log(response)
 
         return response;
     } catch (error: unknown) {

@@ -23,7 +23,7 @@ export const signToken = (payload: Pick<IUser, 'id' | 'email' | 'role' | 'name'>
 export const decodeToken = async (token: string): Promise<Pick<IUser, 'id' | 'email' | 'role' | 'name'> | undefined> => {
 
     try {
-        if (!globalThis.process.env.JWT_SEED) throw new ParsingError('No hay seed de JWT', 400);
+        if (!process.env.JWT_SEED) throw new ParsingError('No hay seed de JWT', 400);
 
         return new Promise((resolve, reject) => {
             jwt.verify(token, globalThis.process.env.JWT_SEED!, (err, payload) => {

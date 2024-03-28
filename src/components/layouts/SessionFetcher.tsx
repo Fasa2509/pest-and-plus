@@ -29,7 +29,7 @@ export const SessionFetcher: FC<Props> = () => {
 
             const res = await frontGetUserInfo(Number(id));
 
-            console.log({ res })
+            // console.log({ res })
 
             $updateUserInfo((!res.error) ? res.payload.user : null);
             res.error && createNotification({ type: "error", content: res.message[0] });

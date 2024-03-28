@@ -75,6 +75,7 @@ aside {
     flex-direction: column;
     row-gap: 2.5rem;
     overflow-y: auto;
+    width: 100%;
     max-height: 100dvh;
 }
 
