@@ -56,7 +56,7 @@ export const RecentPosts: FC<Props> = () => {
             }
             {
                 (userInfo.id === null) &&
-                <p><a href="/">Inicia sesión</a> para ver las últimas publicaciones de las mascotas que sigues.</p>
+                <p><a href="/" style={{ color: "var(secondary-color)" }}>Inicia sesión</a> para ver las últimas publicaciones de las mascotas que sigues.</p>
             }
             {
                 (userInfo.id && userInfo.following.length === 0) &&
