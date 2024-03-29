@@ -82,7 +82,7 @@ export const Menu = () => {
         if (userInfo.id === undefined) {
             createNotification({ type: "info", content: "No has iniciado sesión" });
             return;
-        }
+        };
 
         const notId = createNotification({
             type: "info",

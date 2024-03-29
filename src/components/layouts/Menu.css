@@ -94,10 +94,6 @@
     background-color: #fff;
 }
 
-/* .menu > .first.active:hover {
-        background - color: rgb(245, 245, 245);
-} */
-
 .disabled {
     pointer-events: none;
 }
@@ -105,7 +101,6 @@
 .menu .first.hide-btn {
     background-color: #fff;
     border-color: transparent;
-    /* transform: translate(0); */
     transform: translate(var(--n-icons-size));
 }
 
@@ -144,11 +139,6 @@
     height: 24px;
 }
 
-/* .svg-icon.open-icon {
-    width: 24px;
-    height: 24px;
-} */
-
 .svg-icon.open-icon path,
 .svg-icon.open-icon polygon,
 .svg-icon.open-icon rect {
@@ -159,11 +149,6 @@
     stroke: var(--main-color);
     stroke-width: 1;
 }
-
-/* .svg-icon.feed-icon {
-    width: 24px;
-    height: 24px;
-} */
 
 .svg-icon.feed-icon path,
 .svg-icon.feed-icon polygon,
@@ -187,11 +172,6 @@
     stroke-width: 1;
 }
 
-/* .svg-icon.perfil-icon {
-    width: 24px;
-    height: 24px;
-} */
-
 .svg-icon.perfil-icon path,
 .svg-icon.perfil-icon polygon,
 .svg-icon.perfil-icon rect {
@@ -203,11 +183,6 @@
     stroke-width: 1;
 }
 
-/* .svg-icon.self-icon {
-    width: 24px;
-    height: 24px;
-} */
-
 .svg-icon.self-icon path,
 .svg-icon.self-icon polygon,
 .svg-icon.self-icon rect {
@@ -218,11 +193,6 @@
     stroke: var(--main-color);
     stroke-width: 1;
 }
-
-/* .svg-icon.conf-icon {
-    width: 24px;
-    height: 24px;
-} */
 
 .svg-icon.conf-icon path,
 .svg-icon.conf-icon polygon,

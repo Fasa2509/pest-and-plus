@@ -17,15 +17,12 @@ export const GET: APIRoute = async ({ url, cookies }) => {
 
         const pagination = ZApiPagination.parse({ limit: paginationParams.limit, offset: paginationParams.offset });
 
-        const token = cookies.get("auth-token");
+        // const token = cookies.get("auth-token");
 
-        const userId = token ? (await decodeToken(token.value))?.id : 0;
+        // const userId = token ? (await decodeToken(token.value))?.id : 0;
 
         const posts = await DbClient.post.findMany({
             where: {
-                authorId: {
-                    not: userId,
-                },
                 createdAt: {
                     lt: new Date(Number(paginationParams.max)),
                 },

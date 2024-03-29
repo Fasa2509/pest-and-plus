@@ -10,7 +10,8 @@ export const requestLogin = async (method: 'POST' | 'PATCH', { email, name }: { 
         let response: ApiResponse;
 
         if (method === 'POST') {
-            if (!name || /[^a-zA-ZáéíóúÁÉÍÓÚ ]/.test(name) || name.length < 2) throw new ValidationError("El nombre no es válido", 400);
+            if (!name || name.length < 2) throw new ValidationError("El nombre no es válido", 400);
+            if (/[^a-zA-ZáéíóúÁÉÍÓÚ ]/.test(name)) throw new ValidationError("El nombre contiene caracteres no válidos", 400);
 
             const { data } = await AxiosApi.post<ApiResponse>(`/user.json`, { email, name });
             response = data;
