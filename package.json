@@ -18,7 +18,7 @@
     "@aws-sdk/s3-request-presigner": "3.540.0",
     "@nanostores/preact": "0.5.0",
     "@nanostores/query": "0.2.8",
-    "@prisma/client": "5.8.0",
+    "@prisma/client": "3.15.2",
     "astro": "^4.1.2",
     "axios": "1.6.5",
     "cookie": "0.6.0",
@@ -36,6 +36,6 @@
     "@types/jsonwebtoken": "9.0.5",
     "@types/node": "^20.11.2",
     "@types/nodemailer": "6.4.14",
-    "prisma": "^5.8.0"
+    "prisma": "3.15.2"
   }
 }

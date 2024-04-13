@@ -2,7 +2,6 @@ import { ZodError } from "zod";
 import { isAxiosError } from "axios";
 
 import { AxiosErrorFormatter, CustomErrorFormatter, ZodErrorFormatter } from "./formatters";
-// import { DbClient } from "../database/Db";
 import type { ApiResponseError } from "@/types/Api";
 
 export const ERROR_NAMES = {
